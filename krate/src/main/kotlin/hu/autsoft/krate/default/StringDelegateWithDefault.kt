@@ -10,6 +10,7 @@ class StringDelegateWithDefault(
         private val default: String
 ) {
 
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     operator fun getValue(thisRef: Any?, property: KProperty<*>): String {
         return sharedPreferences.getString(key, default)
     }

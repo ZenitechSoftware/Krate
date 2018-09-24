@@ -10,6 +10,7 @@ class StringSetDelegateWithDefault(
         private val default: Set<String>
 ) {
 
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     operator fun getValue(thisRef: Any?, property: KProperty<*>): Set<String> {
         return sharedPreferences.getStringSet(key, default)
     }
