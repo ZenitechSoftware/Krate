@@ -1,0 +1,54 @@
+image: "gitlab.autsoft.hu:4567/devops/androidciimage:latest"
+
+cache:
+  paths:
+  - .gradle/wrapper
+  - .gradle/caches
+  - .android/build-cache/
+
+stages:
+  - build
+  - deploy
+
+before_script:
+  - export GRADLE_USER_HOME=.gradle
+  - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
+  - mkdir .gradle && echo "org.gradle.jvmargs=-Xmx4096m -XX\:+HeapDumpOnOutOfMemoryError -Dfile.encoding\=UTF-8" > .gradle/gradle.properties
+  - chmod +x ./gradlew
+  - mkdir /sdk/ndk-bundle/toolchains/mips64el-linux-android-4.9/prebuilt/linux-x86_64/bin
+  - touch /sdk/ndk-bundle/toolchains/mips64el-linux-android-4.9/prebuilt/linux-x86_64/bin/mips64el-linux-android-strip
+  - chmod +x /sdk/ndk-bundle/toolchains/mips64el-linux-android-4.9/prebuilt/linux-x86_64/bin/mips64el-linux-android-strip
+
+.build: &build
+  stage: build
+  tags:
+    - docker
+  script:
+    - ./gradlew assemble
+  artifacts:
+    name: "$CI_COMMIT_REF_NAME"
+    paths:
+      - "*/build"
+    expire_in: 2 hours
+
+.deploy: &deploy
+  stage: deploy
+  tags:
+    - docker
+  script:
+    - ./gradlew uploadArchives
+  artifacts:
+    name: "$CI_COMMIT_REF_NAME"
+    paths:
+      - "*/build"
+    expire_in: 2 hours
+
+# ######### Developer customised part
+
+build:
+  <<: *build
+
+deploy:
+  <<: *deploy
+  only:
+    - /^.*-SNAPSHOT$/

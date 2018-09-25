@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 28
@@ -8,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
     }
 
     buildTypes {
@@ -23,9 +24,42 @@ android {
     }
 }
 
-
 dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:28.0.0-beta01'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'androidx.core:core-ktx:0.3'
+}
+
+task androidJavadocs(type: Javadoc) {
+    failOnError = false
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+    classifier = 'javadoc'
+    from androidJavadocs.destinationDir
+}
+
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+artifacts {
+    archives androidSourcesJar
+    archives androidJavadocsJar
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: System.getenv('ARTIFACTORY_URL') + "libs-snapshot-local") {
+                authentication(userName: System.getenv('ARTIFACTORY_USER'), password: System.getenv('ARTIFACTORY_PASS'))
+            }
+            pom.version = android.defaultConfig.versionName + "-SNAPSHOT"
+            pom.artifactId = "krate"
+            pom.groupId = "hu.autsoft"
+        }
+    }
 }
