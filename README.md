@@ -7,7 +7,7 @@ Here's what its basic usage looks like, extending the `SimpleKrate` class:
 ```kotlin
 class UserSettings(context: Context) : SimpleKrate(context) {
 
-    var notificationsEnabled by booleanPref("notifications_enabled", false
+    var notificationsEnabled by booleanPref("notifications_enabled", false)
     var loginCount by intPref("login_count", 0)
     var nickname by stringPref("nickname", "")
 
@@ -20,9 +20,9 @@ Log.d("LOGIN_COUNT", "Count: ${settings.loginCount}")
 
 ### Optionals vs defaults
 
-Each property can be declared with or without a default value.
+Each property can be declared with or without a default value, here are the differences:
 
-#### Optional values:
+##### Optional values:
 
 A property declared with the one-argument delegate function will have a nullable type. It will have a `null` value if no value has been set for this property yet, and its current value can be erased from `SharedPreferences` completely by setting it to `null`.
 
@@ -30,7 +30,7 @@ A property declared with the one-argument delegate function will have a nullable
 var username: String? by stringPref("username")
 ```
 
-#### Default values:
+##### Default values:
 
 A property declared with the two-argument delegate function takes its default value as the second argument, and it will have a non-nullable type. Reading from this property will return either the value it was last set to or the default value. Setting this property will update the value stored in `SharedPreferences`. Note that there's no way to remove these values from `SharedPreferences` (although you could set it explicitly to the default value).
 
