@@ -54,8 +54,8 @@ artifacts {
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: "") {
-                authentication(userName: "", password: "")
+            repository(url: System.getenv('ARTIFACTORY_URL') + "libs-snapshot-local") {
+                authentication(userName: System.getenv('ARTIFACTORY_USER'), password: System.getenv('ARTIFACTORY_PASS'))
             }
             pom.version = android.defaultConfig.versionName + "-SNAPSHOT"
             pom.artifactId = "krate"
