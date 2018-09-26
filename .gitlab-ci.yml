@@ -24,7 +24,7 @@ before_script:
   tags:
     - docker
   script:
-    - ./gradlew assemble
+    - ./gradlew assembleRelease androidSourcesJar generatePomFileForReleasePublication
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
