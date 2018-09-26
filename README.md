@@ -20,7 +20,7 @@ Log.d("LOGIN_COUNT", "Count: ${settings.loginCount}")
 
 # Dependency
 
-You can include Krate from the `jcenter` repository, like so:
+You can include _Krate_ in your project from the `jcenter` repository, like so:
 
 ```groovy
 implementation 'hu.autsoft:krate:0.0.3'
