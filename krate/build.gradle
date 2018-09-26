@@ -30,7 +30,7 @@ dependencies {
 ext {
     PUBLISH_GROUP_ID = 'hu.autsoft'
     PUBLISH_ARTIFACT_ID = 'krate'
-    PUBLISH_VERSION = android.defaultConfig.versionName + "-SNAPSHOT"
+    PUBLISH_VERSION = android.defaultConfig.versionName
 
     BINTRAY_REPO = 'Krate'
     BINTRAY_NAME = 'Krate'
