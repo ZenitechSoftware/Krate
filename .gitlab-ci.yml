@@ -8,6 +8,7 @@ cache:
 
 stages:
   - build
+  - test
   - deploy
 
 before_script:
@@ -31,6 +32,22 @@ before_script:
       - "*/build"
     expire_in: 2 hours
 
+.instrumentationTest: &instrumentationTest
+  stage: test
+  tags:
+    - android
+  before_script:
+    - echo UI teszt
+  script:
+    - ./gradlew autsoftInstrumentationTest
+  artifacts:
+    name: "$CI_COMMIT_REF_NAME"
+    paths:
+      - "*/build"
+    expire_in: 2 hours
+  except:
+    - tags
+
 .deploy: &deploy
   stage: deploy
   tags:
@@ -41,10 +58,13 @@ before_script:
       - "*/build"
     expire_in: 2 hours
 
-# ######### Developer customised part
+########## Developer customised part
 
 build:
   <<: *build
+
+instrumentationTest:
+  <<: *instrumentationTest
 
 deploy to artifactory:
   <<: *deploy
