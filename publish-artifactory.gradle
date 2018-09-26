@@ -7,7 +7,7 @@ artifacts {
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: System.getenv('ARTIFACTORY_URL') + "/libs-snapshot-local") {
+            repository(url: System.getenv('ARTIFACTORY_URL') + "/libs-release-local") {
                 authentication(userName: System.getenv('ARTIFACTORY_USER'), password: System.getenv('ARTIFACTORY_PASS'))
             }
             pom.version = PUBLISH_VERSION
