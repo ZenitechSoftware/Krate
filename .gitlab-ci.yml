@@ -35,8 +35,6 @@ before_script:
   stage: deploy
   tags:
     - docker
-  script:
-    - ./gradlew uploadArchives
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
@@ -48,7 +46,16 @@ before_script:
 build:
   <<: *build
 
-deploy:
+deploy to artifactory:
   <<: *deploy
+  script:
+    - ./gradlew uploadArchives
+  only:
+    - /^.*-SNAPSHOT$/
+
+deploy to bintray:
+  <<: *deploy
+  script:
+    - ./gradlew bintrayUpload
   only:
     - /^.*-SNAPSHOT$/

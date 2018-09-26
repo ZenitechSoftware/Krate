@@ -1,7 +1,7 @@
 package hu.autsoft.krate.default
 
 import android.content.SharedPreferences
-import androidx.core.content.edit
+import hu.autsoft.krate.edit
 import kotlin.reflect.KProperty
 
 class LongDelegateWithDefault(

@@ -1,0 +1,18 @@
+apply plugin: 'com.github.dcendents.android-maven'
+
+artifacts {
+    archives androidSourcesJar
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: System.getenv('ARTIFACTORY_URL') + "/libs-snapshot-local") {
+                authentication(userName: System.getenv('ARTIFACTORY_USER'), password: System.getenv('ARTIFACTORY_PASS'))
+            }
+            pom.version = PUBLISH_VERSION
+            pom.artifactId = PUBLISH_ARTIFACT_ID
+            pom.groupId = PUBLISH_GROUP_ID
+        }
+    }
+}

@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 28
@@ -8,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 1
-        versionName "0.0.1"
+        versionCode 2
+        versionName "0.0.2"
     }
 
     buildTypes {
@@ -26,19 +25,16 @@ android {
 
 dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'androidx.core:core-ktx:0.3'
 }
 
-task androidJavadocs(type: Javadoc) {
-    failOnError = false
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
+ext {
+    PUBLISH_GROUP_ID = 'hu.autsoft'
+    PUBLISH_ARTIFACT_ID = 'krate'
+    PUBLISH_VERSION = android.defaultConfig.versionName
 
-task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
-    classifier = 'javadoc'
-    from androidJavadocs.destinationDir
+    BINTRAY_REPO = 'Krate'
+    BINTRAY_NAME = 'Krate'
+    BINTRAY_VCS_URL = 'https://github.com/AutSoft/Krate'
 }
 
 task androidSourcesJar(type: Jar) {
@@ -46,20 +42,5 @@ task androidSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
 }
 
-artifacts {
-    archives androidSourcesJar
-    archives androidJavadocsJar
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: System.getenv('ARTIFACTORY_URL') + "/libs-snapshot-local") {
-                authentication(userName: System.getenv('ARTIFACTORY_USER'), password: System.getenv('ARTIFACTORY_PASS'))
-            }
-            pom.version = android.defaultConfig.versionName + "-SNAPSHOT"
-            pom.artifactId = "krate"
-            pom.groupId = "hu.autsoft"
-        }
-    }
-}
+apply from: '../publish-artifactory.gradle'
+apply from: '../publish-bintray.gradle'
