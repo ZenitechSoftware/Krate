@@ -1,15 +1,17 @@
 package hu.autsoft.krate.optional
 
 import android.content.SharedPreferences
-import hu.autsoft.krate.edit
+import hu.autsoft.krate.Krate
+import hu.autsoft.krate.util.edit
+import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-class FloatDelegate(
+internal class FloatDelegate(
         private val sharedPreferences: SharedPreferences,
         private val key: String
-) {
+) : ReadWriteProperty<Krate, Float?> {
 
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): Float? {
+    override operator fun getValue(thisRef: Krate, property: KProperty<*>): Float? {
         return if (!sharedPreferences.contains(key)) {
             null
         } else {
@@ -17,7 +19,7 @@ class FloatDelegate(
         }
     }
 
-    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Float?) {
+    override operator fun setValue(thisRef: Krate, property: KProperty<*>, value: Float?) {
         if (value == null) {
             sharedPreferences.edit { remove(key) }
         } else {

@@ -1,15 +1,17 @@
 package hu.autsoft.krate.optional
 
 import android.content.SharedPreferences
-import hu.autsoft.krate.edit
+import hu.autsoft.krate.Krate
+import hu.autsoft.krate.util.edit
+import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-class StringSetDelegate(
+internal class StringSetDelegate(
         private val sharedPreferences: SharedPreferences,
         private val key: String
-) {
+) : ReadWriteProperty<Krate, Set<String>?> {
 
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): Set<String>? {
+    override operator fun getValue(thisRef: Krate, property: KProperty<*>): Set<String>? {
         return if (!sharedPreferences.contains(key)) {
             null
         } else {
@@ -17,7 +19,7 @@ class StringSetDelegate(
         }
     }
 
-    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Set<String>?) {
+    override operator fun setValue(thisRef: Krate, property: KProperty<*>, value: Set<String>?) {
         if (value == null) {
             sharedPreferences.edit { remove(key) }
         } else {
