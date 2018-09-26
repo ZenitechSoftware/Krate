@@ -18,6 +18,14 @@ settings.loginCount = 10
 Log.d("LOGIN_COUNT", "Count: ${settings.loginCount}")
 ```
 
+### Dependency
+
+You can include Krate from the `jcenter` repository, like so:
+
+```groovy
+implementation 'hu.autsoft:krate:0.0.3'
+```
+
 ### Optionals vs defaults
 
 Each property can be declared with or without a default value, here are the differences:
