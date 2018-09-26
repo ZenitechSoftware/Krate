@@ -1,66 +1,92 @@
-@file:Suppress("NOTHING_TO_INLINE")
+@file:Suppress("RedundantVisibilityModifier")
 
 package hu.autsoft.krate
 
-import hu.autsoft.krate.default.BooleanDelegateWithDefault
-import hu.autsoft.krate.default.FloatDelegateWithDefault
-import hu.autsoft.krate.default.IntDelegateWithDefault
-import hu.autsoft.krate.default.LongDelegateWithDefault
-import hu.autsoft.krate.default.StringDelegateWithDefault
-import hu.autsoft.krate.default.StringSetDelegateWithDefault
-import hu.autsoft.krate.optional.BooleanDelegate
-import hu.autsoft.krate.optional.FloatDelegate
-import hu.autsoft.krate.optional.IntDelegate
-import hu.autsoft.krate.optional.LongDelegate
-import hu.autsoft.krate.optional.StringDelegate
-import hu.autsoft.krate.optional.StringSetDelegate
+import hu.autsoft.krate.default.*
+import hu.autsoft.krate.optional.*
+import kotlin.properties.ReadWriteProperty
 
-
-inline fun Krate.booleanPref(key: String): BooleanDelegate {
+/**
+ * Creates an optional preference of type Boolean with the given [key] in this [Krate] instance.
+ */
+public fun Krate.booleanPref(key: String): ReadWriteProperty<Krate, Boolean?> {
     return BooleanDelegate(sharedPreferences, key)
 }
 
-inline fun Krate.floatPref(key: String): FloatDelegate {
+/**
+ * Creates an optional preference of type Float with the given [key] in this [Krate] instance.
+ */
+public fun Krate.floatPref(key: String): ReadWriteProperty<Krate, Float?> {
     return FloatDelegate(sharedPreferences, key)
 }
 
-inline fun Krate.intPref(key: String): IntDelegate {
+/**
+ * Creates an optional preference of type Int with the given [key] in this [Krate] instance.
+ */
+public fun Krate.intPref(key: String): ReadWriteProperty<Krate, Int?> {
     return IntDelegate(sharedPreferences, key)
 }
 
-inline fun Krate.longPref(key: String): LongDelegate {
+/**
+ * Creates an optional preference of type Long with the given [key] in this [Krate] instance.
+ */
+public fun Krate.longPref(key: String): ReadWriteProperty<Krate, Long?> {
     return LongDelegate(sharedPreferences, key)
 }
 
-inline fun Krate.stringPref(key: String): StringDelegate {
+/**
+ * Creates an optional preference of type String with the given [key] in this [Krate] instance.
+ */
+public fun Krate.stringPref(key: String): ReadWriteProperty<Krate, String?> {
     return StringDelegate(sharedPreferences, key)
 }
 
-inline fun Krate.stringSetPref(key: String): StringSetDelegate {
+/**
+ * Creates an optional preference of type Set<String> with the given [key] in this [Krate] instance.
+ */
+public fun Krate.stringSetPref(key: String): ReadWriteProperty<Krate, Set<String>?> {
     return StringSetDelegate(sharedPreferences, key)
 }
 
 
-inline fun Krate.booleanPref(key: String, defaultValue: Boolean): BooleanDelegateWithDefault {
+/**
+ * Creates a non-optional preference of type Boolean with the given [key] and [defaultValue] in this [Krate] instance.
+ */
+public fun Krate.booleanPref(key: String, defaultValue: Boolean): ReadWriteProperty<Krate, Boolean> {
     return BooleanDelegateWithDefault(sharedPreferences, key, defaultValue)
 }
 
-inline fun Krate.floatPref(key: String, defaultValue: Float): FloatDelegateWithDefault {
+/**
+ * Creates a non-optional preference of type Float with the given [key] and [defaultValue] in this [Krate] instance.
+ */
+public fun Krate.floatPref(key: String, defaultValue: Float): ReadWriteProperty<Krate, Float> {
     return FloatDelegateWithDefault(sharedPreferences, key, defaultValue)
 }
 
-inline fun Krate.intPref(key: String, defaultValue: Int): IntDelegateWithDefault {
+/**
+ * Creates a non-optional preference of type Int with the given [key] and [defaultValue] in this [Krate] instance.
+ */
+public fun Krate.intPref(key: String, defaultValue: Int): ReadWriteProperty<Krate, Int> {
     return IntDelegateWithDefault(sharedPreferences, key, defaultValue)
 }
 
-inline fun Krate.longPref(key: String, defaultValue: Long): LongDelegateWithDefault {
+/**
+ * Creates a non-optional preference of type Long with the given [key] and [defaultValue] in this [Krate] instance.
+ */
+public fun Krate.longPref(key: String, defaultValue: Long): ReadWriteProperty<Krate, Long> {
     return LongDelegateWithDefault(sharedPreferences, key, defaultValue)
 }
 
-inline fun Krate.stringPref(key: String, defaultValue: String): StringDelegateWithDefault {
+/**
+ * Creates a non-optional preference of type String with the given [key] and [defaultValue] in this [Krate] instance.
+ */
+public fun Krate.stringPref(key: String, defaultValue: String): ReadWriteProperty<Krate, String> {
     return StringDelegateWithDefault(sharedPreferences, key, defaultValue)
 }
 
-inline fun Krate.stringSetPref(key: String, defaultValue: Set<String>): StringSetDelegateWithDefault {
+/**
+ * Creates a non-optional preference of type Set<String> with the given [key] and [defaultValue] in this [Krate] instance.
+ */
+public fun Krate.stringSetPref(key: String, defaultValue: Set<String>): ReadWriteProperty<Krate, Set<String>> {
     return StringSetDelegateWithDefault(sharedPreferences, key, defaultValue)
 }

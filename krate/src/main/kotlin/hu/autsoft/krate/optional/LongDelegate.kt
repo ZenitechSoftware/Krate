@@ -1,15 +1,17 @@
 package hu.autsoft.krate.optional
 
 import android.content.SharedPreferences
-import hu.autsoft.krate.edit
+import hu.autsoft.krate.Krate
+import hu.autsoft.krate.util.edit
+import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-class LongDelegate(
+internal class LongDelegate(
         private val sharedPreferences: SharedPreferences,
         private val key: String
-) {
+) : ReadWriteProperty<Krate, Long?> {
 
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): Long? {
+    override operator fun getValue(thisRef: Krate, property: KProperty<*>): Long? {
         return if (!sharedPreferences.contains(key)) {
             null
         } else {
@@ -17,7 +19,7 @@ class LongDelegate(
         }
     }
 
-    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Long?) {
+    override operator fun setValue(thisRef: Krate, property: KProperty<*>, value: Long?) {
         if (value == null) {
             sharedPreferences.edit { remove(key) }
         } else {
