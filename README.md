@@ -18,7 +18,7 @@ settings.loginCount = 10
 Log.d("LOGIN_COUNT", "Count: ${settings.loginCount}")
 ```
 
-### Dependency
+# Dependency
 
 You can include Krate from the `jcenter` repository, like so:
 
@@ -26,11 +26,11 @@ You can include Krate from the `jcenter` repository, like so:
 implementation 'hu.autsoft:krate:0.0.3'
 ```
 
-### Optionals vs defaults
+# Optionals vs defaults
 
 Each property can be declared with or without a default value, here are the differences:
 
-##### Optional values:
+### Optional values:
 
 A property declared with the one-argument delegate function will have a nullable type. It will have a `null` value if no value has been set for this property yet, and its current value can be erased from `SharedPreferences` completely by setting it to `null`.
 
@@ -38,7 +38,7 @@ A property declared with the one-argument delegate function will have a nullable
 var username: String? by stringPref("username")
 ```
 
-##### Default values:
+### Default values:
 
 A property declared with the two-argument delegate function takes its default value as the second argument, and it will have a non-nullable type. Reading from this property will return either the value it was last set to or the default value. Setting this property will update the value stored in `SharedPreferences`. Note that there's no way to remove these values from `SharedPreferences` (although you could set it explicitly to the default value).
 
@@ -46,7 +46,7 @@ A property declared with the two-argument delegate function takes its default va
 var username: String by stringPref("username", defaultValue = "admin")
 ```
 
-### Custom Krate implementations
+# Custom Krate implementations
 
 You can usually get away with extending `SimpleKrate`, as it does allow you to pass in a custom name for the `SharedPreferences` to be used to store your values in its constructor as an optional parameter. (If you pass in no `name` parameter to its constructor, it will default to using the instance returned by `PreferenceManager.getDefaultSharedPreferences(context)`.)  
 
@@ -64,3 +64,22 @@ class ExampleCustomKrate(context: Context) : Krate {
     var exampleBoolean by booleanPref("exampleBoolean", false)
     
 }
+```
+
+# License
+
+```
+Copyright 2018 AutSoft
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
