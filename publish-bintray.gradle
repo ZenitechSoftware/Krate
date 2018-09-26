@@ -3,7 +3,7 @@ apply plugin: "com.jfrog.bintray"
 
 bintray {
     dryRun = false
-    publish = false
+    publish = true
     override = false
 
     Properties properties = new Properties()
