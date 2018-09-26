@@ -51,11 +51,11 @@ deploy to artifactory:
   script:
     - ./gradlew uploadArchives
   only:
-    - /^.*-SNAPSHOT$/
+    - /^.*-RELEASE$/
 
 deploy to bintray:
   <<: *deploy
   script:
     - ./gradlew bintrayUpload
   only:
-    - /^.*-SNAPSHOT$/
+    - /^.*-RELEASE$/
