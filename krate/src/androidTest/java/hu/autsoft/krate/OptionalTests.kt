@@ -11,7 +11,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class OptionalTests {
 
-    lateinit var testKrate: TestKrate
+    private lateinit var testKrate: TestKrate
 
     @Before
     fun setup() {
@@ -90,7 +90,7 @@ class OptionalTests {
     }
 
     @Test
-    fun testoptionalStringSetPref() {
+    fun testOptionalStringSetPref() {
         assertEquals(null, testKrate.optionalStringSet)
 
         testKrate.optionalStringSet = setOf("Dog", "Cat")
