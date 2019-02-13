@@ -16,9 +16,6 @@ before_script:
   - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
   - mkdir .gradle && echo "org.gradle.jvmargs=-Xmx4096m -XX\:+HeapDumpOnOutOfMemoryError -Dfile.encoding\=UTF-8" > .gradle/gradle.properties
   - chmod +x ./gradlew
-  - mkdir /sdk/ndk-bundle/toolchains/mips64el-linux-android-4.9/prebuilt/linux-x86_64/bin
-  - touch /sdk/ndk-bundle/toolchains/mips64el-linux-android-4.9/prebuilt/linux-x86_64/bin/mips64el-linux-android-strip
-  - chmod +x /sdk/ndk-bundle/toolchains/mips64el-linux-android-4.9/prebuilt/linux-x86_64/bin/mips64el-linux-android-strip
 
 .build: &build
   stage: build
