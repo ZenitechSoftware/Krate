@@ -60,8 +60,15 @@ before_script:
 build:
   <<: *build
 
-instrumentationTest:
+krate instrumentation test:
   <<: *instrumentationTest
+  script:
+    - ./gradlew krate:autsoftInstrumentationTest
+
+krate-gson instrumentation test:
+  <<: *instrumentationTest
+  script:
+    - ./gradlew krate-gson:autsoftInstrumentationTest
 
 deploy to artifactory:
   <<: *deploy
