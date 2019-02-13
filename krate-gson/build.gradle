@@ -1,0 +1,58 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionName krate_version
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+dependencies {
+    implementation project(':krate')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api 'com.google.code.gson:gson:2.8.5'
+
+    androidTestImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+}
+
+// Publishing
+ext {
+    PUBLISH_GROUP_ID = 'hu.autsoft'
+    PUBLISH_ARTIFACT_ID = 'krate-gson'
+    PUBLISH_VERSION = android.defaultConfig.versionName
+
+    BINTRAY_REPO = 'Krate'
+    BINTRAY_NAME = 'Krate'
+    BINTRAY_VCS_URL = 'https://github.com/AutSoft/Krate'
+}
+
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-artifactory.gradle"
+apply from: "${rootProject.projectDir}/scripts/publish-bintray.gradle"
+
+// Tests
+autsoft {
+    def DEFAULT_FLAVOR = ""
+    defaultFlavor = System.getenv('BUILD_FLAVOR') ? System.getenv('BUILD_FLAVOR') : DEFAULT_FLAVOR
+
+    lint = true
+    unitTest = false
+    instrumentationTest = true
+}
+
+apply plugin: 'autsoft-plugin'
