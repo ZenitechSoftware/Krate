@@ -88,12 +88,14 @@ before_script:
 krate build:
   <<: *build
   stage: build_base
-  MODULE_NAME: krate
+  variables:
+    MODULE_NAME: krate
 
 krate-gson build:
   <<: *build
   stage: build_modules
-  MODULE_NAME: krate-gson
+  variables:
+    MODULE_NAME: krate-gson
 
 ### Tests ###
 
