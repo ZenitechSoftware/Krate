@@ -25,6 +25,11 @@ allprojects {
     }
 }
 
+subprojects { project ->
+    group = 'hu.autsoft'
+    version = krate_version
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

@@ -1,5 +1,7 @@
 image: "gitlab.autsoft.hu:4567/devops/androidciimage:latest"
 
+########## Global settings ##########
+
 cache:
   paths:
   - .gradle/wrapper
@@ -17,12 +19,18 @@ before_script:
   - mkdir .gradle && echo "org.gradle.jvmargs=-Xmx4096m -XX\:+HeapDumpOnOutOfMemoryError -Dfile.encoding\=UTF-8" > .gradle/gradle.properties
   - chmod +x ./gradlew
 
+########## Job templates ##########
+
 .build: &build
   stage: build
   tags:
     - docker
   script:
-    - ./gradlew assembleRelease androidSourcesJar generatePomFileForReleasePublication
+    - >
+      ./gradlew
+      ${MODULE_NAME}:assembleRelease
+      ${MODULE_NAME}:androidSourcesJar
+      ${MODULE_NAME}:generatePomFileForReleasePublication
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
@@ -45,20 +53,49 @@ before_script:
   except:
     - tags
 
-.deploy: &deploy
+.deployArtifactory: &deployArtifactory
   stage: deploy
   tags:
     - docker
+  script:
+    - ./gradlew ${MODULE_NAME}:uploadArchives
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
       - "*/build"
     expire_in: 2 hours
+  only:
+    - /^.*-RELEASE$/
 
-########## Developer customised part
+.deployBintray: &deployBintray
+  stage: deploy
+  tags:
+    - docker
+  script:
+    - ./gradlew ${MODULE_NAME}:bintrayUpload
+  artifacts:
+    name: "$CI_COMMIT_REF_NAME"
+    paths:
+      - "*/build"
+    expire_in: 2 hours
+  only:
+    - /^.*-RELEASE$/
 
-build:
+########## Concrete jobs ##########
+
+### Build ###
+
+krate build:
   <<: *build
+  variables:
+    MODULE_NAME: krate
+
+krate-gson build:
+  <<: *build
+  variables:
+    MODULE_NAME: krate-gson
+
+### Tests ###
 
 krate instrumentation test:
   <<: *instrumentationTest
@@ -70,16 +107,24 @@ krate-gson instrumentation test:
   script:
     - ./gradlew krate-gson:autsoftInstrumentationTest
 
-deploy to artifactory:
-  <<: *deploy
-  script:
-    - ./gradlew uploadArchives
-  only:
-    - /^.*-RELEASE$/
+### Deployment ###
 
-deploy to bintray:
-  <<: *deploy
-  script:
-    - ./gradlew bintrayUpload
-  only:
-    - /^.*-RELEASE$/
+krate deploy to artifactory:
+  <<: *deployArtifactory
+  variables:
+    MODULE_NAME: krate
+
+krate deploy to bintray:
+  <<: *deployBintray
+  variables:
+    MODULE_NAME: krate
+
+krate-gson deploy to artifactory:
+  <<: *deployArtifactory
+  variables:
+    MODULE_NAME: krate-gson
+
+krate-gson deploy to bintray:
+  <<: *deployBintray
+  variables:
+    MODULE_NAME: krate-gson
