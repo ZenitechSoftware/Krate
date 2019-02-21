@@ -9,8 +9,8 @@ cache:
   - .android/build-cache/
 
 stages:
-  - build_base
-  - build_modules
+  - build base library
+  - build modules
   - test
   - deploy
 
@@ -87,13 +87,13 @@ before_script:
 
 krate build:
   <<: *build
-  stage: build_base
+  stage: build base library
   variables:
     MODULE_NAME: krate
 
 krate-gson build:
   <<: *build
-  stage: build_modules
+  stage: build modules
   variables:
     MODULE_NAME: krate-gson
 
