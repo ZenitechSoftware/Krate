@@ -9,7 +9,8 @@ cache:
   - .android/build-cache/
 
 stages:
-  - build
+  - build_base
+  - build_modules
   - test
   - deploy
 
@@ -22,18 +23,14 @@ before_script:
 ########## Job templates ##########
 
 .build: &build
-  stage: build
   tags:
     - docker
   script:
     - >
       ./gradlew
-      krate:assemble
-      krate-gson:assemble
-      krate:androidSourcesJar
-      krate-gson:androidSourcesJar
-      krate:generatePomFileForReleasePublication
-      krate-gson:generatePomFileForReleasePublication
+      ${MODULE_NAME}:assemble
+      ${MODULE_NAME}:androidSourcesJar
+      ${MODULE_NAME}:generatePomFileForReleasePublication
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
@@ -47,7 +44,7 @@ before_script:
   before_script:
     - echo UI teszt
   script:
-    - ./gradlew autsoftInstrumentationTest
+    - ./gradlew ${MODULE_NAME}:autsoftInstrumentationTest
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
@@ -88,22 +85,27 @@ before_script:
 
 ### Build ###
 
-build:
+krate build:
   <<: *build
-  variables:
-    MODULE_NAME: krate
+  stage: build_base
+  MODULE_NAME: krate
+
+krate-gson build:
+  <<: *build
+  stage: build_modules
+  MODULE_NAME: krate-gson
 
 ### Tests ###
 
 krate instrumentation test:
   <<: *instrumentationTest
-  script:
-    - ./gradlew krate:autsoftInstrumentationTest
+  variables:
+    MODULE_NAME: krate
 
 krate-gson instrumentation test:
   <<: *instrumentationTest
-  script:
-    - ./gradlew krate-gson:autsoftInstrumentationTest
+  variables:
+    MODULE_NAME: krate-gson
 
 ### Deployment ###
 
