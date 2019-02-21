@@ -28,9 +28,12 @@ before_script:
   script:
     - >
       ./gradlew
-      ${MODULE_NAME}:assembleRelease
-      ${MODULE_NAME}:androidSourcesJar
-      ${MODULE_NAME}:generatePomFileForReleasePublication
+      krate:assemble
+      krate-gson:assemble
+      krate:androidSourcesJar
+      krate-gson:androidSourcesJar
+      krate:generatePomFileForReleasePublication
+      krate-gson:generatePomFileForReleasePublication
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
@@ -85,15 +88,10 @@ before_script:
 
 ### Build ###
 
-krate build:
+build:
   <<: *build
   variables:
     MODULE_NAME: krate
-
-krate-gson build:
-  <<: *build
-  variables:
-    MODULE_NAME: krate-gson
 
 ### Tests ###
 
