@@ -30,7 +30,6 @@ before_script:
     - >
       ./gradlew
       ${MODULE_NAME}:assembleDebug
-      ${MODULE_NAME}:androidSourcesJar
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
