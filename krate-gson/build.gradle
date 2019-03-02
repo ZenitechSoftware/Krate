@@ -33,7 +33,7 @@ ext {
     PUBLISH_VERSION = android.defaultConfig.versionName
 
     BINTRAY_REPO = 'Krate'
-    BINTRAY_NAME = 'Krate'
+    BINTRAY_NAME = 'krate-gson'
     BINTRAY_VCS_URL = 'https://github.com/AutSoft/Krate'
 }
 
