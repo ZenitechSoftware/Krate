@@ -10,7 +10,7 @@ cache:
 stages:
   - build base library
   - build modules
-  - demo app builds
+  - demo app build
   - test
   - deploy
 
@@ -134,7 +134,7 @@ krate-gson release build:
 
 app debug build:
   <<: *debugBuild
-  stage: demo app builds
+  stage: demo app build
   variables:
     MODULE_NAME: app
   dependencies:
