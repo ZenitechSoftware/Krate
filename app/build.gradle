@@ -26,4 +26,16 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
     implementation project(path: ':krate')
+    implementation project(path: ':krate-gson')
 }
+
+autsoft {
+    def DEFAULT_FLAVOR = ""
+    defaultFlavor = System.getenv('BUILD_FLAVOR') ? System.getenv('BUILD_FLAVOR') : DEFAULT_FLAVOR
+
+    lint = true
+    unitTest = false
+    instrumentationTest = false
+}
+
+apply plugin: 'autsoft-plugin'

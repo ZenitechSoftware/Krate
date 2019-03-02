@@ -17,7 +17,9 @@ android {
 }
 
 dependencies {
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation project(':krate')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api 'com.google.code.gson:gson:2.8.5'
 
     androidTestImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -27,7 +29,7 @@ dependencies {
 // Publishing
 ext {
     PUBLISH_GROUP_ID = 'hu.autsoft'
-    PUBLISH_ARTIFACT_ID = 'krate'
+    PUBLISH_ARTIFACT_ID = 'krate-gson'
     PUBLISH_VERSION = android.defaultConfig.versionName
 
     BINTRAY_REPO = 'Krate'

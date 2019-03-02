@@ -1,13 +1,17 @@
 image: "gitlab.autsoft.hu:4567/devops/androidciimage:latest"
 
+########## Global settings ##########
+
 cache:
   paths:
-  - .gradle/wrapper
-  - .gradle/caches
-  - .android/build-cache/
+    - .gradle
+    - .android/build-cache/
 
 stages:
-  - build
+  - build base library
+  - build modules
+  - demo app build
+  - test
   - deploy
 
 before_script:
@@ -15,47 +19,170 @@ before_script:
   - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
   - mkdir .gradle && echo "org.gradle.jvmargs=-Xmx4096m -XX\:+HeapDumpOnOutOfMemoryError -Dfile.encoding\=UTF-8" > .gradle/gradle.properties
   - chmod +x ./gradlew
-  - mkdir /sdk/ndk-bundle/toolchains/mips64el-linux-android-4.9/prebuilt/linux-x86_64/bin
-  - touch /sdk/ndk-bundle/toolchains/mips64el-linux-android-4.9/prebuilt/linux-x86_64/bin/mips64el-linux-android-strip
-  - chmod +x /sdk/ndk-bundle/toolchains/mips64el-linux-android-4.9/prebuilt/linux-x86_64/bin/mips64el-linux-android-strip
 
-.build: &build
-  stage: build
+########## Job templates ##########
+
+.debugBuild: &debugBuild
   tags:
     - docker
   script:
-    - ./gradlew assembleRelease androidSourcesJar generatePomFileForReleasePublication
+    - >
+      ./gradlew
+      ${MODULE_NAME}:assembleDebug
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
       - "*/build"
     expire_in: 2 hours
+  except:
+    - tags
 
-.deploy: &deploy
+.releaseBuild: &releaseBuild
+  tags:
+    - docker
+  script:
+    - >
+      ./gradlew
+      ${MODULE_NAME}:assembleRelease
+      ${MODULE_NAME}:androidSourcesJar
+  artifacts:
+    name: "$CI_COMMIT_REF_NAME"
+    paths:
+      - "*/build"
+    expire_in: 2 hours
+  only:
+    - /^.*-RELEASE$/
+
+.instrumentationTest: &instrumentationTest
+  stage: test
+  tags:
+    - android
+  before_script:
+    - echo UI teszt
+  script:
+    - ./gradlew ${MODULE_NAME}:autsoftInstrumentationTest
+  artifacts:
+    name: "$CI_COMMIT_REF_NAME"
+    paths:
+      - "*/build"
+    expire_in: 2 hours
+  except:
+    - tags
+
+.deployArtifactory: &deployArtifactory
   stage: deploy
   tags:
     - docker
+  script:
+    - ./gradlew ${MODULE_NAME}:uploadArchives
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
       - "*/build"
     expire_in: 2 hours
-
-# ######### Developer customised part
-
-build:
-  <<: *build
-
-deploy to artifactory:
-  <<: *deploy
-  script:
-    - ./gradlew uploadArchives
   only:
     - /^.*-RELEASE$/
 
-deploy to bintray:
-  <<: *deploy
+.deployBintray: &deployBintray
+  stage: deploy
+  tags:
+    - docker
   script:
-    - ./gradlew bintrayUpload
+    - >
+      ./gradlew
+      ${MODULE_NAME}:generatePomFileForReleasePublication
+      ${MODULE_NAME}:bintrayUpload
+  artifacts:
+    name: "$CI_COMMIT_REF_NAME"
+    paths:
+      - "*/build"
+    expire_in: 2 hours
   only:
     - /^.*-RELEASE$/
+
+########## Concrete jobs ##########
+
+### Base library build ###
+
+krate debug build:
+  <<: *debugBuild
+  stage: build base library
+  variables:
+    MODULE_NAME: krate
+
+krate release build:
+  <<: *releaseBuild
+  stage: build base library
+  variables:
+    MODULE_NAME: krate
+
+### Module library builds ###
+
+krate-gson debug build:
+  <<: *debugBuild
+  stage: build modules
+  variables:
+    MODULE_NAME: krate-gson
+
+krate-gson release build:
+  <<: *releaseBuild
+  stage: build modules
+  variables:
+    MODULE_NAME: krate-gson
+
+### Demo app build ###
+
+app debug build:
+  <<: *debugBuild
+  stage: demo app build
+  variables:
+    MODULE_NAME: app
+  dependencies:
+    - krate debug build
+    - krate-gson debug build
+
+### Tests ###
+
+krate instrumentation test:
+  <<: *instrumentationTest
+  variables:
+    MODULE_NAME: krate
+  dependencies:
+    - krate debug build
+
+krate-gson instrumentation test:
+  <<: *instrumentationTest
+  variables:
+    MODULE_NAME: krate-gson
+  dependencies:
+    - krate-gson debug build
+
+### Deployment ###
+
+krate deploy to artifactory:
+  <<: *deployArtifactory
+  variables:
+    MODULE_NAME: krate
+  dependencies:
+    - krate release build
+
+krate deploy to bintray:
+  <<: *deployBintray
+  variables:
+    MODULE_NAME: krate
+  dependencies:
+    - krate release build
+
+krate-gson deploy to artifactory:
+  <<: *deployArtifactory
+  variables:
+    MODULE_NAME: krate-gson
+  dependencies:
+    - krate-gson release build
+
+krate-gson deploy to bintray:
+  <<: *deployBintray
+  variables:
+    MODULE_NAME: krate-gson
+  dependencies:
+    - krate-gson release build
