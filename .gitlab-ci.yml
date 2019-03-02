@@ -137,6 +137,9 @@ app debug build:
   stage: demo app builds
   variables:
     MODULE_NAME: app
+  dependencies:
+    - krate debug build
+    - krate-gson debug build
 
 ### Tests ###
 
@@ -144,11 +147,15 @@ krate instrumentation test:
   <<: *instrumentationTest
   variables:
     MODULE_NAME: krate
+  dependencies:
+    - krate debug build
 
 krate-gson instrumentation test:
   <<: *instrumentationTest
   variables:
     MODULE_NAME: krate-gson
+  dependencies:
+    - krate-gson debug build
 
 ### Deployment ###
 
@@ -156,18 +163,26 @@ krate deploy to artifactory:
   <<: *deployArtifactory
   variables:
     MODULE_NAME: krate
+  dependencies:
+    - krate release build
 
 krate deploy to bintray:
   <<: *deployBintray
   variables:
     MODULE_NAME: krate
+  dependencies:
+    - krate release build
 
 krate-gson deploy to artifactory:
   <<: *deployArtifactory
   variables:
     MODULE_NAME: krate-gson
+  dependencies:
+    - krate-gson release build
 
 krate-gson deploy to bintray:
   <<: *deployBintray
   variables:
     MODULE_NAME: krate-gson
+  dependencies:
+    - krate-gson release build
