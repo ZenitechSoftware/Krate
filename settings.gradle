@@ -1,1 +1,3 @@
-include ':app', ':krate'
+include ':app',
+        ':krate',
+        ':krate-gson'

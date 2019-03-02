@@ -1,5 +1,7 @@
 # Krate
 
+![Krate banner](./docs/krate.png)
+
 _Krate_ is a `SharedPreferences` wrapper library that uses delegated properties for convenient access to `SharedPreferences` values.
 
 Here's what its basic usage looks like, extending the `SimpleKrate` class:
@@ -23,12 +25,12 @@ Log.d("LOGIN_COUNT", "Count: ${settings.loginCount}")
 You can include _Krate_ in your project from the `jcenter` repository, like so:
 
 ```groovy
-implementation 'hu.autsoft:krate:0.0.3'
+implementation 'hu.autsoft:krate:0.1.0'
 ```
 
 # Optionals vs defaults
 
-Each property can be declared with or without a default value, here are the differences:
+Each stored property can be declared with or without a default value. Here's how the two options differ:
 
 ### Optional values:
 
@@ -66,10 +68,43 @@ class ExampleCustomKrate(context: Context) : Krate {
 }
 ```
 
+# Addons
+
+Krate, by default, supports the types that `SharedPreferences` supports. These are `Boolean`, `Float`, `Int`, `Long`, `String` and `Set<String>`. You may of course want to store additional types in Krate. For some common types, addon libraries are available, as described below.
+
+If you don't find support for the type you're looking for, implementing your own delegate in your own project based on the code of existing delegates should be quite simple, this is very much a supported use case. If you think your type might be commonly used, you can also open an issue to ask for an addon library to provide for that type.
+
+### krate-gson
+
+`krate-gson` provides you a `gsonPref` delegate which can store any arbitrary type, as long as GSON can serialize and deserialize it. This addon, like the base library, is available from `jcenter`:
+
+```groovy
+implementation 'hu.autsoft:krate-gson:0.1.0'
+```
+
+Its basic usage is the same as with any of the base library's delegates:
+
+```kotlin
+class GsonKrate(context: Context) : SimpleKrate(context) {
+    var user: User? by gsonPref("user")
+    var savedArticles: List<Article>? by gsonPref("articles")
+}
+```
+
+By default, the `Gson` instance created by a simple `Gson()` constructor call is used. If you want to provide your own `Gson` instance that you've configured, you can set the `gson` extension property on your Krate. Any `gsonPref` delegates within this Krate will use this instance for serialization and deserialization.
+
+```kotlin
+class CustomGsonKrate(context: Context) : SimpleKrate(context) {
+    init {
+        gson = GsonBuilder().create()
+    }
+}
+``` 
+
 # License
 
 ```
-Copyright 2018 AutSoft
+Copyright 2019 AutSoft
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

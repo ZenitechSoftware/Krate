@@ -1,4 +1,4 @@
-package hu.autsoft.krate.util
+package hu.autsoft.krate.gson.util
 
 import android.content.SharedPreferences
 
