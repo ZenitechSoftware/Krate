@@ -4,9 +4,8 @@ image: "gitlab.autsoft.hu:4567/devops/androidciimage:latest"
 
 cache:
   paths:
-  - .gradle/wrapper
-  - .gradle/caches
-  - .android/build-cache/
+    - .gradle
+    - .android/build-cache/
 
 stages:
   - build base library
