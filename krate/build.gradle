@@ -35,11 +35,7 @@ ext {
     BINTRAY_VCS_URL = 'https://github.com/AutSoft/Krate'
 }
 
-task androidSourcesJar(type: Jar) {
-    classifier = 'sources'
-    from android.sourceSets.main.java.srcDirs
-}
-
+apply from: "${rootProject.projectDir}/scripts/publish-common.gradle"
 apply from: "${rootProject.projectDir}/scripts/publish-artifactory.gradle"
 apply from: "${rootProject.projectDir}/scripts/publish-bintray.gradle"
 

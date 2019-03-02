@@ -11,6 +11,7 @@ cache:
 stages:
   - build base library
   - build modules
+  - demo app builds
   - test
   - deploy
 
@@ -22,20 +23,37 @@ before_script:
 
 ########## Job templates ##########
 
-.build: &build
+.debugBuild: &debugBuild
   tags:
     - docker
   script:
     - >
       ./gradlew
-      ${MODULE_NAME}:assemble
+      ${MODULE_NAME}:assembleDebug
       ${MODULE_NAME}:androidSourcesJar
-      ${MODULE_NAME}:generatePomFileForReleasePublication
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
       - "*/build"
     expire_in: 2 hours
+  except:
+    - tags
+
+.releaseBuild: &releaseBuild
+  tags:
+    - docker
+  script:
+    - >
+      ./gradlew
+      ${MODULE_NAME}:assembleRelease
+      ${MODULE_NAME}:androidSourcesJar
+  artifacts:
+    name: "$CI_COMMIT_REF_NAME"
+    paths:
+      - "*/build"
+    expire_in: 2 hours
+  only:
+    - /^.*-RELEASE$/
 
 .instrumentationTest: &instrumentationTest
   stage: test
@@ -72,7 +90,10 @@ before_script:
   tags:
     - docker
   script:
-    - ./gradlew ${MODULE_NAME}:bintrayUpload
+    - >
+      ./gradlew
+      ${MODULE_NAME}:generatePomFileForReleasePublication
+      ${MODULE_NAME}:bintrayUpload
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
@@ -83,19 +104,41 @@ before_script:
 
 ########## Concrete jobs ##########
 
-### Build ###
+### Base library build ###
 
-krate build:
-  <<: *build
+krate debug build:
+  <<: *debugBuild
   stage: build base library
   variables:
     MODULE_NAME: krate
 
-krate-gson build:
-  <<: *build
+krate release build:
+  <<: *releaseBuild
+  stage: build base library
+  variables:
+    MODULE_NAME: krate
+
+### Module library builds ###
+
+krate-gson debug build:
+  <<: *debugBuild
   stage: build modules
   variables:
     MODULE_NAME: krate-gson
+
+krate-gson release build:
+  <<: *releaseBuild
+  stage: build modules
+  variables:
+    MODULE_NAME: krate-gson
+
+### Demo app build ###
+
+app debug build:
+  <<: *debugBuild
+  stage: demo app builds
+  variables:
+    MODULE_NAME: app
 
 ### Tests ###
 
