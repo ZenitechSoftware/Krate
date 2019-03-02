@@ -2,6 +2,8 @@
 
 _Krate_ is a `SharedPreferences` wrapper library that uses delegated properties for convenient access to `SharedPreferences` values.
 
+![Krate banner](./docs/krate.png)
+
 Here's what its basic usage looks like, extending the `SimpleKrate` class:
 
 ```kotlin
