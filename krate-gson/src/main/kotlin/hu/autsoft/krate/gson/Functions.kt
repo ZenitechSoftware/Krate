@@ -19,7 +19,7 @@ public inline fun <reified T : Any> Krate.gsonPref(key: String): ReadWriteProper
 
 @PublishedApi
 internal fun <T : Any> Krate.gsonPrefImpl(key: String, type: Type): ReadWriteProperty<Krate, T?> {
-    return GsonDelegate(sharedPreferences, key, type)
+    return GsonDelegate(key, type)
 }
 
 /**
@@ -32,5 +32,5 @@ public inline fun <reified T : Any> Krate.gsonPref(key: String, defaultValue: T)
 
 @PublishedApi
 internal fun <T : Any> Krate.gsonPrefImpl(key: String, defaultValue: T, type: Type): ReadWriteProperty<Krate, T> {
-    return GsonDelegateWithDefault(sharedPreferences, key, defaultValue, type)
+    return GsonDelegateWithDefault(key, defaultValue, type)
 }
