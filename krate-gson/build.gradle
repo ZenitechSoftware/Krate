@@ -37,18 +37,4 @@ ext {
     BINTRAY_VCS_URL = 'https://github.com/AutSoft/Krate'
 }
 
-apply from: "${rootProject.projectDir}/scripts/publish-common.gradle"
-apply from: "${rootProject.projectDir}/scripts/publish-artifactory.gradle"
-apply from: "${rootProject.projectDir}/scripts/publish-bintray.gradle"
-
-// Tests
-autsoft {
-    def DEFAULT_FLAVOR = ""
-    defaultFlavor = System.getenv('BUILD_FLAVOR') ? System.getenv('BUILD_FLAVOR') : DEFAULT_FLAVOR
-
-    lint = true
-    unitTest = false
-    instrumentationTest = true
-}
-
-apply plugin: 'autsoft-plugin'
+apply from: "${rootProject.projectDir}/scripts/publish-mavencentral.gradle"
