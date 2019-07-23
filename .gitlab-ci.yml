@@ -177,6 +177,5 @@ krate-gson stage to mavencentral:
 ### Release ###
 
 krate release to mavencentral:
+  <<: *releaseMavenCentral
   stage: release
-  script:
-    - ./gradlew closeAndReleaseRepository
