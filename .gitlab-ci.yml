@@ -1,4 +1,4 @@
-image: "gitlab.autsoft.hu:4567/devops/androidciimage:latest"
+image: registry.gitlab.com/hardysim/android-ci:latest
 
 ########## Global settings ##########
 
@@ -60,7 +60,7 @@ before_script:
   before_script:
     - echo UI teszt
   script:
-    - ./gradlew ${MODULE_NAME}:autsoftInstrumentationTest
+    - ./gradlew ${MODULE_NAME}:connectedDebugAndroidTest
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
