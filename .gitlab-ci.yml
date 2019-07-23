@@ -69,29 +69,15 @@ before_script:
   except:
     - tags
 
-.deployArtifactory: &deployArtifactory
+.deployMavenCentral: &deployMavenCentral
   stage: deploy
   tags:
     - docker
+  before_script:
+    - echo $GPG_KEY_CONTENTS | base64 -d > /secret.gpg
+    - ls -al /
   script:
     - ./gradlew ${MODULE_NAME}:uploadArchives
-  artifacts:
-    name: "$CI_COMMIT_REF_NAME"
-    paths:
-      - "*/build"
-    expire_in: 2 hours
-  only:
-    - /^.*-RELEASE$/
-
-.deployBintray: &deployBintray
-  stage: deploy
-  tags:
-    - docker
-  script:
-    - >
-      ./gradlew
-      ${MODULE_NAME}:generatePomFileForReleasePublication
-      ${MODULE_NAME}:bintrayUpload
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
@@ -159,29 +145,15 @@ krate-gson instrumentation test:
 
 ### Deployment ###
 
-krate deploy to artifactory:
-  <<: *deployArtifactory
+krate deploy to mavencentral:
+  <<: *deployMavenCentral
   variables:
     MODULE_NAME: krate
   dependencies:
     - krate release build
 
-krate deploy to bintray:
-  <<: *deployBintray
-  variables:
-    MODULE_NAME: krate
-  dependencies:
-    - krate release build
-
-krate-gson deploy to artifactory:
-  <<: *deployArtifactory
-  variables:
-    MODULE_NAME: krate-gson
-  dependencies:
-    - krate-gson release build
-
-krate-gson deploy to bintray:
-  <<: *deployBintray
+krate-gson deploy to mavencentral:
+  <<: *deployMavenCentral
   variables:
     MODULE_NAME: krate-gson
   dependencies:

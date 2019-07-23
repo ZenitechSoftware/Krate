@@ -35,6 +35,4 @@ ext {
     BINTRAY_VCS_URL = 'https://github.com/AutSoft/Krate'
 }
 
-apply from: "${rootProject.projectDir}/scripts/publish-common.gradle"
-apply from: "${rootProject.projectDir}/scripts/publish-artifactory.gradle"
-apply from: "${rootProject.projectDir}/scripts/publish-bintray.gradle"
+apply from: "${rootProject.projectDir}/scripts/publish-mavencentral.gradle"
