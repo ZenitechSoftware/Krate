@@ -161,14 +161,14 @@ krate-gson instrumentation test:
 ### Staging ###
 
 krate stage to mavencentral:
-  <<: *deployMavenCentral
+  <<: *stageMavenCentral
   variables:
     MODULE_NAME: krate
   dependencies:
     - krate release build
 
 krate-gson stage to mavencentral:
-  <<: *deployMavenCentral
+  <<: *stageMavenCentral
   variables:
     MODULE_NAME: krate-gson
   dependencies:
