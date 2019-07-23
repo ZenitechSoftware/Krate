@@ -30,6 +30,12 @@ if (secretPropsFile.exists()) {
     ext["ossrhPassword"] = System.getenv('OSSRH_PASSWORD')
 }
 
+nexusStaging {
+    packageGroup = "hu.autsoft"
+    username = ossrhUsername
+    password = ossrhPassword
+}
+
 uploadArchives {
     archivesBaseName = PUBLISH_ARTIFACT_ID
 
