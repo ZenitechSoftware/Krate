@@ -50,13 +50,13 @@ uploadArchives {
             pom.project {
                 name PUBLISH_ARTIFACT_ID
                 packaging 'aar'
-                description 'A modern Android architecture framework'
-                url 'https://github.com/rainbowcake/rainbowcake'
+                description 'A Kotlin SharedPreferences wrapper'
+                url 'https://github.com/autsoft/krate'
 
                 scm {
-                    connection 'scm:git:git://github.com/rainbowcake/rainbowcake.git'
-                    developerConnection 'scm:git:ssh://github.com:rainbowcake/rainbowcake.git'
-                    url 'https://github.com/rainbowcake/rainbowcake/tree/master'
+                    connection 'scm:git:github.com/autsoft/krate.git'
+                    developerConnection 'scm:git:ssh://github.com/autsoft/krate.git'
+                    url 'https://github.com/autsoft/krate/tree/master'
                 }
 
                 licenses {
@@ -68,9 +68,9 @@ uploadArchives {
 
                 developers {
                     developer {
-                        id 'zsmb13'
-                        name 'Márton Braun'
-                        email 'braunmarci@gmail.com'
+                        id 'autsoft-android-dev'
+                        name 'AutSoft Android'
+                        email 'android-dev@autsoft.hu'
                     }
                 }
             }
