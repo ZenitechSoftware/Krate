@@ -28,14 +28,3 @@ dependencies {
     implementation project(path: ':krate')
     implementation project(path: ':krate-gson')
 }
-
-autsoft {
-    def DEFAULT_FLAVOR = ""
-    defaultFlavor = System.getenv('BUILD_FLAVOR') ? System.getenv('BUILD_FLAVOR') : DEFAULT_FLAVOR
-
-    lint = true
-    unitTest = false
-    instrumentationTest = false
-}
-
-apply plugin: 'autsoft-plugin'
