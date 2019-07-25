@@ -5,14 +5,12 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        jcenter()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
         classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.0"
     }
 }
@@ -20,7 +18,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
