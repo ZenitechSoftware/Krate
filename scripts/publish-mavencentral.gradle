@@ -7,7 +7,7 @@ artifacts {
     archives androidSourcesJar
 }
 
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 group = PUBLISH_GROUP_ID
@@ -30,54 +30,73 @@ if (secretPropsFile.exists()) {
     ext["ossrhPassword"] = System.getenv('OSSRH_PASSWORD')
 }
 
-uploadArchives {
-    archivesBaseName = PUBLISH_ARTIFACT_ID
+nexusStaging {
+    packageGroup = 'hu.autsoft'
+    stagingProfileId = 'caceeedcae039c'
+    username = ossrhUsername
+    password = ossrhPassword
+}
 
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId PUBLISH_GROUP_ID
+            artifactId PUBLISH_ARTIFACT_ID
+            version PUBLISH_VERSION
+            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+            artifact androidSourcesJar
 
-//            repository(url: mavenLocal().url)
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-            pom.project {
-                name PUBLISH_ARTIFACT_ID
-                packaging 'aar'
-                description 'A Kotlin SharedPreferences wrapper'
-                url 'https://github.com/autsoft/krate'
-
-                scm {
-                    connection 'scm:git:github.com/autsoft/krate.git'
-                    developerConnection 'scm:git:ssh://github.com/autsoft/krate.git'
-                    url 'https://github.com/autsoft/krate/tree/master'
-                }
-
+            pom {
+                name = PUBLISH_ARTIFACT_ID
+                description = 'A Kotlin SharedPreferences wrapper'
+                url = 'https://github.com/autsoft/krate'
                 licenses {
                     license {
-                        name 'The Apache License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
                     }
                 }
-
                 developers {
                     developer {
-                        id 'autsoft-android-dev'
-                        name 'AutSoft Android'
-                        email 'android-dev@autsoft.hu'
+                        id = 'zsmb13'
+                        name = 'Márton Braun'
+                        email = 'braun.marton@autsoft.hu'
                     }
                 }
+                scm {
+                    connection = 'scm:git:github.com/autsoft/krate.git'
+                    developerConnection = 'scm:git:ssh://github.com/autsoft/krate.git'
+                    url = 'https://github.com/autsoft/krate/tree/master'
+                }
+                withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+
+                    project.configurations.implementation.allDependencies.each {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "sonatype"
+
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            credentials {
+                username ossrhUsername
+                password ossrhPassword
             }
         }
     }
 }
 
 signing {
-    sign configurations.archives
+    sign publishing.publications
 }

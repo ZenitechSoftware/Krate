@@ -12,7 +12,8 @@ stages:
   - build modules
   - demo app build
   - test
-  - deploy
+  - staging
+  - release
 
 before_script:
   - export GRADLE_USER_HOME=.gradle
@@ -69,15 +70,29 @@ before_script:
   except:
     - tags
 
-.deployMavenCentral: &deployMavenCentral
-  stage: deploy
+.stageMavenCentral: &stageMavenCentral
+  stage: staging
   tags:
     - docker
   before_script:
     - echo $GPG_KEY_CONTENTS | base64 -d > /secret.gpg
     - ls -al /
   script:
-    - ./gradlew ${MODULE_NAME}:uploadArchives
+    - ./gradlew ${MODULE_NAME}:publishReleasePublicationToSonatypeRepository
+  artifacts:
+    name: "$CI_COMMIT_REF_NAME"
+    paths:
+      - "*/build"
+    expire_in: 2 hours
+  only:
+    - /^.*-RELEASE$/
+
+.releaseMavenCentral: &releaseMavenCentral
+  stage: release
+  tags:
+    - docker
+  script:
+    - ./gradlew closeAndReleaseRepository
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
@@ -143,18 +158,24 @@ krate-gson instrumentation test:
   dependencies:
     - krate-gson debug build
 
-### Deployment ###
+### Staging ###
 
-krate deploy to mavencentral:
-  <<: *deployMavenCentral
+krate stage to mavencentral:
+  <<: *stageMavenCentral
   variables:
     MODULE_NAME: krate
   dependencies:
     - krate release build
 
-krate-gson deploy to mavencentral:
-  <<: *deployMavenCentral
+krate-gson stage to mavencentral:
+  <<: *stageMavenCentral
   variables:
     MODULE_NAME: krate-gson
   dependencies:
     - krate-gson release build
+
+### Release ###
+
+krate release to mavencentral:
+  <<: *releaseMavenCentral
+  stage: release
