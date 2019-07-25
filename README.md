@@ -22,10 +22,10 @@ Log.d("LOGIN_COUNT", "Count: ${settings.loginCount}")
 
 # Dependency
 
-You can include _Krate_ in your project from the `jcenter` repository, like so:
+You can include _Krate_ in your project from the `mavenCentral()` repository, like so:
 
 ```groovy
-implementation 'hu.autsoft:krate:0.1.1'
+implementation 'hu.autsoft:krate:0.1.2'
 ```
 
 # Optionals vs defaults
@@ -76,10 +76,10 @@ If you don't find support for the type you're looking for, implementing your own
 
 ### krate-gson
 
-`krate-gson` provides you a `gsonPref` delegate which can store any arbitrary type, as long as GSON can serialize and deserialize it. This addon, like the base library, is available from `jcenter`:
+`krate-gson` provides you a `gsonPref` delegate which can store any arbitrary type, as long as GSON can serialize and deserialize it. This addon, like the base library, is available from `mavenCentral()`:
 
 ```groovy
-implementation 'hu.autsoft:krate-gson:0.1.1'
+implementation 'hu.autsoft:krate-gson:0.1.2'
 ```
 
 Its basic usage is the same as with any of the base library's delegates:
