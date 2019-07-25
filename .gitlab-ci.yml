@@ -78,7 +78,7 @@ before_script:
     - echo $GPG_KEY_CONTENTS | base64 -d > /secret.gpg
     - ls -al /
   script:
-    - ./gradlew ${MODULE_NAME}:uploadArchives
+    - ./gradlew ${MODULE_NAME}:publishReleasePublicationToSonatypeRepository
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
