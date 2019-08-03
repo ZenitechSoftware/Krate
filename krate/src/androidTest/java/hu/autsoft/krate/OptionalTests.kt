@@ -103,4 +103,18 @@ class OptionalTests {
         assertEquals(null, testKrate.optionalStringSet)
     }
 
+    @Test(expected = IllegalArgumentException::class)
+    fun testOptionalStringValidatedPrefFailsValidation() {
+        assertEquals(null, testKrate.optionalValidatedString)
+
+        testKrate.optionalValidatedString = "Lorem ipsum dolor sit amet"
+    }
+
+    @Test
+    fun testOptionalStringValidatedPassesValidation() {
+        assertEquals(null, testKrate.optionalValidatedString)
+
+        testKrate.optionalValidatedString = "Lorem"
+    }
+
 }

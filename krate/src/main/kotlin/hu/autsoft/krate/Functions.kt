@@ -45,7 +45,7 @@ public fun Krate.longPref(key: String): ReadWriteProperty<Krate, Long?> {
 }
 
 /**
- * Creates an optional preference of type String with the given [key] in this [Krate] instance.
+ * Creates an optional preference of type [String] with the given [key] in this [Krate] instance.
  */
 public fun Krate.stringPref(key: String): ReadWriteProperty<Krate, String?> {
     return StringDelegate(key)
