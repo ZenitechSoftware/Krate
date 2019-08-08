@@ -2,7 +2,6 @@
 
 package hu.autsoft.krate
 
-import hu.autsoft.krate.validated.ValidatedPreferenceDelegate
 import hu.autsoft.krate.default.FloatDelegateWithDefault
 import hu.autsoft.krate.default.IntDelegateWithDefault
 import hu.autsoft.krate.default.LongDelegateWithDefault
@@ -13,6 +12,7 @@ import hu.autsoft.krate.optional.IntDelegate
 import hu.autsoft.krate.optional.LongDelegate
 import hu.autsoft.krate.optional.StringDelegate
 import hu.autsoft.krate.optional.StringSetDelegate
+import hu.autsoft.krate.validated.ValidatedPreferenceDelegate
 import kotlin.properties.ReadWriteProperty
 
 /**
@@ -31,8 +31,8 @@ public fun Krate.floatPref(key: String, isValid: (Float?) -> Boolean): ReadWrite
  * If a value being set to this preference returns `false` when checked by [isValid],
  * an [IllegalArgumentException] will be thrown.
  */
-public fun Krate.floatPref(key: String, default: Float, isValid: (Float) -> Boolean): ReadWriteProperty<Krate, Float> {
-    return ValidatedPreferenceDelegate(FloatDelegateWithDefault(key, default), isValid)
+public fun Krate.floatPref(key: String, defaultValue: Float, isValid: (Float) -> Boolean): ReadWriteProperty<Krate, Float> {
+    return ValidatedPreferenceDelegate(FloatDelegateWithDefault(key, defaultValue), isValid)
 }
 
 /**
@@ -51,8 +51,8 @@ public fun Krate.intPref(key: String, isValid: (Int?) -> Boolean): ReadWriteProp
  * If a value being set to this preference returns `false` when checked by [isValid],
  * an [IllegalArgumentException] will be thrown.
  */
-public fun Krate.intPref(key: String, default: Int, isValid: (Int) -> Boolean): ReadWriteProperty<Krate, Int> {
-    return ValidatedPreferenceDelegate(IntDelegateWithDefault(key, default), isValid)
+public fun Krate.intPref(key: String, defaultValue: Int, isValid: (Int) -> Boolean): ReadWriteProperty<Krate, Int> {
+    return ValidatedPreferenceDelegate(IntDelegateWithDefault(key, defaultValue), isValid)
 }
 
 /**
@@ -91,8 +91,8 @@ public fun Krate.stringPref(key: String, isValid: (String?) -> Boolean): ReadWri
  * If a value being set to this preference returns `false` when checked by [isValid],
  * an [IllegalArgumentException] will be thrown.
  */
-public fun Krate.stringPref(key: String, default: String, isValid: (String) -> Boolean): ReadWriteProperty<Krate, String> {
-    return ValidatedPreferenceDelegate(StringDelegateWithDefault(key, default), isValid)
+public fun Krate.stringPref(key: String, defaultValue: String, isValid: (String) -> Boolean): ReadWriteProperty<Krate, String> {
+    return ValidatedPreferenceDelegate(StringDelegateWithDefault(key, defaultValue), isValid)
 }
 
 /**
