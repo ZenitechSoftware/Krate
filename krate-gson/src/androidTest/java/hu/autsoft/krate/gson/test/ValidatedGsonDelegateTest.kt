@@ -10,7 +10,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class ValidatedTest {
+class ValidatedGsonDelegateTest {
 
     private lateinit var krate: GsonTestKrate
 
@@ -20,7 +20,7 @@ class ValidatedTest {
     }
 
     @Test
-    fun testValidValue() {
+    fun testValidNonOptionalValue() {
         val newValue = TestModel(20, 21.0, "")
 
         krate.validatedValue = newValue
@@ -29,8 +29,30 @@ class ValidatedTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun testInvalidValue() {
+    fun testInvalidNonOptionalValue() {
         krate.validatedValue = TestModel(10, 5.0, "")
+    }
+
+    @Test
+    fun testValidOptionalValue() {
+        val newValue = listOf(
+                TestModel(20, 21.0, ""),
+                TestModel(10, 5.0, "")
+        )
+
+        krate.validatedOptionalValue = newValue
+
+        assertEquals(newValue, krate.validatedOptionalValue)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun testInvalidOptionalValue() {
+        krate.validatedOptionalValue = null
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun testInvalidOptionalValue2() {
+        krate.validatedOptionalValue = emptyList()
     }
 
 }

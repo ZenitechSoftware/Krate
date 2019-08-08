@@ -33,4 +33,11 @@ class GsonTestKrate(context: Context) : SimpleKrate(context) {
             }
     )
 
+    var validatedOptionalValue: List<TestModel>? by gsonPref(
+            key = "validatedOptionalValue",
+            isValid = { newValue ->
+                newValue.isNullOrEmpty().not()
+            }
+    )
+
 }
