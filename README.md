@@ -4,7 +4,7 @@
 
 _Krate_ is a `SharedPreferences` wrapper library that uses delegated properties for convenient access to `SharedPreferences` values.
 
-Here's what its basic usage looks like, extending the `SimpleKrate` class:
+Here's what its basic usage looks like, extending the provided `SimpleKrate` class:
 
 ```kotlin
 class UserSettings(context: Context) : SimpleKrate(context) {
@@ -67,6 +67,34 @@ class ExampleCustomKrate(context: Context) : Krate {
     
 }
 ```
+
+For simple applications, your `Activity` or `Fragment` can easily serve as a `Krate` implementation:
+
+```kotlin
+class MainActivity : AppCompatActivity(), Krate {
+
+    override val sharedPreferences: SharedPreferences by lazy {
+        getPreferences(Context.MODE_PRIVATE) // Could also fetch a named or default SharedPrefs
+    }
+    
+    var username by stringPref("username", "")
+
+}
+```
+
+# Validation
+
+You can add validation rules to your Krate properties by providing an additional lambda parameter, `isValid`:
+
+```kotlin
+var percentage: Int by intPref(
+        key = "percentage",
+        defaultValue = 0,
+        isValid = { it in 0..100 }
+)
+```
+
+If this validation fails, an `IllegalArgumentException` will be thrown.
 
 # Addons
 
