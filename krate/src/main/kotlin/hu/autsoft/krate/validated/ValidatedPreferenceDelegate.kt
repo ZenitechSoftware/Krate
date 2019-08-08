@@ -13,7 +13,7 @@ import kotlin.reflect.KProperty
  */
 class ValidatedPreferenceDelegate<T>(
         private val delegate: ReadWriteProperty<Krate, T>,
-        private val isValid: (T) -> Boolean
+        private val isValid: (newValue: T) -> Boolean
 ) : ReadWriteProperty<Krate, T> by delegate {
 
     override operator fun setValue(thisRef: Krate, property: KProperty<*>, value: T) {
