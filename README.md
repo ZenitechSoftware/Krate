@@ -4,7 +4,7 @@
 
 _Krate_ is a `SharedPreferences` wrapper library that uses delegated properties for convenient access to `SharedPreferences` values.
 
-Here's what its basic usage looks like, extending the `SimpleKrate` class:
+Here's what its basic usage looks like, extending the provided `SimpleKrate` class:
 
 ```kotlin
 class UserSettings(context: Context) : SimpleKrate(context) {
@@ -25,7 +25,7 @@ Log.d("LOGIN_COUNT", "Count: ${settings.loginCount}")
 You can include _Krate_ in your project from the `mavenCentral()` repository, like so:
 
 ```groovy
-implementation 'hu.autsoft:krate:0.1.2'
+implementation 'hu.autsoft:krate:0.2.0'
 ```
 
 # Optionals vs defaults
@@ -68,6 +68,34 @@ class ExampleCustomKrate(context: Context) : Krate {
 }
 ```
 
+For simple applications, your `Activity` or `Fragment` can easily serve as a `Krate` implementation:
+
+```kotlin
+class MainActivity : AppCompatActivity(), Krate {
+
+    override val sharedPreferences: SharedPreferences by lazy {
+        getPreferences(Context.MODE_PRIVATE) // Could also fetch a named or default SharedPrefs
+    }
+    
+    var username by stringPref("username", "")
+
+}
+```
+
+# Validation
+
+You can add validation rules to your Krate properties by providing an additional lambda parameter, `isValid`:
+
+```kotlin
+var percentage: Int by intPref(
+        key = "percentage",
+        defaultValue = 0,
+        isValid = { it in 0..100 }
+)
+```
+
+If this validation fails, an `IllegalArgumentException` will be thrown.
+
 # Addons
 
 Krate, by default, supports the types that `SharedPreferences` supports. These are `Boolean`, `Float`, `Int`, `Long`, `String` and `Set<String>`. You may of course want to store additional types in Krate. For some common types, addon libraries are available, as described below.
@@ -79,7 +107,7 @@ If you don't find support for the type you're looking for, implementing your own
 `krate-gson` provides you a `gsonPref` delegate which can store any arbitrary type, as long as GSON can serialize and deserialize it. This addon, like the base library, is available from `mavenCentral()`:
 
 ```groovy
-implementation 'hu.autsoft:krate-gson:0.1.2'
+implementation 'hu.autsoft:krate-gson:0.2.0'
 ```
 
 Its basic usage is the same as with any of the base library's delegates:

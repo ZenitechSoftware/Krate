@@ -13,6 +13,12 @@ apply plugin: 'signing'
 group = PUBLISH_GROUP_ID
 version = PUBLISH_VERSION
 
+ext["signing.keyId"] = ''
+ext["signing.password"] = ''
+ext["signing.secretKeyRingFile"] = ''
+ext["ossrhUsername"] = ''
+ext["ossrhPassword"] = ''
+
 File secretPropsFile = project.rootProject.file('local.properties')
 if (secretPropsFile.exists()) {
     println "Found secret props file, loading props"
@@ -31,7 +37,7 @@ if (secretPropsFile.exists()) {
 }
 
 nexusStaging {
-    packageGroup = 'hu.autsoft'
+    packageGroup = PUBLISH_GROUP_ID
     stagingProfileId = 'caceeedcae039c'
     username = ossrhUsername
     password = ossrhPassword
