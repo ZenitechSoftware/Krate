@@ -4,7 +4,7 @@ package hu.autsoft.krate
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 
 
 /**
