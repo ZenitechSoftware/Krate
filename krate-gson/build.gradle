@@ -8,7 +8,7 @@ android {
         minSdkVersion min_sdk
         targetSdkVersion target_sdk
         versionName krate_version
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     sourceSets {
@@ -22,8 +22,8 @@ dependencies {
     api 'com.google.code.gson:gson:2.8.5'
 
     androidTestImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
 }
 
 // Publishing

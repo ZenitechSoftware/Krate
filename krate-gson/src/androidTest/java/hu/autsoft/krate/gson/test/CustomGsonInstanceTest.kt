@@ -1,7 +1,7 @@
 package hu.autsoft.krate.gson.test
 
-import android.support.test.InstrumentationRegistry.getTargetContext
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.google.gson.GsonBuilder
 import hu.autsoft.krate.Krate
 import hu.autsoft.krate.SimpleKrate
@@ -20,7 +20,7 @@ class CustomGsonInstanceTest {
 
     @Before
     fun setup() {
-        krate = object : SimpleKrate(getTargetContext()) {}
+        krate = object : SimpleKrate(InstrumentationRegistry.getInstrumentation().targetContext) {}
     }
 
     @Test

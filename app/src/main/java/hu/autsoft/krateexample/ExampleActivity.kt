@@ -1,7 +1,7 @@
 package hu.autsoft.krateexample
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import hu.autsoft.krateexample.krates.ExampleCustomKrate
 import hu.autsoft.krateexample.krates.ExampleSettings
 import hu.autsoft.krateexample.krates.ExampleSimpleKrate

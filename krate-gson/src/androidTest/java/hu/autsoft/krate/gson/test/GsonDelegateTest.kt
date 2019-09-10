@@ -1,7 +1,7 @@
 package hu.autsoft.krate.gson.test
 
-import android.support.test.InstrumentationRegistry.getTargetContext
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import hu.autsoft.krate.gson.GsonTestKrate
 import hu.autsoft.krate.gson.TestModel
 import org.junit.Assert.assertEquals
@@ -16,7 +16,7 @@ class GsonDelegateTest {
 
     @Before
     fun setup() {
-        krate = GsonTestKrate(getTargetContext())
+        krate = GsonTestKrate(InstrumentationRegistry.getInstrumentation().targetContext)
     }
 
     @Test
