@@ -17,9 +17,7 @@ class ValidatedPreferenceDelegate<T>(
 ) : ReadWriteProperty<Krate, T> by delegate {
 
     override operator fun setValue(thisRef: Krate, property: KProperty<*>, value: T) {
-        if (!isValid(value)) {
-            throw IllegalArgumentException("$value is not valid for ${property.name}.")
-        }
+        require(isValid(value)) { "$value is not valid for ${property.name}." }
 
         delegate.setValue(thisRef, property, value)
     }
