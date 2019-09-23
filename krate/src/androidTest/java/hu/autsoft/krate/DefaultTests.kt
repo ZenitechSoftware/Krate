@@ -1,7 +1,6 @@
 package hu.autsoft.krate
 
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -14,8 +13,7 @@ class DefaultTests {
 
     @Before
     fun setup() {
-        val appContext = InstrumentationRegistry.getTargetContext()
-        testKrate = TestKrate(appContext)
+        testKrate = TestKrate(targetContext)
     }
 
     @Test
