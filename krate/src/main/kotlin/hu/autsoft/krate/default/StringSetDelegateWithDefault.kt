@@ -12,7 +12,7 @@ internal class StringSetDelegateWithDefault(
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): Set<String> {
-        return thisRef.sharedPreferences.getStringSet(key, default)
+        return thisRef.sharedPreferences.getStringSet(key, default)!!
     }
 
     override operator fun setValue(thisRef: Krate, property: KProperty<*>, value: Set<String>) {
