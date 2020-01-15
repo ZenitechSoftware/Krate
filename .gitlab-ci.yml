@@ -8,9 +8,7 @@ cache:
     - .android/build-cache/
 
 stages:
-  - build base library
-  - build modules
-  - demo app build
+  - build
   - test
   - staging
   - release
@@ -24,6 +22,7 @@ before_script:
 ########## Job templates ##########
 
 debug build:
+  stage: build
   tags:
     - docker
   script:
@@ -38,6 +37,7 @@ debug build:
     - tags
 
 release build:
+  stage: build
   tags:
     - docker
   script:
