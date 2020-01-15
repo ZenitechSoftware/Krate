@@ -1,0 +1,39 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion compile_sdk
+
+    defaultConfig {
+        minSdkVersion min_sdk
+        targetSdkVersion target_sdk
+        versionName krate_version
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+dependencies {
+    implementation project(':krate')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    compileOnly project(':krate-moshi-stub')
+
+    api "com.squareup.moshi:moshi:$moshi_version"
+
+    androidTestImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+}
+
+// Publishing
+ext {
+    PUBLISH_GROUP_ID = 'hu.autsoft'
+    PUBLISH_ARTIFACT_ID = 'krate-moshi-core'
+    PUBLISH_VERSION = android.defaultConfig.versionName
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-mavencentral.gradle"
