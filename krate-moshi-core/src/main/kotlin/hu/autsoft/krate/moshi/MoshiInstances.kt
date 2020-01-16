@@ -19,7 +19,7 @@ internal val moshiInstances: MutableMap<Krate, Moshi> = mutableMapOf<Krate, Mosh
  *
  * If you want to set a custom Moshi instance, see the [moshi] property.
  */
-val Krate.moshiInstance: Moshi
+val Krate.realMoshiInstance: Moshi
     get() = moshiInstances.getValue(this)
 
 /**

@@ -7,7 +7,7 @@ import hu.autsoft.krate.Krate
 import hu.autsoft.krate.SimpleKrate
 import hu.autsoft.krate.moshi.defaultMoshi
 import hu.autsoft.krate.moshi.moshi
-import hu.autsoft.krate.moshi.moshiInstance
+import hu.autsoft.krate.moshi.realMoshiInstance
 import hu.autsoft.krate.moshi.util.targetContext
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -26,7 +26,7 @@ class CustomMoshiInstanceTest {
 
     @Test
     fun testDefaultMoshiInstanceInternal() {
-        assertEquals(defaultMoshi, krate.moshiInstance)
+        assertEquals(defaultMoshi, krate.realMoshiInstance)
     }
 
     @Test
@@ -35,21 +35,21 @@ class CustomMoshiInstanceTest {
 
         krate.moshi = customMoshi
 
-        assertEquals(customMoshi, krate.moshiInstance)
+        assertEquals(customMoshi, krate.realMoshiInstance)
     }
 
     @Test
     fun testMultipleMoshiInstancesInternal() {
         val customMoshi = createCustomTestMoshi()
         krate.moshi = customMoshi
-        assertEquals(customMoshi, krate.moshiInstance)
+        assertEquals(customMoshi, krate.realMoshiInstance)
 
         val customMoshi2 = createCustomTestMoshi()
         krate.moshi = customMoshi2
-        assertEquals(customMoshi2, krate.moshiInstance)
+        assertEquals(customMoshi2, krate.realMoshiInstance)
 
         krate.moshi = null
-        assertEquals(defaultMoshi, krate.moshiInstance)
+        assertEquals(defaultMoshi, krate.realMoshiInstance)
     }
 
     @Test

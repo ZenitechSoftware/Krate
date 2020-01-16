@@ -1,7 +1,7 @@
 package hu.autsoft.krate.moshi.optional
 
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.moshi.moshiInstance
+import hu.autsoft.krate.moshi.realMoshiInstance
 import hu.autsoft.krate.moshi.util.edit
 import java.lang.reflect.Type
 import kotlin.properties.ReadWriteProperty
@@ -18,7 +18,7 @@ internal class MoshiDelegate<T : Any>(
             null
         } else {
             val string = requireNotNull(thisRef.sharedPreferences.getString(key, null))
-            val adapter = thisRef.moshiInstance.adapter<T?>(type)
+            val adapter = thisRef.realMoshiInstance.adapter<T?>(type)
             adapter.fromJson(string)
         }
     }
@@ -30,7 +30,7 @@ internal class MoshiDelegate<T : Any>(
             }
         } else {
             thisRef.sharedPreferences.edit {
-                val adapter = thisRef.moshiInstance.adapter<T?>(type)
+                val adapter = thisRef.realMoshiInstance.adapter<T?>(type)
                 putString(key, adapter.toJson(value))
             }
         }

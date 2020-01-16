@@ -1,7 +1,7 @@
 package hu.autsoft.krate.moshi.default
 
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.moshi.moshiInstance
+import hu.autsoft.krate.moshi.realMoshiInstance
 import hu.autsoft.krate.moshi.util.edit
 import java.lang.reflect.Type
 import kotlin.properties.ReadWriteProperty
@@ -20,13 +20,13 @@ internal class MoshiDelegateWithDefault<T : Any>(
         }
 
         val string = requireNotNull(thisRef.sharedPreferences.getString(key, null))
-        val adapter = thisRef.moshiInstance.adapter<T>(type)
+        val adapter = thisRef.realMoshiInstance.adapter<T>(type)
         return requireNotNull(adapter.fromJson(string))
     }
 
     override operator fun setValue(thisRef: Krate, property: KProperty<*>, value: T) {
         thisRef.sharedPreferences.edit {
-            val adapter = thisRef.moshiInstance.adapter<T>(type)
+            val adapter = thisRef.realMoshiInstance.adapter<T>(type)
             putString(key, adapter.toJson(value))
         }
     }
