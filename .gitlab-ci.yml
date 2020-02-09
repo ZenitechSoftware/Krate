@@ -8,9 +8,7 @@ cache:
     - .android/build-cache/
 
 stages:
-  - build base library
-  - build modules
-  - demo app build
+  - build
   - test
   - staging
   - release
@@ -23,13 +21,13 @@ before_script:
 
 ########## Job templates ##########
 
-.debugBuild: &debugBuild
+debug build:
+  stage: build
   tags:
     - docker
   script:
     - >
-      ./gradlew
-      ${MODULE_NAME}:assembleDebug
+      ./gradlew assembleDebug
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
@@ -38,14 +36,25 @@ before_script:
   except:
     - tags
 
-.releaseBuild: &releaseBuild
+release build:
+  stage: build
   tags:
     - docker
   script:
     - >
       ./gradlew
-      ${MODULE_NAME}:assembleRelease
-      ${MODULE_NAME}:androidSourcesJar
+      krate:assembleRelease
+      krate-gson:assembleRelease
+      krate-moshi-stub:assembleRelease
+      krate-moshi-core:assembleRelease
+      krate-moshi-reflect:assembleRelease
+      krate-moshi-codegen:assembleRelease
+      krate:androidSourcesJar
+      krate-gson:androidSourcesJar
+      krate-moshi-stub:androidSourcesJar
+      krate-moshi-core:androidSourcesJar
+      krate-moshi-reflect:androidSourcesJar
+      krate-moshi-codegen:androidSourcesJar
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
@@ -54,14 +63,14 @@ before_script:
   only:
     - /^.*-RELEASE$/
 
-.instrumentationTest: &instrumentationTest
+instrumentation test:
   stage: test
   tags:
     - android
   before_script:
     - echo UI teszt
   script:
-    - ./gradlew ${MODULE_NAME}:connectedDebugAndroidTest
+    - ./gradlew connectedDebugAndroidTest
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
@@ -69,8 +78,10 @@ before_script:
     expire_in: 2 hours
   except:
     - tags
+  dependencies:
+    - debug build
 
-.stageMavenCentral: &stageMavenCentral
+stage to MavenCentral:
   stage: staging
   tags:
     - docker
@@ -78,7 +89,7 @@ before_script:
     - echo $GPG_KEY_CONTENTS | base64 -d > /secret.gpg
     - ls -al /
   script:
-    - ./gradlew ${MODULE_NAME}:publishReleasePublicationToSonatypeRepository
+    - ./gradlew publishReleasePublicationToSonatypeRepository
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
@@ -86,8 +97,10 @@ before_script:
     expire_in: 2 hours
   only:
     - /^.*-RELEASE$/
+  dependencies:
+    - release build
 
-.releaseMavenCentral: &releaseMavenCentral
+release to MavenCentral:
   stage: release
   tags:
     - docker
@@ -100,81 +113,3 @@ before_script:
     expire_in: 2 hours
   only:
     - /^.*-RELEASE$/
-
-########## Concrete jobs ##########
-
-### Base library build ###
-
-krate debug build:
-  <<: *debugBuild
-  stage: build base library
-  variables:
-    MODULE_NAME: krate
-
-krate release build:
-  <<: *releaseBuild
-  stage: build base library
-  variables:
-    MODULE_NAME: krate
-
-### Module library builds ###
-
-krate-gson debug build:
-  <<: *debugBuild
-  stage: build modules
-  variables:
-    MODULE_NAME: krate-gson
-
-krate-gson release build:
-  <<: *releaseBuild
-  stage: build modules
-  variables:
-    MODULE_NAME: krate-gson
-
-### Demo app build ###
-
-app debug build:
-  <<: *debugBuild
-  stage: demo app build
-  variables:
-    MODULE_NAME: app
-  dependencies:
-    - krate debug build
-    - krate-gson debug build
-
-### Tests ###
-
-krate instrumentation test:
-  <<: *instrumentationTest
-  variables:
-    MODULE_NAME: krate
-  dependencies:
-    - krate debug build
-
-krate-gson instrumentation test:
-  <<: *instrumentationTest
-  variables:
-    MODULE_NAME: krate-gson
-  dependencies:
-    - krate-gson debug build
-
-### Staging ###
-
-krate stage to mavencentral:
-  <<: *stageMavenCentral
-  variables:
-    MODULE_NAME: krate
-  dependencies:
-    - krate release build
-
-krate-gson stage to mavencentral:
-  <<: *stageMavenCentral
-  variables:
-    MODULE_NAME: krate-gson
-  dependencies:
-    - krate-gson release build
-
-### Release ###
-
-release all to mavencentral:
-  <<: *releaseMavenCentral

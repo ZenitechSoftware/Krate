@@ -19,16 +19,16 @@ android {
 dependencies {
     implementation project(':krate')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    api 'com.google.code.gson:gson:2.8.5'
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.robolectric:robolectric:4.3.1'
+    compileOnly project(':krate-moshi-stub')
+
+    api "com.squareup.moshi:moshi:$moshi_version"
 }
 
 // Publishing
 ext {
     PUBLISH_GROUP_ID = 'hu.autsoft'
-    PUBLISH_ARTIFACT_ID = 'krate-gson'
+    PUBLISH_ARTIFACT_ID = 'krate-moshi-core'
     PUBLISH_VERSION = android.defaultConfig.versionName
 }
 
