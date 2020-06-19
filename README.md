@@ -1,6 +1,6 @@
 # Krate
 
-[![Build Status](https://app.bitrise.io/app/40d6bd22db4cfda8/status.svg?token=0neqv73n3TXp9F0nNxj_rA&branch=master)](https://app.bitrise.io/app/40d6bd22db4cfda8)
+[![Build Status](https://app.bitrise.io/app/40d6bd22db4cfda8/status.svg?token=0neqv73n3TXp9F0nNxj_rA&branch=main)](https://app.bitrise.io/app/40d6bd22db4cfda8)
 
 ![Krate banner](./docs/krate.png)
 
