@@ -72,7 +72,7 @@ publishing {
                 scm {
                     connection = 'scm:git:github.com/autsoft/krate.git'
                     developerConnection = 'scm:git:ssh://github.com/autsoft/krate.git'
-                    url = 'https://github.com/autsoft/krate/tree/master'
+                    url = 'https://github.com/autsoft/krate/tree/main'
                 }
                 withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
