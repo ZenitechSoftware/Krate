@@ -25,7 +25,7 @@ dependencies {
     api "com.squareup.moshi:moshi:$moshi_version"
     kaptTest "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:$junit_version"
     testImplementation 'org.robolectric:robolectric:4.3.1'
 }
 
