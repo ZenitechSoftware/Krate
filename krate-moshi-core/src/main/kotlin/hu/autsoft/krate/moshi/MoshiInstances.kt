@@ -14,12 +14,12 @@ internal val moshiInstances: MutableMap<Krate, Moshi> = mutableMapOf<Krate, Mosh
 /**
  * This read-only property fetches the Moshi instance used for serialization with this given Krate.
  *
- * This will always return a Moshi instance, if no custom one is set, it will return the default
+ * This will always return a Moshi instance. If no custom one is set, it will return the default
  * instance that's being used internally.
  *
  * If you want to set a custom Moshi instance, see the [moshi] property.
  */
-val Krate.realMoshiInstance: Moshi
+public val Krate.realMoshiInstance: Moshi
     get() = moshiInstances.getValue(this)
 
 /**
@@ -29,7 +29,7 @@ val Krate.realMoshiInstance: Moshi
  *
  * Set to null to use the default instance.
  */
-var Krate.moshi: Moshi?
+public var Krate.moshi: Moshi?
     set(value) {
         if (value != null) {
             moshiInstances[this] = value

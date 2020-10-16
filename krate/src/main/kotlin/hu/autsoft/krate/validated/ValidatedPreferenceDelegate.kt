@@ -11,7 +11,7 @@ import kotlin.reflect.KProperty
  * @param [delegate] the [ReadWriteProperty] implementation that is used for delegation
  * @param [isValid] the lambda used to validate property values on [setValue]
  */
-class ValidatedPreferenceDelegate<T>(
+public class ValidatedPreferenceDelegate<T>(
         private val delegate: ReadWriteProperty<Krate, T>,
         private val isValid: (newValue: T) -> Boolean
 ) : ReadWriteProperty<Krate, T> by delegate {

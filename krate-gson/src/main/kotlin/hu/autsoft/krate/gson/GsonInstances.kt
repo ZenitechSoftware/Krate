@@ -15,7 +15,7 @@ internal inline val Krate.internalGson: Gson
  *
  * Set to null to use the default instance.
  */
-var Krate.gson: Gson?
+public var Krate.gson: Gson?
     set(value) {
         if (value != null) {
             gsonInstances[this] = value

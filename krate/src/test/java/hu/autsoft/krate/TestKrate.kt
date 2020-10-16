@@ -2,7 +2,7 @@ package hu.autsoft.krate
 
 import android.content.Context
 
-class TestKrate(context: Context) : SimpleKrate(context) {
+internal class TestKrate(context: Context) : SimpleKrate(context) {
 
     init {
         sharedPreferences.edit().clear().commit()
