@@ -1,4 +1,4 @@
-@file:Suppress("RedundantVisibilityModifier", "unused")
+@file:Suppress("unused")
 
 package hu.autsoft.krate
 

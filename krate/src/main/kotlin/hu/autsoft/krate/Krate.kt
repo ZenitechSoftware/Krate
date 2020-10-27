@@ -1,5 +1,3 @@
-@file:Suppress("RedundantVisibilityModifier")
-
 package hu.autsoft.krate
 
 import android.content.SharedPreferences
