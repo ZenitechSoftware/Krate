@@ -1,4 +1,4 @@
-@file:Suppress("unused")
+@file:[Suppress("unused") OptIn(InternalKrateApi::class)]
 
 package hu.autsoft.krate.gson
 
@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken
 import hu.autsoft.krate.Krate
 import hu.autsoft.krate.gson.default.GsonDelegateWithDefault
 import hu.autsoft.krate.gson.optional.GsonDelegate
+import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.validated.ValidatedPreferenceDelegate
 import java.lang.reflect.Type
 import kotlin.properties.ReadWriteProperty

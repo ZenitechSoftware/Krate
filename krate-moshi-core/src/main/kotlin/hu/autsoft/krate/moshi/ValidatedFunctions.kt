@@ -1,8 +1,9 @@
-@file:Suppress("unused")
+@file:[Suppress("unused") OptIn(InternalKrateApi::class)]
 
 package hu.autsoft.krate.moshi
 
 import hu.autsoft.krate.Krate
+import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.moshi.default.MoshiDelegateWithDefault
 import hu.autsoft.krate.moshi.optional.MoshiDelegate
 import hu.autsoft.krate.validated.ValidatedPreferenceDelegate
