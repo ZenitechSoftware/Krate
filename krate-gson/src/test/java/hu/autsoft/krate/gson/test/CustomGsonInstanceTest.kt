@@ -14,7 +14,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-class CustomGsonInstanceTest {
+internal class CustomGsonInstanceTest {
 
     private lateinit var krate: Krate
 

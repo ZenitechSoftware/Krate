@@ -8,7 +8,7 @@ import org.robolectric.RobolectricTestRunner
 
 
 @RunWith(RobolectricTestRunner::class)
-class OptionalTests {
+internal class OptionalTests {
 
     private lateinit var testKrate: TestKrate
 

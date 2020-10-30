@@ -16,6 +16,15 @@ android {
     }
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        freeCompilerArgs += [
+                '-progressive',
+                '-Xexplicit-api=strict',
+        ]
+    }
+}
+
 dependencies {
     implementation project(':krate')
     api project(':krate-moshi-core')
@@ -24,7 +33,7 @@ dependencies {
     api "com.squareup.moshi:moshi:$moshi_version"
     api "com.squareup.moshi:moshi-kotlin:$moshi_version"
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:$junit_version"
     testImplementation 'org.robolectric:robolectric:4.3.1'
 }
 
