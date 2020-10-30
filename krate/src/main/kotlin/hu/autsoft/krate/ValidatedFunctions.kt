@@ -1,4 +1,4 @@
-@file:Suppress("RedundantVisibilityModifier", "unused")
+@file:[Suppress("unused") OptIn(InternalKrateApi::class)]
 
 package hu.autsoft.krate
 
@@ -7,6 +7,7 @@ import hu.autsoft.krate.default.IntDelegateWithDefault
 import hu.autsoft.krate.default.LongDelegateWithDefault
 import hu.autsoft.krate.default.StringDelegateWithDefault
 import hu.autsoft.krate.default.StringSetDelegateWithDefault
+import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.optional.FloatDelegate
 import hu.autsoft.krate.optional.IntDelegate
 import hu.autsoft.krate.optional.LongDelegate

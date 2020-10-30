@@ -16,12 +16,22 @@ android {
     }
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        freeCompilerArgs += [
+                '-progressive',
+                '-Xexplicit-api=strict',
+                '-Xopt-in=kotlin.RequiresOptIn',
+        ]
+    }
+}
+
 dependencies {
     implementation project(':krate')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api 'com.google.code.gson:gson:2.8.5'
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:$junit_version"
     testImplementation 'org.robolectric:robolectric:4.3.1'
 }
 

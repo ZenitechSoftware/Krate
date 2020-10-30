@@ -84,6 +84,25 @@ class MainActivity : AppCompatActivity(), Krate {
 }
 ```
 
+### Third party implementations
+
+You can create the `SharedPreferences` instance to implement Krate's interface by using third party `SharedPreferences` implementations as well. For example, [EncryptedSharedPreferences](https://developer.android.com/reference/androidx/security/crypto/EncryptedSharedPreferences) or [Harmony](https://github.com/pablobaxter/Harmony) are such implementations.
+
+Here's how you'd use EncryptedSharedPreferences with Krate ([see this source file for the full code](hu/autsoft/krateexample/krates/ExampleThirdPartyKrates.kt)):
+
+```kotlin
+class EncryptedKrate(applicationContext: Context) : Krate {
+    override val sharedPreferences: SharedPreferences
+
+    init {
+        /* ... */
+        sharedPreferences = EncryptedSharedPreferences.create(applicationContext, ...)
+    }
+
+    val myStringValue: String by stringPref("my_string_value", "")
+}
+```
+
 # Validation
 
 You can add validation rules to your Krate properties by providing an additional lambda parameter, `isValid`:

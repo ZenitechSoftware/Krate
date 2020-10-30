@@ -4,7 +4,7 @@ import android.content.Context
 import hu.autsoft.krate.SimpleKrate
 
 
-class GsonTestKrate(context: Context) : SimpleKrate(context) {
+internal class GsonTestKrate(context: Context) : SimpleKrate(context) {
 
     init {
         sharedPreferences.edit().clear().commit()
