@@ -12,7 +12,7 @@ import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
 /**
- * Creates an validated, optional preference of type T with the given [key] in this [Krate] instance.
+ * Creates a validated, optional preference of type T with the given [key] in this [Krate] instance.
  * This value will be serialized using kotlinx.serialization.
  */
 @OptIn(ExperimentalStdlibApi::class)

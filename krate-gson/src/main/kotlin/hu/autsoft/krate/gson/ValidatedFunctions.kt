@@ -12,7 +12,7 @@ import java.lang.reflect.Type
 import kotlin.properties.ReadWriteProperty
 
 /**
- * Creates an validated, optional preference of type T with the given [key] in this [Krate] instance.
+ * Creates a validated, optional preference of type T with the given [key] in this [Krate] instance.
  * This value will be serialized using Gson.
  */
 public inline fun <reified T : Any> Krate.gsonPref(
