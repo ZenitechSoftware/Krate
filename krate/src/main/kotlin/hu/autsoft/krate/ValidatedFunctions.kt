@@ -13,7 +13,7 @@ import hu.autsoft.krate.optional.IntDelegate
 import hu.autsoft.krate.optional.LongDelegate
 import hu.autsoft.krate.optional.StringDelegate
 import hu.autsoft.krate.optional.StringSetDelegate
-import hu.autsoft.krate.validated.ValidatedPreferenceDelegate
+import hu.autsoft.krate.validation.ValidatedPreferenceDelegate
 import kotlin.properties.ReadWriteProperty
 
 /**

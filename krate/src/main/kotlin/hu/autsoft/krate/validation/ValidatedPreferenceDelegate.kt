@@ -1,4 +1,4 @@
-package hu.autsoft.krate.validated
+package hu.autsoft.krate.validation
 
 import hu.autsoft.krate.Krate
 import hu.autsoft.krate.internal.InternalKrateApi
@@ -15,7 +15,7 @@ import kotlin.reflect.KProperty
 @InternalKrateApi
 public class ValidatedPreferenceDelegate<T>(
         private val delegate: ReadWriteProperty<Krate, T>,
-        private val isValid: (newValue: T) -> Boolean
+        private val isValid: (newValue: T) -> Boolean,
 ) : ReadWriteProperty<Krate, T> by delegate {
 
     override operator fun setValue(thisRef: Krate, property: KProperty<*>, value: T) {
@@ -24,4 +24,26 @@ public class ValidatedPreferenceDelegate<T>(
         delegate.setValue(thisRef, property, value)
     }
 
+}
+
+/**
+ * Adds validation to a Krate delegate.
+ *
+ * If a value being set to this preference returns `false` when checked by [isValid],
+ * an [IllegalArgumentException] will be thrown.
+ *
+ * Example property using this function for validation:
+ *
+ * ```kotlin
+ * var validatedString by stringPref("validatedString", "default")
+ *      .validate { newValue ->
+ *          newValue.length > 3 // arbitrary condition
+ *      }
+ * ```
+ */
+public fun <T : Any?> ReadWriteProperty<Krate, T>.validate(
+        isValid: (newValue: T) -> Boolean,
+): ReadWriteProperty<Krate, T> {
+    @OptIn(InternalKrateApi::class)
+    return ValidatedPreferenceDelegate(this, isValid)
 }

@@ -7,7 +7,7 @@ import hu.autsoft.krate.Krate
 import hu.autsoft.krate.gson.default.GsonDelegateWithDefault
 import hu.autsoft.krate.gson.optional.GsonDelegate
 import hu.autsoft.krate.internal.InternalKrateApi
-import hu.autsoft.krate.validated.ValidatedPreferenceDelegate
+import hu.autsoft.krate.validation.ValidatedPreferenceDelegate
 import java.lang.reflect.Type
 import kotlin.properties.ReadWriteProperty
 

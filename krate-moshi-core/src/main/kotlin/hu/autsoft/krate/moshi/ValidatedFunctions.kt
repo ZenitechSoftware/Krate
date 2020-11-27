@@ -6,7 +6,7 @@ import hu.autsoft.krate.Krate
 import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.moshi.default.MoshiDelegateWithDefault
 import hu.autsoft.krate.moshi.optional.MoshiDelegate
-import hu.autsoft.krate.validated.ValidatedPreferenceDelegate
+import hu.autsoft.krate.validation.ValidatedPreferenceDelegate
 import java.lang.reflect.Type
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.javaType

@@ -6,7 +6,7 @@ import hu.autsoft.krate.Krate
 import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.kotlinx.default.KotlinxDelegateWithDefault
 import hu.autsoft.krate.kotlinx.optional.KotlinxDelegate
-import hu.autsoft.krate.validated.ValidatedPreferenceDelegate
+import hu.autsoft.krate.validation.ValidatedPreferenceDelegate
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
