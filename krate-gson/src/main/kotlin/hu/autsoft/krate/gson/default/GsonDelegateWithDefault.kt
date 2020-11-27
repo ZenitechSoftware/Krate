@@ -11,7 +11,7 @@ import kotlin.reflect.KProperty
 internal class GsonDelegateWithDefault<T : Any>(
         private val key: String,
         private val default: T,
-        private val type: Type
+        private val type: Type,
 ) : ReadWriteProperty<Krate, T> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): T {

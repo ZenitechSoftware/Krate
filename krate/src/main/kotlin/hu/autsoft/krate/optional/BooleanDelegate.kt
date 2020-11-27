@@ -6,7 +6,7 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 internal class BooleanDelegate(
-        private val key: String
+        private val key: String,
 ) : ReadWriteProperty<Krate, Boolean?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): Boolean? {

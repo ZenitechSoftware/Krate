@@ -13,7 +13,7 @@ import kotlin.reflect.KType
 internal class KotlinxDelegateWithDefault<T : Any>(
         private val key: String,
         private val default: T,
-        private val type: KType
+        private val type: KType,
 ) : ReadWriteProperty<Krate, T> {
 
     @Suppress("UNCHECKED_CAST")

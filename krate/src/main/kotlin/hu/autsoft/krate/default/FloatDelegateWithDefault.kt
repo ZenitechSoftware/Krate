@@ -7,7 +7,7 @@ import kotlin.reflect.KProperty
 
 internal class FloatDelegateWithDefault(
         private val key: String,
-        private val default: Float
+        private val default: Float,
 ) : ReadWriteProperty<Krate, Float> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): Float {

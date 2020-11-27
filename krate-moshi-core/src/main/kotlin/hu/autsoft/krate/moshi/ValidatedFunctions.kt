@@ -27,7 +27,7 @@ import kotlin.reflect.typeOf
 )
 public inline fun <reified T : Any> Krate.moshiPref(
         key: String,
-        noinline isValid: (newValue: T?) -> Boolean
+        noinline isValid: (newValue: T?) -> Boolean,
 ): ReadWriteProperty<Krate, T?> {
     return moshiPrefImpl(key, typeOf<T>().javaType, isValid)
 }
@@ -68,7 +68,7 @@ internal fun <T : Any> Krate.moshiPrefImpl(
         key: String,
         defaultValue: T,
         type: Type,
-        isValid: (newValue: T) -> Boolean
+        isValid: (newValue: T) -> Boolean,
 ): ReadWriteProperty<Krate, T> {
     return ValidatedPreferenceDelegate(MoshiDelegateWithDefault(key, defaultValue, type), isValid)
 }

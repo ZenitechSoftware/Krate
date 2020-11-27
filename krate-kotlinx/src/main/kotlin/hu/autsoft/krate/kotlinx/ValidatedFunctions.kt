@@ -26,7 +26,7 @@ import kotlin.reflect.typeOf
 )
 public inline fun <reified T : Any> Krate.kotlinxPref(
         key: String,
-        noinline isValid: (newValue: T?) -> Boolean
+        noinline isValid: (newValue: T?) -> Boolean,
 ): ReadWriteProperty<Krate, T?> {
     return kotlinxPrefImpl(key, typeOf<T>(), isValid)
 }
@@ -35,7 +35,7 @@ public inline fun <reified T : Any> Krate.kotlinxPref(
 internal fun <T : Any> Krate.kotlinxPrefImpl(
         key: String,
         type: KType,
-        isValid: (newValue: T?) -> Boolean
+        isValid: (newValue: T?) -> Boolean,
 ): ReadWriteProperty<Krate, T?> {
     return ValidatedPreferenceDelegate(KotlinxDelegate(key, type), isValid)
 }
@@ -57,7 +57,7 @@ internal fun <T : Any> Krate.kotlinxPrefImpl(
 public inline fun <reified T : Any> Krate.kotlinxPref(
         key: String,
         defaultValue: T,
-        noinline isValid: (newValue: T) -> Boolean
+        noinline isValid: (newValue: T) -> Boolean,
 ): ReadWriteProperty<Krate, T> {
     return kotlinxPrefImpl(key, defaultValue, typeOf<T>(), isValid)
 }
@@ -67,7 +67,7 @@ internal fun <T : Any> Krate.kotlinxPrefImpl(
         key: String,
         defaultValue: T,
         type: KType,
-        isValid: (newValue: T) -> Boolean
+        isValid: (newValue: T) -> Boolean,
 ): ReadWriteProperty<Krate, T> {
     return ValidatedPreferenceDelegate(KotlinxDelegateWithDefault(key, defaultValue, type), isValid)
 }

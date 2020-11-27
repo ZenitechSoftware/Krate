@@ -7,7 +7,7 @@ import kotlin.reflect.KProperty
 
 internal class LongDelegateWithDefault(
         private val key: String,
-        private val default: Long
+        private val default: Long,
 ) : ReadWriteProperty<Krate, Long> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): Long {
