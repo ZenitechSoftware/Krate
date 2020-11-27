@@ -15,6 +15,14 @@ import kotlin.properties.ReadWriteProperty
  * Creates a validated, optional preference of type T with the given [key] in this [Krate] instance.
  * This value will be serialized using Gson.
  */
+@Deprecated(
+        message = "Use .validate {} on a gsonPref instead",
+        level = DeprecationLevel.WARNING,
+        replaceWith = ReplaceWith(
+                "this.gsonPref<T>(key).validate(isValid)",
+                imports = arrayOf("hu.autsoft.krate.validation.validate"),
+        ),
+)
 public inline fun <reified T : Any> Krate.gsonPref(
         key: String,
         noinline isValid: (newValue: T?) -> Boolean
@@ -36,6 +44,14 @@ internal fun <T : Any> Krate.gsonPrefImpl(
  * in this [Krate] instance.
  * This value will be serialized using Gson.
  */
+@Deprecated(
+        message = "Use .validate {} on a gsonPref instead",
+        level = DeprecationLevel.WARNING,
+        replaceWith = ReplaceWith(
+                "this.gsonPref(key, defaultValue).validate(isValid)",
+                imports = arrayOf("hu.autsoft.krate.validation.validate"),
+        ),
+)
 public inline fun <reified T : Any> Krate.gsonPref(
         key: String,
         defaultValue: T,

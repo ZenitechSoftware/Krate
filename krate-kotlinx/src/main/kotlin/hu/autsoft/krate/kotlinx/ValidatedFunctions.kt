@@ -16,6 +16,14 @@ import kotlin.reflect.typeOf
  * This value will be serialized using kotlinx.serialization.
  */
 @OptIn(ExperimentalStdlibApi::class)
+@Deprecated(
+        message = "Use .validate {} on a kotlinxPref instead",
+        level = DeprecationLevel.WARNING,
+        replaceWith = ReplaceWith(
+                "this.kotlinxPref<T>(key).validate(isValid)",
+                imports = arrayOf("hu.autsoft.krate.validation.validate"),
+        ),
+)
 public inline fun <reified T : Any> Krate.kotlinxPref(
         key: String,
         noinline isValid: (newValue: T?) -> Boolean
@@ -38,6 +46,14 @@ internal fun <T : Any> Krate.kotlinxPrefImpl(
  * This value will be serialized using kotlinx.serialization.
  */
 @OptIn(ExperimentalStdlibApi::class)
+@Deprecated(
+        message = "Use .validate {} on a kotlinxPref instead",
+        level = DeprecationLevel.WARNING,
+        replaceWith = ReplaceWith(
+                "this.kotlinxPref(key, defaultValue).validate(isValid)",
+                imports = arrayOf("hu.autsoft.krate.validation.validate"),
+        ),
+)
 public inline fun <reified T : Any> Krate.kotlinxPref(
         key: String,
         defaultValue: T,

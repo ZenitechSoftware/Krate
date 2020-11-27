@@ -17,6 +17,14 @@ import kotlin.reflect.typeOf
  * This value will be serialized using Moshi.
  */
 @OptIn(ExperimentalStdlibApi::class)
+@Deprecated(
+        message = "Use .validate {} on a moshiPref instead",
+        level = DeprecationLevel.WARNING,
+        replaceWith = ReplaceWith(
+                "this.moshiPref<T>(key).validate(isValid)",
+                imports = arrayOf("hu.autsoft.krate.validation.validate"),
+        ),
+)
 public inline fun <reified T : Any> Krate.moshiPref(
         key: String,
         noinline isValid: (newValue: T?) -> Boolean
@@ -28,7 +36,7 @@ public inline fun <reified T : Any> Krate.moshiPref(
 internal fun <T : Any> Krate.moshiPrefImpl(
         key: String,
         type: Type,
-        isValid: (newValue: T?) -> Boolean
+        isValid: (newValue: T?) -> Boolean,
 ): ReadWriteProperty<Krate, T?> {
     return ValidatedPreferenceDelegate(MoshiDelegate(key, type), isValid)
 }
@@ -39,10 +47,18 @@ internal fun <T : Any> Krate.moshiPrefImpl(
  * This value will be serialized using Moshi.
  */
 @OptIn(ExperimentalStdlibApi::class)
+@Deprecated(
+        message = "Use .validate {} on a moshiPref instead",
+        level = DeprecationLevel.WARNING,
+        replaceWith = ReplaceWith(
+                "this.moshiPref(key, defaultValue).validate(isValid)",
+                imports = arrayOf("hu.autsoft.krate.validation.validate"),
+        ),
+)
 public inline fun <reified T : Any> Krate.moshiPref(
         key: String,
         defaultValue: T,
-        noinline isValid: (newValue: T) -> Boolean
+        noinline isValid: (newValue: T) -> Boolean,
 ): ReadWriteProperty<Krate, T> {
     return moshiPrefImpl(key, defaultValue, typeOf<T>().javaType, isValid)
 }
