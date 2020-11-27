@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlinx-serialization'
+
+android {
+    compileSdkVersion compile_sdk
+
+    defaultConfig {
+        minSdkVersion min_sdk
+        targetSdkVersion target_sdk
+        versionName krate_version
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        freeCompilerArgs += [
+                '-progressive',
+                '-Xexplicit-api=strict',
+                '-Xopt-in=kotlin.RequiresOptIn',
+        ]
+    }
+}
+
+dependencies {
+    implementation project(':krate')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
+
+    testImplementation "junit:junit:$junit_version"
+    testImplementation 'org.robolectric:robolectric:4.3.1'
+}
+
+// Publishing
+ext {
+    PUBLISH_GROUP_ID = 'hu.autsoft'
+    PUBLISH_ARTIFACT_ID = 'krate-kotlinx'
+    PUBLISH_VERSION = android.defaultConfig.versionName
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-mavencentral.gradle"
