@@ -187,6 +187,21 @@ class KotlinxKrate(context: Context) : SimpleKrate(context) {
 }
 ```
 
+By default, the `Json.Default` is used. If you want to provide your own customized `Json` instance, you can set the `json` extension property on your Krate. Any `kotlinxPref` delegates within this Krate will use this instance for serialization and deserialization.
+
+```kotlin
+class CustomKotlinxKrate(context: Context) : SimpleKrate(context) {
+    init {
+        json = Json {
+           coerceInputValues = true
+           ...
+        }
+    }
+
+    var user: User? by kotlinxPref("user")
+}
+```
+
 ### Gson support
 
 The `krate-gson` artifact provides a `gsonPref` delegate which can store any arbitrary type, as long as Gson can serialize and deserialize it. This addon, like the base library, is available from `mavenCentral()`:
@@ -211,6 +226,8 @@ class CustomGsonKrate(context: Context) : SimpleKrate(context) {
     init {
         gson = GsonBuilder().create()
     }
+
+    var user: User? by gsonPref("user")
 }
 ```
 
