@@ -2,6 +2,7 @@ package hu.autsoft.krate.moshi
 
 import android.content.Context
 import hu.autsoft.krate.SimpleKrate
+import hu.autsoft.krate.validation.validate
 
 
 internal class MoshiTestKrate(context: Context) : SimpleKrate(context) {
@@ -25,19 +26,16 @@ internal class MoshiTestKrate(context: Context) : SimpleKrate(context) {
     var listOfValuesWithDefault: List<TestModel>
             by moshiPref("listOfValuesWithDefault", defaultValue = DEFAULT_LIST_VALUE)
 
-    var validatedValue: TestModel by moshiPref(
-            key = "validatedValue",
-            defaultValue = DEFAULT_SIMPLE_VALUE,
-            isValid = { newValue ->
-                newValue.x < newValue.y // arbitrary rule
-            }
-    )
+    var validatedValue: TestModel
+            by moshiPref(key = "validatedValue", defaultValue = DEFAULT_SIMPLE_VALUE)
+                    .validate { newValue ->
+                        newValue.x < newValue.y // arbitrary rule
+                    }
 
-    var validatedOptionalValue: List<TestModel>? by moshiPref(
-            key = "validatedOptionalValue",
-            isValid = { newValue ->
-                newValue.isNullOrEmpty().not()
-            }
-    )
+    var validatedOptionalValue: List<TestModel>?
+            by moshiPref<List<TestModel>>(key = "validatedOptionalValue")
+                    .validate { newValue ->
+                        newValue.isNullOrEmpty().not()
+                    }
 
 }

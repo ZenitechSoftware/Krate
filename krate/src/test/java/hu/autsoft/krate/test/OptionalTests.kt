@@ -1,5 +1,7 @@
-package hu.autsoft.krate
+package hu.autsoft.krate.test
 
+import hu.autsoft.krate.TestKrate
+import hu.autsoft.krate.targetContext
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
