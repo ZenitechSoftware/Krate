@@ -1,10 +1,10 @@
-include (
-		':app',
+include(
+        ':app',
         ':krate',
         ':krate-gson',
-		':krate-moshi-core',
-		':krate-moshi-reflect',
-		':krate-moshi-codegen',
-		':krate-moshi-stub',
-		':krate-kotlinx',
+        ':krate-moshi-core',
+        ':krate-moshi-reflect',
+        ':krate-moshi-codegen',
+        ':krate-moshi-stub',
+        ':krate-kotlinx',
 )
