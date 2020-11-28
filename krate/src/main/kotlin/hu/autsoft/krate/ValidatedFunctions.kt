@@ -51,7 +51,6 @@ public fun Krate.floatPref(
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
         ),
 )
-
 public fun Krate.floatPref(
         key: String,
         defaultValue: Float,
@@ -95,7 +94,6 @@ public fun Krate.intPref(
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
         ),
 )
-
 public fun Krate.intPref(
         key: String,
         defaultValue: Int,
@@ -139,7 +137,6 @@ public fun Krate.longPref(
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
         ),
 )
-
 public fun Krate.longPref(
         key: String,
         defaultValue: Long,
@@ -183,7 +180,6 @@ public fun Krate.stringPref(
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
         ),
 )
-
 public fun Krate.stringPref(
         key: String,
         defaultValue: String,
@@ -227,7 +223,6 @@ public fun Krate.stringSetPref(
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
         ),
 )
-
 public fun Krate.stringSetPref(
         key: String,
         defaultValue: Set<String>,
