@@ -6,11 +6,11 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 /**
- * [ValidatedPreferenceDelegate] is a generic [ReadWriteProperty] that can be used to
- * validate values that are being set.
+ * A generic [ReadWriteProperty] that can be used to validate values that are being set
+ * into another delegate.
  *
- * @param [delegate] the [ReadWriteProperty] implementation that is used for delegation
- * @param [isValid] the lambda used to validate property values on [setValue]
+ * If a value being set to this preference returns `false` when checked by [isValid],
+ * an [IllegalArgumentException] will be thrown.
  */
 @InternalKrateApi
 public class ValidatedPreferenceDelegate<T>(
