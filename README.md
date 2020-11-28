@@ -119,42 +119,15 @@ If this validation fails, an `IllegalArgumentException` will be thrown.
 
 # Addons
 
-Krate, by default, supports the types that `SharedPreferences` supports. These are `Boolean`, `Float`, `Int`, `Long`, `String` and `Set<String>`. You may of course want to store additional types in Krate. For some common types, addon libraries are available, as described below.
+Krate, by default, supports the types that `SharedPreferences` supports. These are `Boolean`, `Float`, `Int`, `Long`, `String` and `Set<String>`. You may of course want to store additional types in Krate.
 
-If you don't find support for the type you're looking for, implementing your own delegate in your own project based on the code of existing delegates should be quite simple, this is very much a supported use case. If you think your type might be commonly used, you can also open an issue to ask for an addon library to provide for that type.
+If you don't find support for the library or type you're looking for, implementing your own delegate in your own project based on the code of existing delegates should be quite simple, this is very much a supported use case. If you think your type might be commonly used, you can also open an issue to ask for an addon library for that type.
 
-### Gson support
+### Moshi support
 
-The `krate-gson` artifact provides you a `gsonPref` delegate which can store any arbitrary type, as long as GSON can serialize and deserialize it. This addon, like the base library, is available from `mavenCentral()`:
+This addon provides a `moshiPref` delegate which can store any arbitrary type, as long as Moshi can serialize and deserialize it.
 
-```groovy
-implementation 'hu.autsoft:krate-gson:0.5.0'
-```
-
-Its basic usage is the same as with any of the base library's delegates:
-
-```kotlin
-class GsonKrate(context: Context) : SimpleKrate(context) {
-    var user: User? by gsonPref("user")
-    var savedArticles: List<Article>? by gsonPref("articles")
-}
-```
-
-By default, the `Gson` instance created by a simple `Gson()` constructor call is used. If you want to provide your own `Gson` instance that you've configured, you can set the `gson` extension property on your Krate. Any `gsonPref` delegates within this Krate will use this instance for serialization and deserialization.
-
-```kotlin
-class CustomGsonKrate(context: Context) : SimpleKrate(context) {
-    init {
-        gson = GsonBuilder().create()
-    }
-}
-``` 
-
-### Moshi support 
-
-Similarly to [krate-gson], the following artifacts add support for using Moshi to serialize values to `SharedPreferences` via Krate.
-
-Since Moshi supports both reflection-based serialization and code generation, there are multiple Krate artifacts for different use cases. You should always include only  one of the dependencies below, otherwise you'll end up with a dexing error.
+Since Moshi supports both reflection-based serialization and code generation, there are multiple Krate artifacts for different use cases. *You should always include only one of the dependencies below, otherwise you'll end up with a dexing error.*
 
 The usage of the Krate integration is the same for both setups:
 
@@ -195,7 +168,68 @@ implementation 'hu.autsoft:krate-moshi-reflect:0.5.0'
 
 The default `Moshi` instance from this dependency will include the aforementioned factory, and be able to serialize any Kotlin class. Note that this approach relies on the `kotlin-reflect` library, which is a large dependency.
 
-You may choose to use Moshi's codegen for some classes in your project, and serialize the ones with no adapters generated with the default approach via reflection. For this mixed use case, you should probably choose this dependency.
+You may choose to use Moshi's codegen for some classes in your project, and serialize the ones with no adapters generated with the default approach via reflection. For this mixed use case, you should also choose this dependency (unless you set your own custom Moshi instances as described above).
+
+### Kotlinx.serialization support
+
+The `krate-kotlinx` artifact provides a `kotlinxPref` delegate which can store any arbitrary type, as long as Kotlinx.serializazion can serialize and deserialize it. This addon, like the base library, is available from `mavenCentral()`:
+
+```groovy
+implementation 'hu.autsoft:krate-kotlinx:0.5.0'
+```
+
+Its usage is the same as with any of the base library's delegates:
+
+```kotlin
+class KotlinxKrate(context: Context) : SimpleKrate(context) {
+    var user: User? by kotlinxPref("user")
+    var savedArticles: List<Article>? by kotlinxPref("articles")
+}
+```
+
+By default, the `Json.Default` is used. If you want to provide your own customized `Json` instance, you can set the `json` extension property on your Krate. Any `kotlinxPref` delegates within this Krate will use this instance for serialization and deserialization.
+
+```kotlin
+class CustomKotlinxKrate(context: Context) : SimpleKrate(context) {
+    init {
+        json = Json {
+           coerceInputValues = true
+           ...
+        }
+    }
+
+    var user: User? by kotlinxPref("user")
+}
+```
+
+### Gson support
+
+The `krate-gson` artifact provides a `gsonPref` delegate which can store any arbitrary type, as long as Gson can serialize and deserialize it. This addon, like the base library, is available from `mavenCentral()`:
+
+```groovy
+implementation 'hu.autsoft:krate-gson:0.5.0'
+```
+
+Its basic usage is the same as with any of the base library's delegates:
+
+```kotlin
+class GsonKrate(context: Context) : SimpleKrate(context) {
+    var user: User? by gsonPref("user")
+    var savedArticles: List<Article>? by gsonPref("articles")
+}
+```
+
+By default, the `Gson` instance created by a simple `Gson()` constructor call is used. If you want to provide your own `Gson` instance that you've configured, you can set the `gson` extension property on your Krate. Any `gsonPref` delegates within this Krate will use this instance for serialization and deserialization.
+
+```kotlin
+class CustomGsonKrate(context: Context) : SimpleKrate(context) {
+    init {
+        gson = GsonBuilder().create()
+    }
+
+    var user: User? by gsonPref("user")
+}
+```
 
 # License
 

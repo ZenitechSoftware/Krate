@@ -1,0 +1,43 @@
+package hu.autsoft.krate.kotlinx
+
+import android.content.Context
+import hu.autsoft.krate.SimpleKrate
+
+
+internal class KotlinxTestKrate(context: Context) : SimpleKrate(context) {
+
+    init {
+        sharedPreferences.edit().clear().commit()
+    }
+
+    companion object {
+        val DEFAULT_SIMPLE_VALUE = TestModel(x = 1, y = 2.0, z = "3")
+        val DEFAULT_LIST_VALUE = emptyList<TestModel>()
+    }
+
+    var simpleValue: TestModel? by kotlinxPref("simpleValue")
+
+    var listOfValues: List<TestModel>? by kotlinxPref("listOfValues")
+
+    var simpleValueWithDefault: TestModel
+            by kotlinxPref("simpleValueWithDefault", DEFAULT_SIMPLE_VALUE)
+
+    var listOfValuesWithDefault: List<TestModel>
+            by kotlinxPref("listOfValuesWithDefault", defaultValue = DEFAULT_LIST_VALUE)
+
+    var validatedValue: TestModel by kotlinxPref(
+            key = "validatedValue",
+            defaultValue = DEFAULT_SIMPLE_VALUE,
+            isValid = { newValue ->
+                newValue.x < newValue.y // arbitrary rule
+            }
+    )
+
+    var validatedOptionalValue: List<TestModel>? by kotlinxPref(
+            key = "validatedOptionalValue",
+            isValid = { newValue ->
+                newValue.isNullOrEmpty().not()
+            }
+    )
+
+}

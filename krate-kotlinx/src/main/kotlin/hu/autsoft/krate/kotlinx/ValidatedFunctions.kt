@@ -1,58 +1,57 @@
 @file:[Suppress("unused") OptIn(InternalKrateApi::class)]
 
-package hu.autsoft.krate.moshi
+package hu.autsoft.krate.kotlinx
 
 import hu.autsoft.krate.Krate
 import hu.autsoft.krate.internal.InternalKrateApi
-import hu.autsoft.krate.moshi.default.MoshiDelegateWithDefault
-import hu.autsoft.krate.moshi.optional.MoshiDelegate
+import hu.autsoft.krate.kotlinx.default.KotlinxDelegateWithDefault
+import hu.autsoft.krate.kotlinx.optional.KotlinxDelegate
 import hu.autsoft.krate.validated.ValidatedPreferenceDelegate
-import java.lang.reflect.Type
 import kotlin.properties.ReadWriteProperty
-import kotlin.reflect.javaType
+import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
 /**
  * Creates a validated, optional preference of type T with the given [key] in this [Krate] instance.
- * This value will be serialized using Moshi.
+ * This value will be serialized using kotlinx.serialization.
  */
 @OptIn(ExperimentalStdlibApi::class)
-public inline fun <reified T : Any> Krate.moshiPref(
+public inline fun <reified T : Any> Krate.kotlinxPref(
         key: String,
         noinline isValid: (newValue: T?) -> Boolean
 ): ReadWriteProperty<Krate, T?> {
-    return moshiPrefImpl(key, typeOf<T>().javaType, isValid)
+    return kotlinxPrefImpl(key, typeOf<T>(), isValid)
 }
 
 @PublishedApi
-internal fun <T : Any> Krate.moshiPrefImpl(
+internal fun <T : Any> Krate.kotlinxPrefImpl(
         key: String,
-        type: Type,
+        type: KType,
         isValid: (newValue: T?) -> Boolean
 ): ReadWriteProperty<Krate, T?> {
-    return ValidatedPreferenceDelegate(MoshiDelegate(key, type), isValid)
+    return ValidatedPreferenceDelegate(KotlinxDelegate(key, type), isValid)
 }
 
 /**
  * Creates a validated, non-optional preference of type T with the given [key] and [defaultValue]
  * in this [Krate] instance.
- * This value will be serialized using Moshi.
+ * This value will be serialized using kotlinx.serialization.
  */
 @OptIn(ExperimentalStdlibApi::class)
-public inline fun <reified T : Any> Krate.moshiPref(
+public inline fun <reified T : Any> Krate.kotlinxPref(
         key: String,
         defaultValue: T,
         noinline isValid: (newValue: T) -> Boolean
 ): ReadWriteProperty<Krate, T> {
-    return moshiPrefImpl(key, defaultValue, typeOf<T>().javaType, isValid)
+    return kotlinxPrefImpl(key, defaultValue, typeOf<T>(), isValid)
 }
 
 @PublishedApi
-internal fun <T : Any> Krate.moshiPrefImpl(
+internal fun <T : Any> Krate.kotlinxPrefImpl(
         key: String,
         defaultValue: T,
-        type: Type,
+        type: KType,
         isValid: (newValue: T) -> Boolean
 ): ReadWriteProperty<Krate, T> {
-    return ValidatedPreferenceDelegate(MoshiDelegateWithDefault(key, defaultValue, type), isValid)
+    return ValidatedPreferenceDelegate(KotlinxDelegateWithDefault(key, defaultValue, type), isValid)
 }
