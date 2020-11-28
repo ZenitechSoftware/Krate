@@ -35,7 +35,7 @@ internal class MoshiTestKrate(context: Context) : SimpleKrate(context) {
     var validatedOptionalValue: List<TestModel>?
             by moshiPref<List<TestModel>>(key = "validatedOptionalValue")
                     .validate { newValue ->
-                        newValue.isNullOrEmpty().not()
+                        newValue.isNullOrEmpty().not() // arbitrary rule
                     }
 
 }

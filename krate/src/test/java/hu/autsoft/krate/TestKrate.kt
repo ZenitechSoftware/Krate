@@ -15,13 +15,9 @@ internal class TestKrate(context: Context) : SimpleKrate(context) {
     var optionalLong by longPref("optionalLong")
     var optionalString by stringPref("optionalString")
     var optionalStringSet by stringSetPref("optionalStringSet")
-    var optionalValidatedString by stringPref("validatedString")
-            .validate {
-                it?.length ?: 5 == 5
-            }
-    var defaultValidatedFloat by floatPref("defaultFloat", 0.0f)
-            .validate {
-                it in 0.0f..1.0f
-            }
+    var optionalValidatedString by stringPref("optionalValidatedString")
+            .validate { it?.length ?: 5 == 5 }
+    var defaultValidatedFloat by floatPref("defaultValidatedFloat", 0.0f)
+            .validate { it in 0.0f..1.0f }
 
 }
