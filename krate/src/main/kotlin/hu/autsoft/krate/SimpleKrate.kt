@@ -14,7 +14,7 @@ import androidx.preference.PreferenceManager
  */
 public abstract class SimpleKrate(
         context: Context,
-        name: String? = null
+        name: String? = null,
 ) : Krate {
 
     public override val sharedPreferences: SharedPreferences = when (name) {

@@ -1,10 +1,8 @@
-package hu.autsoft.krate.moshi.test
+package hu.autsoft.krate.kotlinx.test
 
-import com.squareup.moshi.Moshi
-import hu.autsoft.krate.moshi.MoshiTestKrate
-import hu.autsoft.krate.moshi.TestModel
-import hu.autsoft.krate.moshi.moshi
-import hu.autsoft.krate.moshi.util.targetContext
+import hu.autsoft.krate.kotlinx.KotlinxTestKrate
+import hu.autsoft.krate.kotlinx.TestModel
+import hu.autsoft.krate.targetContext
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -12,16 +10,13 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
-internal class ValidatedGsonDelegateTest {
+internal class ValidatedKotlinxDelegateTest {
 
-    private lateinit var krate: MoshiTestKrate
+    private lateinit var krate: KotlinxTestKrate
 
     @Before
     fun setup() {
-        krate = MoshiTestKrate(targetContext)
-
-        krate.moshi = Moshi.Builder().build()
-
+        krate = KotlinxTestKrate(targetContext)
     }
 
     @Test

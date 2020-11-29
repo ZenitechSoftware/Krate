@@ -6,20 +6,28 @@ import hu.autsoft.krate.Krate
 import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.moshi.default.MoshiDelegateWithDefault
 import hu.autsoft.krate.moshi.optional.MoshiDelegate
-import hu.autsoft.krate.validated.ValidatedPreferenceDelegate
+import hu.autsoft.krate.validation.ValidatedPreferenceDelegate
 import java.lang.reflect.Type
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.javaType
 import kotlin.reflect.typeOf
 
 /**
- * Creates an validated, optional preference of type T with the given [key] in this [Krate] instance.
+ * Creates a validated, optional preference of type T with the given [key] in this [Krate] instance.
  * This value will be serialized using Moshi.
  */
 @OptIn(ExperimentalStdlibApi::class)
+@Deprecated(
+        message = "Use .validate {} on a moshiPref instead",
+        level = DeprecationLevel.WARNING,
+        replaceWith = ReplaceWith(
+                "this.moshiPref<T>(key).validate(isValid)",
+                imports = arrayOf("hu.autsoft.krate.validation.validate"),
+        ),
+)
 public inline fun <reified T : Any> Krate.moshiPref(
         key: String,
-        noinline isValid: (newValue: T?) -> Boolean
+        noinline isValid: (newValue: T?) -> Boolean,
 ): ReadWriteProperty<Krate, T?> {
     return moshiPrefImpl(key, typeOf<T>().javaType, isValid)
 }
@@ -28,7 +36,7 @@ public inline fun <reified T : Any> Krate.moshiPref(
 internal fun <T : Any> Krate.moshiPrefImpl(
         key: String,
         type: Type,
-        isValid: (newValue: T?) -> Boolean
+        isValid: (newValue: T?) -> Boolean,
 ): ReadWriteProperty<Krate, T?> {
     return ValidatedPreferenceDelegate(MoshiDelegate(key, type), isValid)
 }
@@ -39,10 +47,18 @@ internal fun <T : Any> Krate.moshiPrefImpl(
  * This value will be serialized using Moshi.
  */
 @OptIn(ExperimentalStdlibApi::class)
+@Deprecated(
+        message = "Use .validate {} on a moshiPref instead",
+        level = DeprecationLevel.WARNING,
+        replaceWith = ReplaceWith(
+                "this.moshiPref(key, defaultValue).validate(isValid)",
+                imports = arrayOf("hu.autsoft.krate.validation.validate"),
+        ),
+)
 public inline fun <reified T : Any> Krate.moshiPref(
         key: String,
         defaultValue: T,
-        noinline isValid: (newValue: T) -> Boolean
+        noinline isValid: (newValue: T) -> Boolean,
 ): ReadWriteProperty<Krate, T> {
     return moshiPrefImpl(key, defaultValue, typeOf<T>().javaType, isValid)
 }
@@ -52,7 +68,7 @@ internal fun <T : Any> Krate.moshiPrefImpl(
         key: String,
         defaultValue: T,
         type: Type,
-        isValid: (newValue: T) -> Boolean
+        isValid: (newValue: T) -> Boolean,
 ): ReadWriteProperty<Krate, T> {
     return ValidatedPreferenceDelegate(MoshiDelegateWithDefault(key, defaultValue, type), isValid)
 }

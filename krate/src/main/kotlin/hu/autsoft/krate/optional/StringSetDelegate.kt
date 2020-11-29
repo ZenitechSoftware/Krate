@@ -6,7 +6,7 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 internal class StringSetDelegate(
-        private val key: String
+        private val key: String,
 ) : ReadWriteProperty<Krate, Set<String>?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): Set<String>? {
