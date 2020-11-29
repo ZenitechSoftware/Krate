@@ -7,7 +7,7 @@ import kotlin.reflect.KProperty
 
 internal class StringDelegateWithDefault(
         private val key: String,
-        private val default: String
+        private val default: String,
 ) : ReadWriteProperty<Krate, String> {
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")

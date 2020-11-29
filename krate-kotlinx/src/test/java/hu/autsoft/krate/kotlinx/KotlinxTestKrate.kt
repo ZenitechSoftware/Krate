@@ -2,6 +2,7 @@ package hu.autsoft.krate.kotlinx
 
 import android.content.Context
 import hu.autsoft.krate.SimpleKrate
+import hu.autsoft.krate.validation.validate
 
 
 internal class KotlinxTestKrate(context: Context) : SimpleKrate(context) {
@@ -25,19 +26,16 @@ internal class KotlinxTestKrate(context: Context) : SimpleKrate(context) {
     var listOfValuesWithDefault: List<TestModel>
             by kotlinxPref("listOfValuesWithDefault", defaultValue = DEFAULT_LIST_VALUE)
 
-    var validatedValue: TestModel by kotlinxPref(
-            key = "validatedValue",
-            defaultValue = DEFAULT_SIMPLE_VALUE,
-            isValid = { newValue ->
-                newValue.x < newValue.y // arbitrary rule
-            }
-    )
+    var validatedValue: TestModel
+            by kotlinxPref(key = "validatedValue", defaultValue = DEFAULT_SIMPLE_VALUE)
+                    .validate { newValue ->
+                        newValue.x < newValue.y // arbitrary rule
+                    }
 
-    var validatedOptionalValue: List<TestModel>? by kotlinxPref(
-            key = "validatedOptionalValue",
-            isValid = { newValue ->
-                newValue.isNullOrEmpty().not()
-            }
-    )
+    var validatedOptionalValue: List<TestModel>?
+            by kotlinxPref<List<TestModel>>(key = "validatedOptionalValue")
+                    .validate { newValue ->
+                        newValue.isNullOrEmpty().not() // arbitrary rule
+                    }
 
 }

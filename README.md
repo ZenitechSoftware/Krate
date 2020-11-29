@@ -105,14 +105,13 @@ class EncryptedKrate(applicationContext: Context) : Krate {
 
 # Validation
 
-You can add validation rules to your Krate properties by providing an additional lambda parameter, `isValid`:
+You can add validation rules to your Krate properties by calling `validate` on any of Krate's delegate functions:
 
 ```kotlin
 var percentage: Int by intPref(
         key = "percentage",
         defaultValue = 0,
-        isValid = { it in 0..100 }
-)
+).validate { it in 0..100 }
 ```
 
 If this validation fails, an `IllegalArgumentException` will be thrown.

@@ -6,7 +6,7 @@ import hu.autsoft.krate.Krate
 import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.kotlinx.default.KotlinxDelegateWithDefault
 import hu.autsoft.krate.kotlinx.optional.KotlinxDelegate
-import hu.autsoft.krate.validated.ValidatedPreferenceDelegate
+import hu.autsoft.krate.validation.ValidatedPreferenceDelegate
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
@@ -16,9 +16,17 @@ import kotlin.reflect.typeOf
  * This value will be serialized using kotlinx.serialization.
  */
 @OptIn(ExperimentalStdlibApi::class)
+@Deprecated(
+        message = "Use .validate {} on a kotlinxPref instead",
+        level = DeprecationLevel.WARNING,
+        replaceWith = ReplaceWith(
+                "this.kotlinxPref<T>(key).validate(isValid)",
+                imports = arrayOf("hu.autsoft.krate.validation.validate"),
+        ),
+)
 public inline fun <reified T : Any> Krate.kotlinxPref(
         key: String,
-        noinline isValid: (newValue: T?) -> Boolean
+        noinline isValid: (newValue: T?) -> Boolean,
 ): ReadWriteProperty<Krate, T?> {
     return kotlinxPrefImpl(key, typeOf<T>(), isValid)
 }
@@ -27,7 +35,7 @@ public inline fun <reified T : Any> Krate.kotlinxPref(
 internal fun <T : Any> Krate.kotlinxPrefImpl(
         key: String,
         type: KType,
-        isValid: (newValue: T?) -> Boolean
+        isValid: (newValue: T?) -> Boolean,
 ): ReadWriteProperty<Krate, T?> {
     return ValidatedPreferenceDelegate(KotlinxDelegate(key, type), isValid)
 }
@@ -38,10 +46,18 @@ internal fun <T : Any> Krate.kotlinxPrefImpl(
  * This value will be serialized using kotlinx.serialization.
  */
 @OptIn(ExperimentalStdlibApi::class)
+@Deprecated(
+        message = "Use .validate {} on a kotlinxPref instead",
+        level = DeprecationLevel.WARNING,
+        replaceWith = ReplaceWith(
+                "this.kotlinxPref(key, defaultValue).validate(isValid)",
+                imports = arrayOf("hu.autsoft.krate.validation.validate"),
+        ),
+)
 public inline fun <reified T : Any> Krate.kotlinxPref(
         key: String,
         defaultValue: T,
-        noinline isValid: (newValue: T) -> Boolean
+        noinline isValid: (newValue: T) -> Boolean,
 ): ReadWriteProperty<Krate, T> {
     return kotlinxPrefImpl(key, defaultValue, typeOf<T>(), isValid)
 }
@@ -51,7 +67,7 @@ internal fun <T : Any> Krate.kotlinxPrefImpl(
         key: String,
         defaultValue: T,
         type: KType,
-        isValid: (newValue: T) -> Boolean
+        isValid: (newValue: T) -> Boolean,
 ): ReadWriteProperty<Krate, T> {
     return ValidatedPreferenceDelegate(KotlinxDelegateWithDefault(key, defaultValue, type), isValid)
 }
