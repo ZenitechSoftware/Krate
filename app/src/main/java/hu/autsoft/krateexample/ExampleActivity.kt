@@ -38,6 +38,7 @@ class ExampleActivity : AppCompatActivity() {
         super.onResume()
 
         booleanPreference.isChecked = exampleSettings.exampleBoolean
+        doublePreferenceInput.setText(exampleSettings.exampleDouble.toString())
         floatPreferenceInput.setText(exampleSettings.exampleFloat.toString())
         intPreferenceInput.setText(exampleSettings.exampleInt.toString())
         longPreferenceInput.setText(exampleSettings.exampleLong.toString())
@@ -49,6 +50,7 @@ class ExampleActivity : AppCompatActivity() {
         super.onPause()
 
         exampleSettings.exampleBoolean = booleanPreference.isChecked
+        exampleSettings.exampleDouble = doublePreferenceInput.text.toString().toDouble()
         exampleSettings.exampleFloat = floatPreferenceInput.text.toString().toFloat()
         exampleSettings.exampleInt = intPreferenceInput.text.toString().toInt()
         exampleSettings.exampleLong = longPreferenceInput.text.toString().toLong()

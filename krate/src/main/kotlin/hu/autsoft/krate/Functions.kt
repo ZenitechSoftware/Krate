@@ -3,12 +3,14 @@
 package hu.autsoft.krate
 
 import hu.autsoft.krate.default.BooleanDelegateWithDefault
+import hu.autsoft.krate.default.DoubleDelegateWithDefault
 import hu.autsoft.krate.default.FloatDelegateWithDefault
 import hu.autsoft.krate.default.IntDelegateWithDefault
 import hu.autsoft.krate.default.LongDelegateWithDefault
 import hu.autsoft.krate.default.StringDelegateWithDefault
 import hu.autsoft.krate.default.StringSetDelegateWithDefault
 import hu.autsoft.krate.optional.BooleanDelegate
+import hu.autsoft.krate.optional.DoubleDelegate
 import hu.autsoft.krate.optional.FloatDelegate
 import hu.autsoft.krate.optional.IntDelegate
 import hu.autsoft.krate.optional.LongDelegate
@@ -21,6 +23,13 @@ import kotlin.properties.ReadWriteProperty
  */
 public fun Krate.booleanPref(key: String): ReadWriteProperty<Krate, Boolean?> {
     return BooleanDelegate(key)
+}
+
+/**
+ * Creates an option preference of type Double with the given [key] in this [Krate] instance.
+ */
+public fun Krate.doublePref(key: String): ReadWriteProperty<Krate, Double?> {
+    return DoubleDelegate(key)
 }
 
 /**
@@ -64,6 +73,13 @@ public fun Krate.stringSetPref(key: String): ReadWriteProperty<Krate, Set<String
  */
 public fun Krate.booleanPref(key: String, defaultValue: Boolean): ReadWriteProperty<Krate, Boolean> {
     return BooleanDelegateWithDefault(key, defaultValue)
+}
+
+/**
+ * Creates a non-option preference of type Double with the given [key] and [defaultValue] in this [Krate] instance.
+ */
+public fun Krate.doublePref(key: String, defaultValue: Double): ReadWriteProperty<Krate, Double> {
+    return DoubleDelegateWithDefault(key, defaultValue)
 }
 
 /**

@@ -10,6 +10,7 @@ internal class TestKrate(context: Context) : SimpleKrate(context) {
     }
 
     var optionalBoolean by booleanPref("optionalBoolean")
+    var optionDouble by doublePref("optionalDouble")
     var optionalFloat by floatPref("optionalFloat")
     var optionalInt by intPref("optionalInt")
     var optionalLong by longPref("optionalLong")
