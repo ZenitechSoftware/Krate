@@ -22,9 +22,9 @@ jobs:
           SIGNING_SECRET_KEY_RING_FILE: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
         run: sudo bash -c "echo '$GPG_KEY_CONTENTS' | base64 -d > '$SIGNING_SECRET_KEY_RING_FILE'"
       - name: Release build and source jar generation
-        run: ./gradlew :krate:assembleRelease :krate-gson:assembleRelease :krate-moshi-stub:assembleRelease :krate-moshi-core:assembleRelease :krate-moshi-reflect:assembleRelease :krate-moshi-codegen:assembleRelease :krate-kotlinx:assembleRelease :krate:androidSourcesJar :krate-gson:androidSourcesJar :krate-moshi-stub:androidSourcesJar :krate-moshi-core:androidSourcesJar :krate-moshi-reflect:androidSourcesJar :krate-moshi-codegen:androidSourcesJar :krate-kotlinx:androidSourcesJar
+        run: ./gradlew assembleRelease androidSourcesJar -x :app:assembleRelease
       - name: Publish to MavenCentral
-        run: ./gradlew publishReleasePublicationToSonatypeRepository closeAndReleaseRepository
+        run: ./gradlew publishReleasePublicationToSonatypeRepository --max-workers 1 closeAndReleaseSonatypeStagingRepository
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}

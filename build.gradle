@@ -13,13 +13,14 @@ buildscript {
         google()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        maven { url "https://plugins.gradle.org/m2/" }
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.22.0"
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+        classpath "io.github.gradle-nexus:publish-plugin:1.1.0"
     }
 }
 
@@ -40,4 +41,5 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-apply plugin: 'io.codearte.nexus-staging'
+apply plugin: 'io.github.gradle-nexus.publish-plugin'
+apply from: "${rootProject.projectDir}/scripts/publish-root.gradle"
