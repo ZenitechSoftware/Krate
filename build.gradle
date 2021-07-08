@@ -1,9 +1,10 @@
 buildscript {
-    ext.kotlin_version = '1.4.21'
+    ext.kotlin_version = '1.5.20'
     ext.krate_version = '1.0.0'
 
-    ext.moshi_version = '1.9.3'
-    ext.junit_version = '4.13'
+    ext.moshi_version = '1.12.0'
+    ext.junit_version = '4.13.2'
+    ext.robolectric_version = '4.5.1'
 
     ext.min_sdk = 15
     ext.compile_sdk = 29
@@ -14,10 +15,9 @@ buildscript {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
         maven { url "https://plugins.gradle.org/m2/" }
-        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:4.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
         classpath "io.github.gradle-nexus:publish-plugin:1.1.0"
@@ -28,7 +28,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        jcenter()
     }
 }
 
