@@ -14,6 +14,10 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    buildFeatures {
+        buildConfig false
+    }
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
@@ -34,7 +38,7 @@ dependencies {
     api "com.squareup.moshi:moshi-kotlin:$moshi_version"
 
     testImplementation "junit:junit:$junit_version"
-    testImplementation 'org.robolectric:robolectric:4.3.1'
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
 }
 
 // Publishing
@@ -44,4 +48,4 @@ ext {
     PUBLISH_VERSION = android.defaultConfig.versionName
 }
 
-apply from: "${rootProject.projectDir}/scripts/publish-mavencentral.gradle"
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"

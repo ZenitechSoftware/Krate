@@ -14,6 +14,10 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    buildFeatures {
+        buildConfig false
+    }
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
@@ -42,4 +46,4 @@ ext {
     PUBLISH_VERSION = android.defaultConfig.versionName
 }
 
-apply from: "${rootProject.projectDir}/scripts/publish-mavencentral.gradle"
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"

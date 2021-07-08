@@ -15,6 +15,10 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    buildFeatures {
+        buildConfig false
+    }
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
@@ -31,10 +35,10 @@ dependencies {
     implementation project(':krate')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1"
 
     testImplementation "junit:junit:$junit_version"
-    testImplementation 'org.robolectric:robolectric:4.3.1'
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
 }
 
 // Publishing
@@ -44,4 +48,4 @@ ext {
     PUBLISH_VERSION = android.defaultConfig.versionName
 }
 
-apply from: "${rootProject.projectDir}/scripts/publish-mavencentral.gradle"
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
