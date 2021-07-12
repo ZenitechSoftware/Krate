@@ -118,7 +118,7 @@ If this validation fails, an `IllegalArgumentException` will be thrown.
 
 # Addons
 
-Krate, by default, supports the types that `SharedPreferences` supports. These are `Boolean`, `Float`, `Int`, `Long`, `String` and `Set<String>`. You may of course want to store additional types in Krate.
+Krate, by default, supports the types that `SharedPreferences` supports. These are `Boolean`, `Float`, `Int`, `Long`, `String` and `Set<String>`. Additionally, Krate supports `Double`. You may of course want to store additional types in Krate.
 
 If you don't find support for the library or type you're looking for, implementing your own delegate in your own project based on the code of existing delegates should be quite simple, this is very much a supported use case. If you think your type might be commonly used, you can also open an issue to ask for an addon library for that type.
 

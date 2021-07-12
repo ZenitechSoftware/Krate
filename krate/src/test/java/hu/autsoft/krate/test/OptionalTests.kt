@@ -34,6 +34,20 @@ internal class OptionalTests {
     }
 
     @Test
+    fun testOptionalDoublePref() {
+        assertEquals(null, testKrate.optionDouble)
+
+        testKrate.optionDouble = -487741.0
+        assertEquals(-487741.0, testKrate.optionDouble)
+
+        testKrate.optionDouble = 215125.0
+        assertEquals(215125.0, testKrate.optionDouble)
+
+        testKrate.optionDouble = null
+        assertEquals(null, testKrate.optionDouble)
+    }
+
+    @Test
     fun testOptionalFloatPref() {
         assertEquals(null, testKrate.optionalFloat)
 
