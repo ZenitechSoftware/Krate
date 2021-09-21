@@ -15,7 +15,9 @@ import kotlin.reflect.typeOf
  * This instance will be serialized using kotlinx.serialization.
  */
 @OptIn(ExperimentalStdlibApi::class)
-public inline fun <reified T : Any> Krate.kotlinxPref(key: String): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
+public inline fun <reified T : Any> Krate.kotlinxPref(
+    key: String,
+): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
     return kotlinxPrefImpl(key, typeOf<T>())
 }
 
