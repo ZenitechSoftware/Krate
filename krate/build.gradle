@@ -26,6 +26,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
                 '-progressive',
                 '-Xexplicit-api=strict',
                 '-Xopt-in=kotlin.RequiresOptIn',
+                '-Xopt-in=hu.autsoft.krate.internal.InternalKrateApi',
         ]
     }
 }

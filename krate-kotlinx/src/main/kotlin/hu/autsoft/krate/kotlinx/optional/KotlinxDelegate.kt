@@ -6,22 +6,20 @@ import hu.autsoft.krate.kotlinx.util.edit
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
+import kotlin.properties.PropertyDelegateProvider
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 import kotlin.reflect.KType
 
 
-internal class KotlinxDelegate<T : Any>(
-        private val key: String,
-        private val type: KType,
+private class KotlinxDelegate<T : Any>(
+    private val key: String,
+    private val serializer: KSerializer<T>,
 ) : ReadWriteProperty<Krate, T?> {
-
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): T? {
         return if (!thisRef.sharedPreferences.contains(key)) {
             null
         } else {
-            @Suppress("UNCHECKED_CAST")
-            val serializer = thisRef.internalJson.serializersModule.serializer(type) as KSerializer<T>
             val string = requireNotNull(thisRef.sharedPreferences.getString(key, null))
             Json.decodeFromString(serializer, string)
         }
@@ -33,12 +31,20 @@ internal class KotlinxDelegate<T : Any>(
                 remove(key)
             }
         } else {
-            @Suppress("UNCHECKED_CAST")
-            val serializer = thisRef.internalJson.serializersModule.serializer(type) as KSerializer<T>
             thisRef.sharedPreferences.edit {
                 putString(key, Json.encodeToString(serializer, value))
             }
         }
     }
+}
 
+internal class KotlinxDelegateFactory<T : Any>(
+    private val key: String,
+    private val type: KType,
+) : PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
+    override fun provideDelegate(thisRef: Krate, property: KProperty<*>): ReadWriteProperty<Krate, T?> {
+        @Suppress("UNCHECKED_CAST")
+        val serializer = thisRef.internalJson.serializersModule.serializer(type) as KSerializer<T>
+        return KotlinxDelegate(key, serializer)
+    }
 }
