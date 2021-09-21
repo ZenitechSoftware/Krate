@@ -1,6 +1,7 @@
 package hu.autsoft.krate.kotlinx.optional
 
 import hu.autsoft.krate.Krate
+import hu.autsoft.krate.kotlinx.internalJson
 import hu.autsoft.krate.kotlinx.util.edit
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
@@ -15,14 +16,12 @@ internal class KotlinxDelegate<T : Any>(
         private val type: KType,
 ) : ReadWriteProperty<Krate, T?> {
 
-    @Suppress("UNCHECKED_CAST")
-    private inline val serializer: KSerializer<T>
-        get() = Json.serializersModule.serializer(type) as KSerializer<T>
-
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): T? {
         return if (!thisRef.sharedPreferences.contains(key)) {
             null
         } else {
+            @Suppress("UNCHECKED_CAST")
+            val serializer = thisRef.internalJson.serializersModule.serializer(type) as KSerializer<T>
             val string = requireNotNull(thisRef.sharedPreferences.getString(key, null))
             Json.decodeFromString(serializer, string)
         }
@@ -34,6 +33,8 @@ internal class KotlinxDelegate<T : Any>(
                 remove(key)
             }
         } else {
+            @Suppress("UNCHECKED_CAST")
+            val serializer = thisRef.internalJson.serializersModule.serializer(type) as KSerializer<T>
             thisRef.sharedPreferences.edit {
                 putString(key, Json.encodeToString(serializer, value))
             }
