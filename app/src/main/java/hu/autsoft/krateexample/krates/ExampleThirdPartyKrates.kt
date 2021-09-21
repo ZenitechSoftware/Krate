@@ -19,16 +19,16 @@ class EncryptedKrate(applicationContext: Context) : Krate {
         // https://developer.android.com/topic/security/data
         // https://developer.android.com/reference/kotlin/androidx/security/crypto/EncryptedSharedPreferences
         val masterKeyAlias = MasterKey.Builder(applicationContext)
-                .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                .build()
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
         val sharedPrefsFile = "my_sensitive_data.txt"
 
         sharedPreferences = EncryptedSharedPreferences.create(
-                applicationContext,
-                sharedPrefsFile,
-                masterKeyAlias,
-                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            applicationContext,
+            sharedPrefsFile,
+            masterKeyAlias,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
     }
 

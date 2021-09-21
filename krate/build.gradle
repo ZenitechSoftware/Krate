@@ -11,10 +11,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
-
     buildFeatures {
         buildConfig false
     }
@@ -26,12 +22,12 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
                 '-progressive',
                 '-Xexplicit-api=strict',
                 '-Xopt-in=kotlin.RequiresOptIn',
+                '-Xopt-in=hu.autsoft.krate.internal.InternalKrateApi',
         ]
     }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
     testImplementation "junit:junit:$junit_version"

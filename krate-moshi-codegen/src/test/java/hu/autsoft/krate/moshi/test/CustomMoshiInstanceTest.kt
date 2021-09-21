@@ -81,7 +81,7 @@ internal class CustomMoshiInstanceTest {
 
     private fun createCustomTestMoshi(): Moshi {
         return Moshi.Builder()
-                .build()
+            .build()
     }
 
 }

@@ -1,30 +1,26 @@
 package hu.autsoft.krate.kotlinx.optional
 
 import hu.autsoft.krate.Krate
+import hu.autsoft.krate.kotlinx.internalJson
 import hu.autsoft.krate.kotlinx.util.edit
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
+import kotlin.properties.PropertyDelegateProvider
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 import kotlin.reflect.KType
 
 
-internal class KotlinxDelegate<T : Any>(
-        private val key: String,
-        private val type: KType,
+private class KotlinxDelegate<T : Any>(
+    private val key: String,
+    private val serializer: KSerializer<T>,
 ) : ReadWriteProperty<Krate, T?> {
-
-    @Suppress("UNCHECKED_CAST")
-    private inline val serializer: KSerializer<T>
-        get() = Json.serializersModule.serializer(type) as KSerializer<T>
-
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): T? {
         return if (!thisRef.sharedPreferences.contains(key)) {
             null
         } else {
             val string = requireNotNull(thisRef.sharedPreferences.getString(key, null))
-            Json.decodeFromString(serializer, string)
+            thisRef.internalJson.decodeFromString(serializer, string)
         }
     }
 
@@ -35,9 +31,19 @@ internal class KotlinxDelegate<T : Any>(
             }
         } else {
             thisRef.sharedPreferences.edit {
-                putString(key, Json.encodeToString(serializer, value))
+                putString(key, thisRef.internalJson.encodeToString(serializer, value))
             }
         }
     }
+}
 
+internal class KotlinxDelegateFactory<T : Any>(
+    private val key: String,
+    private val type: KType,
+) : PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
+    override fun provideDelegate(thisRef: Krate, property: KProperty<*>): ReadWriteProperty<Krate, T?> {
+        @Suppress("UNCHECKED_CAST")
+        val serializer = thisRef.internalJson.serializersModule.serializer(type) as KSerializer<T>
+        return KotlinxDelegate(key, serializer)
+    }
 }

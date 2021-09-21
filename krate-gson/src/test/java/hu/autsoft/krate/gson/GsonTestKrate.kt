@@ -28,14 +28,14 @@ internal class GsonTestKrate(context: Context) : SimpleKrate(context) {
 
     var validatedValue: TestModel
             by gsonPref(key = "validatedValue", defaultValue = DEFAULT_SIMPLE_VALUE)
-                    .validate { newValue ->
-                        newValue.x < newValue.y // arbitrary rule
-                    }
+                .validate { newValue ->
+                    newValue.x < newValue.y // arbitrary rule
+                }
 
     var validatedOptionalValue: List<TestModel>?
             by gsonPref<List<TestModel>>(key = "validatedOptionalValue")
-                    .validate { newValue ->
-                        newValue.isNullOrEmpty().not()
-                    }
+                .validate { newValue ->
+                    newValue.isNullOrEmpty().not()
+                }
 
 }

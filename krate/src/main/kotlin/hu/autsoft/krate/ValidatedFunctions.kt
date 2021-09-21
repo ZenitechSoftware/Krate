@@ -23,16 +23,16 @@ import kotlin.properties.ReadWriteProperty
  * an [IllegalArgumentException] will be thrown.
  */
 @Deprecated(
-        message = "Use .validate {} on a floatPref instead",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith(
-                "this.floatPref(key).validate(isValid)",
-                imports = arrayOf("hu.autsoft.krate.validation.validate"),
-        ),
+    message = "Use .validate {} on a floatPref instead",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        "this.floatPref(key).validate(isValid)",
+        imports = arrayOf("hu.autsoft.krate.validation.validate"),
+    ),
 )
 public fun Krate.floatPref(
-        key: String,
-        isValid: (newValue: Float?) -> Boolean,
+    key: String,
+    isValid: (newValue: Float?) -> Boolean,
 ): ReadWriteProperty<Krate, Float?> {
     return ValidatedPreferenceDelegate(FloatDelegate(key), isValid)
 }
@@ -44,17 +44,17 @@ public fun Krate.floatPref(
  * an [IllegalArgumentException] will be thrown.
  */
 @Deprecated(
-        message = "Use .validate {} on a floatPref instead",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith(
-                "this.floatPref(key, defaultValue).validate(isValid)",
-                imports = arrayOf("hu.autsoft.krate.validation.validate"),
-        ),
+    message = "Use .validate {} on a floatPref instead",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        "this.floatPref(key, defaultValue).validate(isValid)",
+        imports = arrayOf("hu.autsoft.krate.validation.validate"),
+    ),
 )
 public fun Krate.floatPref(
-        key: String,
-        defaultValue: Float,
-        isValid: (newValue: Float) -> Boolean,
+    key: String,
+    defaultValue: Float,
+    isValid: (newValue: Float) -> Boolean,
 ): ReadWriteProperty<Krate, Float> {
     return ValidatedPreferenceDelegate(FloatDelegateWithDefault(key, defaultValue), isValid)
 }
@@ -66,16 +66,16 @@ public fun Krate.floatPref(
  * an [IllegalArgumentException] will be thrown.
  */
 @Deprecated(
-        message = "Use .validate {} on an intPref instead",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith(
-                "this.intPref(key).validate(isValid)",
-                imports = arrayOf("hu.autsoft.krate.validation.validate"),
-        ),
+    message = "Use .validate {} on an intPref instead",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        "this.intPref(key).validate(isValid)",
+        imports = arrayOf("hu.autsoft.krate.validation.validate"),
+    ),
 )
 public fun Krate.intPref(
-        key: String,
-        isValid: (newValue: Int?) -> Boolean,
+    key: String,
+    isValid: (newValue: Int?) -> Boolean,
 ): ReadWriteProperty<Krate, Int?> {
     return ValidatedPreferenceDelegate(IntDelegate(key), isValid)
 }
@@ -87,17 +87,17 @@ public fun Krate.intPref(
  * an [IllegalArgumentException] will be thrown.
  */
 @Deprecated(
-        message = "Use .validate {} on an intPref instead",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith(
-                "this.intPref(key, defaultValue).validate(isValid)",
-                imports = arrayOf("hu.autsoft.krate.validation.validate"),
-        ),
+    message = "Use .validate {} on an intPref instead",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        "this.intPref(key, defaultValue).validate(isValid)",
+        imports = arrayOf("hu.autsoft.krate.validation.validate"),
+    ),
 )
 public fun Krate.intPref(
-        key: String,
-        defaultValue: Int,
-        isValid: (newValue: Int) -> Boolean,
+    key: String,
+    defaultValue: Int,
+    isValid: (newValue: Int) -> Boolean,
 ): ReadWriteProperty<Krate, Int> {
     return ValidatedPreferenceDelegate(IntDelegateWithDefault(key, defaultValue), isValid)
 }
@@ -109,16 +109,16 @@ public fun Krate.intPref(
  * an [IllegalArgumentException] will be thrown.
  */
 @Deprecated(
-        message = "Use .validate {} on a longPref instead",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith(
-                "this.longPref(key).validate(isValid)",
-                imports = arrayOf("hu.autsoft.krate.validation.validate"),
-        ),
+    message = "Use .validate {} on a longPref instead",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        "this.longPref(key).validate(isValid)",
+        imports = arrayOf("hu.autsoft.krate.validation.validate"),
+    ),
 )
 public fun Krate.longPref(
-        key: String,
-        isValid: (newValue: Long?) -> Boolean,
+    key: String,
+    isValid: (newValue: Long?) -> Boolean,
 ): ReadWriteProperty<Krate, Long?> {
     return ValidatedPreferenceDelegate(LongDelegate(key), isValid)
 }
@@ -130,17 +130,17 @@ public fun Krate.longPref(
  * an [IllegalArgumentException] will be thrown.
  */
 @Deprecated(
-        message = "Use .validate {} on a longPref instead",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith(
-                "this.longPref(key, defaultValue).validate(isValid)",
-                imports = arrayOf("hu.autsoft.krate.validation.validate"),
-        ),
+    message = "Use .validate {} on a longPref instead",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        "this.longPref(key, defaultValue).validate(isValid)",
+        imports = arrayOf("hu.autsoft.krate.validation.validate"),
+    ),
 )
 public fun Krate.longPref(
-        key: String,
-        defaultValue: Long,
-        isValid: (newValue: Long) -> Boolean,
+    key: String,
+    defaultValue: Long,
+    isValid: (newValue: Long) -> Boolean,
 ): ReadWriteProperty<Krate, Long> {
     return ValidatedPreferenceDelegate(LongDelegateWithDefault(key, defaultValue), isValid)
 }
@@ -152,16 +152,16 @@ public fun Krate.longPref(
  * an [IllegalArgumentException] will be thrown.
  */
 @Deprecated(
-        message = "Use .validate {} on a stringPref instead",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith(
-                "this.stringPref(key).validate(isValid)",
-                imports = arrayOf("hu.autsoft.krate.validation.validate"),
-        ),
+    message = "Use .validate {} on a stringPref instead",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        "this.stringPref(key).validate(isValid)",
+        imports = arrayOf("hu.autsoft.krate.validation.validate"),
+    ),
 )
 public fun Krate.stringPref(
-        key: String,
-        isValid: (newValue: String?) -> Boolean,
+    key: String,
+    isValid: (newValue: String?) -> Boolean,
 ): ReadWriteProperty<Krate, String?> {
     return ValidatedPreferenceDelegate(StringDelegate(key), isValid)
 }
@@ -173,17 +173,17 @@ public fun Krate.stringPref(
  * an [IllegalArgumentException] will be thrown.
  */
 @Deprecated(
-        message = "Use .validate {} on a stringPref instead",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith(
-                "this.stringPref(key, defaultValue).validate(isValid)",
-                imports = arrayOf("hu.autsoft.krate.validation.validate"),
-        ),
+    message = "Use .validate {} on a stringPref instead",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        "this.stringPref(key, defaultValue).validate(isValid)",
+        imports = arrayOf("hu.autsoft.krate.validation.validate"),
+    ),
 )
 public fun Krate.stringPref(
-        key: String,
-        defaultValue: String,
-        isValid: (newValue: String) -> Boolean,
+    key: String,
+    defaultValue: String,
+    isValid: (newValue: String) -> Boolean,
 ): ReadWriteProperty<Krate, String> {
     return ValidatedPreferenceDelegate(StringDelegateWithDefault(key, defaultValue), isValid)
 }
@@ -195,16 +195,16 @@ public fun Krate.stringPref(
  * an [IllegalArgumentException] will be thrown.
  */
 @Deprecated(
-        message = "Use .validate {} on a stringSetPref instead",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith(
-                "this.stringSetPref(key).validate(isValid)",
-                imports = arrayOf("hu.autsoft.krate.validation.validate"),
-        ),
+    message = "Use .validate {} on a stringSetPref instead",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        "this.stringSetPref(key).validate(isValid)",
+        imports = arrayOf("hu.autsoft.krate.validation.validate"),
+    ),
 )
 public fun Krate.stringSetPref(
-        key: String,
-        isValid: (newValue: Set<String>?) -> Boolean,
+    key: String,
+    isValid: (newValue: Set<String>?) -> Boolean,
 ): ReadWriteProperty<Krate, Set<String>?> {
     return ValidatedPreferenceDelegate(StringSetDelegate(key), isValid)
 }
@@ -216,17 +216,17 @@ public fun Krate.stringSetPref(
  * an [IllegalArgumentException] will be thrown.
  */
 @Deprecated(
-        message = "Use .validate {} on a stringSetPref instead",
-        level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith(
-                "this.stringSetPref(key, defaultValue).validate(isValid)",
-                imports = arrayOf("hu.autsoft.krate.validation.validate"),
-        ),
+    message = "Use .validate {} on a stringSetPref instead",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        "this.stringSetPref(key, defaultValue).validate(isValid)",
+        imports = arrayOf("hu.autsoft.krate.validation.validate"),
+    ),
 )
 public fun Krate.stringSetPref(
-        key: String,
-        defaultValue: Set<String>,
-        isValid: (newValue: Set<String>) -> Boolean,
+    key: String,
+    defaultValue: Set<String>,
+    isValid: (newValue: Set<String>) -> Boolean,
 ): ReadWriteProperty<Krate, Set<String>> {
     return ValidatedPreferenceDelegate(StringSetDelegateWithDefault(key, defaultValue), isValid)
 }

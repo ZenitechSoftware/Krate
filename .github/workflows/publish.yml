@@ -1,9 +1,8 @@
 name: Publish
 
 on:
-  push:
-    tags:
-      - "*-RELEASE"
+  release:
+    types: [ released ]
 
 jobs:
   publish:
@@ -12,10 +11,11 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
         with:
-          java-version: 1.8
+          distribution: adopt
+          java-version: 11
       - name: Release build and source jar generation
         run: ./gradlew assembleRelease androidSourcesJar -x :app:assembleRelease
       - name: Publish to MavenCentral

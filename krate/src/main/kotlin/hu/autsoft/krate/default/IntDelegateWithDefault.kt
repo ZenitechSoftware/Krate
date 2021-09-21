@@ -6,8 +6,8 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 internal class IntDelegateWithDefault(
-        private val key: String,
-        private val default: Int,
+    private val key: String,
+    private val default: Int,
 ) : ReadWriteProperty<Krate, Int> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): Int {

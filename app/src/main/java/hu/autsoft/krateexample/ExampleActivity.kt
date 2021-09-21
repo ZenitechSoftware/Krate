@@ -2,10 +2,10 @@ package hu.autsoft.krateexample
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import hu.autsoft.krateexample.databinding.ActivityExampleBinding
 import hu.autsoft.krateexample.krates.ExampleCustomKrate
 import hu.autsoft.krateexample.krates.ExampleSettings
 import hu.autsoft.krateexample.krates.ExampleSimpleKrate
-import kotlinx.android.synthetic.main.activity_example.*
 
 class ExampleActivity : AppCompatActivity() {
 
@@ -17,9 +17,13 @@ class ExampleActivity : AppCompatActivity() {
 
     lateinit var exampleSettings: ExampleSettings
 
+    private lateinit var binding: ActivityExampleBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_example)
+
+        binding = ActivityExampleBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         when (intent.getStringExtra(KEY_KRATE_TYPE)) {
             TYPE_SIMPLE -> {
@@ -37,23 +41,24 @@ class ExampleActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        booleanPreference.isChecked = exampleSettings.exampleBoolean
-        floatPreferenceInput.setText(exampleSettings.exampleFloat.toString())
-        intPreferenceInput.setText(exampleSettings.exampleInt.toString())
-        longPreferenceInput.setText(exampleSettings.exampleLong.toString())
-        stringPreferenceInput.setText(exampleSettings.exampleString)
-        stringSetPreferenceInput.setText(exampleSettings.exampleStringSet.joinToString(separator = ", "))
+        binding.booleanPreference.isChecked = exampleSettings.exampleBoolean
+        binding.floatPreferenceInput.setText(exampleSettings.exampleFloat.toString())
+        binding.intPreferenceInput.setText(exampleSettings.exampleInt.toString())
+        binding.longPreferenceInput.setText(exampleSettings.exampleLong.toString())
+        binding.stringPreferenceInput.setText(exampleSettings.exampleString)
+        binding.stringSetPreferenceInput.setText(exampleSettings.exampleStringSet.joinToString(separator = ", "))
     }
 
     override fun onPause() {
         super.onPause()
 
-        exampleSettings.exampleBoolean = booleanPreference.isChecked
-        exampleSettings.exampleFloat = floatPreferenceInput.text.toString().toFloat()
-        exampleSettings.exampleInt = intPreferenceInput.text.toString().toInt()
-        exampleSettings.exampleLong = longPreferenceInput.text.toString().toLong()
-        exampleSettings.exampleString = stringPreferenceInput.text.toString()
-        exampleSettings.exampleStringSet = stringSetPreferenceInput.text.toString().split(",").map(String::trim).toSet()
+        exampleSettings.exampleBoolean = binding.booleanPreference.isChecked
+        exampleSettings.exampleFloat = binding.floatPreferenceInput.text.toString().toFloat()
+        exampleSettings.exampleInt = binding.intPreferenceInput.text.toString().toInt()
+        exampleSettings.exampleLong = binding.longPreferenceInput.text.toString().toLong()
+        exampleSettings.exampleString = binding.stringPreferenceInput.text.toString()
+        exampleSettings.exampleStringSet =
+            binding.stringSetPreferenceInput.text.toString().split(",").map(String::trim).toSet()
     }
 
 }
