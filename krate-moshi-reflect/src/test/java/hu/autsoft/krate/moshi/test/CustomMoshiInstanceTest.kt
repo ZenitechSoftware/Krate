@@ -82,8 +82,8 @@ internal class CustomMoshiInstanceTest {
 
     private fun createCustomTestMoshi(): Moshi {
         return Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
+            .add(KotlinJsonAdapterFactory())
+            .build()
     }
 
 }

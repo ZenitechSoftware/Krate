@@ -28,14 +28,14 @@ internal class MoshiTestKrate(context: Context) : SimpleKrate(context) {
 
     var validatedValue: TestModel
             by moshiPref(key = "validatedValue", defaultValue = DEFAULT_SIMPLE_VALUE)
-                    .validate { newValue ->
-                        newValue.x < newValue.y // arbitrary rule
-                    }
+                .validate { newValue ->
+                    newValue.x < newValue.y // arbitrary rule
+                }
 
     var validatedOptionalValue: List<TestModel>?
             by moshiPref<List<TestModel>>(key = "validatedOptionalValue")
-                    .validate { newValue ->
-                        newValue.isNullOrEmpty().not() // arbitrary rule
-                    }
+                .validate { newValue ->
+                    newValue.isNullOrEmpty().not() // arbitrary rule
+                }
 
 }

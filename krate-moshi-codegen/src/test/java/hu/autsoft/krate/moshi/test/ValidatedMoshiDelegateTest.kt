@@ -41,8 +41,8 @@ internal class ValidatedMoshiDelegateTest {
     @Test
     fun testValidOptionalValue() {
         val newValue = listOf(
-                TestModel(20, 21.0, ""),
-                TestModel(10, 5.0, "")
+            TestModel(20, 21.0, ""),
+            TestModel(10, 5.0, "")
         )
 
         krate.validatedOptionalValue = newValue

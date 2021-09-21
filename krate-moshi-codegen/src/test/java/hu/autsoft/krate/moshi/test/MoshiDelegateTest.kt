@@ -47,9 +47,9 @@ internal class MoshiDelegateTest {
     @Test
     fun testSetListOfValues() {
         val list = listOf(
-                TestModel(x = 42, y = 3.141592, z = "shibboleth"),
-                TestModel(x = 13, y = 6.283185, z = "signal"),
-                TestModel(x = 34, y = 2.718182, z = "bingo")
+            TestModel(x = 42, y = 3.141592, z = "shibboleth"),
+            TestModel(x = 13, y = 6.283185, z = "signal"),
+            TestModel(x = 34, y = 2.718182, z = "bingo")
         )
 
         krate.listOfValues = list
@@ -60,9 +60,9 @@ internal class MoshiDelegateTest {
     @Test
     fun testRemoveListOfValues() {
         val list = listOf(
-                TestModel(x = 42, y = 3.141592, z = "shibboleth"),
-                TestModel(x = 13, y = 6.283185, z = "signal"),
-                TestModel(x = 34, y = 2.718182, z = "bingo")
+            TestModel(x = 42, y = 3.141592, z = "shibboleth"),
+            TestModel(x = 13, y = 6.283185, z = "signal"),
+            TestModel(x = 34, y = 2.718182, z = "bingo")
         )
 
         krate.listOfValues = list
