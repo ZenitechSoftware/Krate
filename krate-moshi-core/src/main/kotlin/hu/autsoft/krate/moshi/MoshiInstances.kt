@@ -8,10 +8,10 @@ internal val moshiInstances: MutableMap<Krate, Moshi> = mutableMapOf<Krate, Mosh
         defaultMoshi
     } catch (e: Throwable) {
         throw IllegalStateException(
-            message = "Do not use krate-moshi-core directly. Either krate-moshi-codegen (if you only use Moshi" +
+            "Do not use krate-moshi-core directly. Either krate-moshi-codegen (if you only use Moshi" +
                     " with codegen) or krate-moshi-reflect (if you use Moshi via reflection at all) should be" +
                     " included as a dependency!",
-            cause = e
+            e
         )
     }
 }
