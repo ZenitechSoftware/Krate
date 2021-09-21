@@ -4,7 +4,6 @@ import hu.autsoft.krate.Krate
 import hu.autsoft.krate.kotlinx.internalJson
 import hu.autsoft.krate.kotlinx.util.edit
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 import kotlin.properties.PropertyDelegateProvider
 import kotlin.properties.ReadWriteProperty
@@ -21,12 +20,12 @@ private class KotlinxDelegateWithDefault<T : Any>(
             return default
         }
         val string = requireNotNull(thisRef.sharedPreferences.getString(key, null))
-        return Json.decodeFromString(serializer, string)
+        return thisRef.internalJson.decodeFromString(serializer, string)
     }
 
     override operator fun setValue(thisRef: Krate, property: KProperty<*>, value: T) {
         thisRef.sharedPreferences.edit {
-            putString(key, Json.encodeToString(serializer, value))
+            putString(key, thisRef.internalJson.encodeToString(serializer, value))
         }
     }
 }

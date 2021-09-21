@@ -4,7 +4,6 @@ import hu.autsoft.krate.Krate
 import hu.autsoft.krate.kotlinx.internalJson
 import hu.autsoft.krate.kotlinx.util.edit
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 import kotlin.properties.PropertyDelegateProvider
 import kotlin.properties.ReadWriteProperty
@@ -21,7 +20,7 @@ private class KotlinxDelegate<T : Any>(
             null
         } else {
             val string = requireNotNull(thisRef.sharedPreferences.getString(key, null))
-            Json.decodeFromString(serializer, string)
+            thisRef.internalJson.decodeFromString(serializer, string)
         }
     }
 
@@ -32,7 +31,7 @@ private class KotlinxDelegate<T : Any>(
             }
         } else {
             thisRef.sharedPreferences.edit {
-                putString(key, Json.encodeToString(serializer, value))
+                putString(key, thisRef.internalJson.encodeToString(serializer, value))
             }
         }
     }
