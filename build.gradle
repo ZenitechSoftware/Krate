@@ -1,14 +1,14 @@
 buildscript {
-    ext.kotlin_version = '1.5.20'
+    ext.kotlin_version = '1.5.31'
     ext.krate_version = '1.1.0'
 
     ext.moshi_version = '1.12.0'
     ext.junit_version = '4.13.2'
-    ext.robolectric_version = '4.5.1'
+    ext.robolectric_version = '4.6.1'
 
     ext.min_sdk = 15
-    ext.compile_sdk = 29
-    ext.target_sdk = 29
+    ext.compile_sdk = 31
+    ext.target_sdk = 31
 
     repositories {
         google()
@@ -17,7 +17,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath 'com.android.tools.build:gradle:7.0.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
         classpath "io.github.gradle-nexus:publish-plugin:1.1.0"

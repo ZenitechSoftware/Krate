@@ -12,10 +12,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
-
     buildFeatures {
         buildConfig false
     }
@@ -34,7 +30,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 dependencies {
     implementation project(':krate')
 
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2"
 
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.robolectric:robolectric:$robolectric_version"
