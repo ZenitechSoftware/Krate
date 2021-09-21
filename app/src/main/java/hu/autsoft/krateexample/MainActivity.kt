@@ -3,22 +3,26 @@ package hu.autsoft.krateexample
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import hu.autsoft.krateexample.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        btnSimpleKrate.setOnClickListener {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.btnSimpleKrate.setOnClickListener {
             val intent = Intent(this, ExampleActivity::class.java)
-                    .putExtra(ExampleActivity.KEY_KRATE_TYPE, ExampleActivity.TYPE_SIMPLE)
+                .putExtra(ExampleActivity.KEY_KRATE_TYPE, ExampleActivity.TYPE_SIMPLE)
             startActivity(intent)
         }
-        btnCustomKrate.setOnClickListener {
+        binding.btnCustomKrate.setOnClickListener {
             val intent = Intent(this, ExampleActivity::class.java)
-                    .putExtra(ExampleActivity.KEY_KRATE_TYPE, ExampleActivity.TYPE_CUSTOM)
+                .putExtra(ExampleActivity.KEY_KRATE_TYPE, ExampleActivity.TYPE_CUSTOM)
             startActivity(intent)
         }
     }
