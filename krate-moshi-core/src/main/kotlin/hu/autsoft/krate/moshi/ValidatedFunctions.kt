@@ -19,7 +19,7 @@ import kotlin.reflect.typeOf
 @OptIn(ExperimentalStdlibApi::class)
 @Deprecated(
         message = "Use .validate {} on a moshiPref instead",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
         replaceWith = ReplaceWith(
                 "this.moshiPref<T>(key).validate(isValid)",
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
@@ -49,7 +49,7 @@ internal fun <T : Any> Krate.moshiPrefImpl(
 @OptIn(ExperimentalStdlibApi::class)
 @Deprecated(
         message = "Use .validate {} on a moshiPref instead",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
         replaceWith = ReplaceWith(
                 "this.moshiPref(key, defaultValue).validate(isValid)",
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),

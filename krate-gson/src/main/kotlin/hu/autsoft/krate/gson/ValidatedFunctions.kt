@@ -17,7 +17,7 @@ import kotlin.properties.ReadWriteProperty
  */
 @Deprecated(
         message = "Use .validate {} on a gsonPref instead",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
         replaceWith = ReplaceWith(
                 "this.gsonPref<T>(key).validate(isValid)",
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
@@ -46,7 +46,7 @@ internal fun <T : Any> Krate.gsonPrefImpl(
  */
 @Deprecated(
         message = "Use .validate {} on a gsonPref instead",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
         replaceWith = ReplaceWith(
                 "this.gsonPref(key, defaultValue).validate(isValid)",
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),

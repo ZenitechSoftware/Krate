@@ -2,17 +2,9 @@
 
 package hu.autsoft.krate
 
-import hu.autsoft.krate.default.FloatDelegateWithDefault
-import hu.autsoft.krate.default.IntDelegateWithDefault
-import hu.autsoft.krate.default.LongDelegateWithDefault
-import hu.autsoft.krate.default.StringDelegateWithDefault
-import hu.autsoft.krate.default.StringSetDelegateWithDefault
+import hu.autsoft.krate.default.*
 import hu.autsoft.krate.internal.InternalKrateApi
-import hu.autsoft.krate.optional.FloatDelegate
-import hu.autsoft.krate.optional.IntDelegate
-import hu.autsoft.krate.optional.LongDelegate
-import hu.autsoft.krate.optional.StringDelegate
-import hu.autsoft.krate.optional.StringSetDelegate
+import hu.autsoft.krate.optional.*
 import hu.autsoft.krate.validation.ValidatedPreferenceDelegate
 import kotlin.properties.ReadWriteProperty
 
@@ -24,7 +16,7 @@ import kotlin.properties.ReadWriteProperty
  */
 @Deprecated(
         message = "Use .validate {} on a floatPref instead",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
         replaceWith = ReplaceWith(
                 "this.floatPref(key).validate(isValid)",
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
@@ -45,7 +37,7 @@ public fun Krate.floatPref(
  */
 @Deprecated(
         message = "Use .validate {} on a floatPref instead",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
         replaceWith = ReplaceWith(
                 "this.floatPref(key, defaultValue).validate(isValid)",
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
@@ -67,7 +59,7 @@ public fun Krate.floatPref(
  */
 @Deprecated(
         message = "Use .validate {} on an intPref instead",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
         replaceWith = ReplaceWith(
                 "this.intPref(key).validate(isValid)",
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
@@ -88,7 +80,7 @@ public fun Krate.intPref(
  */
 @Deprecated(
         message = "Use .validate {} on an intPref instead",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
         replaceWith = ReplaceWith(
                 "this.intPref(key, defaultValue).validate(isValid)",
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
@@ -110,7 +102,7 @@ public fun Krate.intPref(
  */
 @Deprecated(
         message = "Use .validate {} on a longPref instead",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
         replaceWith = ReplaceWith(
                 "this.longPref(key).validate(isValid)",
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
@@ -131,7 +123,7 @@ public fun Krate.longPref(
  */
 @Deprecated(
         message = "Use .validate {} on a longPref instead",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
         replaceWith = ReplaceWith(
                 "this.longPref(key, defaultValue).validate(isValid)",
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
@@ -153,7 +145,7 @@ public fun Krate.longPref(
  */
 @Deprecated(
         message = "Use .validate {} on a stringPref instead",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
         replaceWith = ReplaceWith(
                 "this.stringPref(key).validate(isValid)",
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
@@ -174,7 +166,7 @@ public fun Krate.stringPref(
  */
 @Deprecated(
         message = "Use .validate {} on a stringPref instead",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
         replaceWith = ReplaceWith(
                 "this.stringPref(key, defaultValue).validate(isValid)",
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
@@ -196,7 +188,7 @@ public fun Krate.stringPref(
  */
 @Deprecated(
         message = "Use .validate {} on a stringSetPref instead",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
         replaceWith = ReplaceWith(
                 "this.stringSetPref(key).validate(isValid)",
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
@@ -217,7 +209,7 @@ public fun Krate.stringSetPref(
  */
 @Deprecated(
         message = "Use .validate {} on a stringSetPref instead",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
         replaceWith = ReplaceWith(
                 "this.stringSetPref(key, defaultValue).validate(isValid)",
                 imports = arrayOf("hu.autsoft.krate.validation.validate"),
