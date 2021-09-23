@@ -1,14 +1,17 @@
+@file:OptIn(InternalKrateApi::class)
+
 package hu.autsoft.krate.default
 
 import hu.autsoft.krate.Krate
+import hu.autsoft.krate.base.KeyDelegate
+import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.util.edit
-import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 internal class StringDelegateWithDefault(
-    private val key: String,
+    key: String,
     private val default: String,
-) : ReadWriteProperty<Krate, String> {
+) : KeyDelegate<String>(key) {
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): String {

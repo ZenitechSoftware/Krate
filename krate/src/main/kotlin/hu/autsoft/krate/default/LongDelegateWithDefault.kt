@@ -1,14 +1,17 @@
+@file:OptIn(InternalKrateApi::class)
+
 package hu.autsoft.krate.default
 
 import hu.autsoft.krate.Krate
+import hu.autsoft.krate.base.KeyDelegate
+import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.util.edit
-import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 internal class LongDelegateWithDefault(
-    private val key: String,
+    key: String,
     private val default: Long,
-) : ReadWriteProperty<Krate, Long> {
+) : KeyDelegate<Long>(key) {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): Long {
         return thisRef.sharedPreferences.getLong(key, default)

@@ -1,20 +1,24 @@
+@file:OptIn(InternalKrateApi::class)
+
 package hu.autsoft.krate.gson.default
 
 import com.google.gson.TypeAdapter
 import com.google.gson.reflect.TypeToken
 import hu.autsoft.krate.Krate
+import hu.autsoft.krate.base.KeyDelegate
+import hu.autsoft.krate.base.KeyDelegateProvider
 import hu.autsoft.krate.gson.internalGson
 import hu.autsoft.krate.gson.util.edit
+import hu.autsoft.krate.internal.InternalKrateApi
 import java.lang.reflect.Type
-import kotlin.properties.PropertyDelegateProvider
-import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 private class GsonDelegateWithDefault<T : Any>(
-    private val key: String,
+    key: String,
     private val default: T,
     private val adapter: TypeAdapter<T>,
-) : ReadWriteProperty<Krate, T> {
+) : KeyDelegate<T>(key) {
+
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): T {
         if (!thisRef.sharedPreferences.contains(key)) {
             return default
@@ -35,8 +39,9 @@ internal class GsonDelegateWithDefaultFactory<T : Any>(
     private val key: String,
     private val default: T,
     private val type: Type,
-) : PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
-    override fun provideDelegate(thisRef: Krate, property: KProperty<*>): ReadWriteProperty<Krate, T> {
+) : KeyDelegateProvider<T>() {
+
+    override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyDelegate<T> {
         @Suppress("UNCHECKED_CAST")
         val adapter: TypeAdapter<T> = thisRef.internalGson.getAdapter(TypeToken.get(type)) as TypeAdapter<T>
         return GsonDelegateWithDefault(key, default, adapter)

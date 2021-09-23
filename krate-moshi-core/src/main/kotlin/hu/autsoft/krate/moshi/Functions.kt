@@ -1,13 +1,14 @@
-@file:Suppress("unused")
+@file:[Suppress("unused") OptIn(InternalKrateApi::class)]
 
 package hu.autsoft.krate.moshi
 
 import hu.autsoft.krate.Krate
+import hu.autsoft.krate.base.KeyDelegate
+import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.moshi.default.MoshiDelegateWithDefaultFactory
 import hu.autsoft.krate.moshi.optional.MoshiDelegateFactory
 import java.lang.reflect.Type
 import kotlin.properties.PropertyDelegateProvider
-import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.javaType
 import kotlin.reflect.typeOf
 
@@ -18,7 +19,7 @@ import kotlin.reflect.typeOf
 @OptIn(ExperimentalStdlibApi::class)
 public inline fun <reified T : Any> Krate.moshiPref(
     key: String,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
+): PropertyDelegateProvider<Krate, KeyDelegate<T?>> {
     return moshiPrefImpl(key, typeOf<T>().javaType)
 }
 
@@ -26,7 +27,7 @@ public inline fun <reified T : Any> Krate.moshiPref(
 internal fun <T : Any> Krate.moshiPrefImpl(
     key: String,
     type: Type,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
+): PropertyDelegateProvider<Krate, KeyDelegate<T?>> {
     return MoshiDelegateFactory(key, type)
 }
 
@@ -38,7 +39,7 @@ internal fun <T : Any> Krate.moshiPrefImpl(
 public inline fun <reified T : Any> Krate.moshiPref(
     key: String,
     defaultValue: T,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
+): PropertyDelegateProvider<Krate, KeyDelegate<T>> {
     return moshiPrefImpl(key, defaultValue, typeOf<T>().javaType)
 }
 
@@ -47,6 +48,6 @@ internal fun <T : Any> Krate.moshiPrefImpl(
     key: String,
     defaultValue: T,
     type: Type,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
+): PropertyDelegateProvider<Krate, KeyDelegate<T>> {
     return MoshiDelegateWithDefaultFactory(key, defaultValue, type)
 }

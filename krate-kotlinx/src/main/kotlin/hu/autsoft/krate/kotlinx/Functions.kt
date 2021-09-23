@@ -1,12 +1,13 @@
-@file:Suppress("unused")
+@file:[Suppress("unused") OptIn(InternalKrateApi::class)]
 
 package hu.autsoft.krate.kotlinx
 
 import hu.autsoft.krate.Krate
+import hu.autsoft.krate.base.KeyDelegate
+import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.kotlinx.default.KotlinxDelegateWithDefaultFactory
 import hu.autsoft.krate.kotlinx.optional.KotlinxDelegateFactory
 import kotlin.properties.PropertyDelegateProvider
-import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
@@ -17,7 +18,7 @@ import kotlin.reflect.typeOf
 @OptIn(ExperimentalStdlibApi::class)
 public inline fun <reified T : Any> Krate.kotlinxPref(
     key: String,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
+): PropertyDelegateProvider<Krate, KeyDelegate<T?>> {
     return kotlinxPrefImpl(key, typeOf<T>())
 }
 
@@ -25,7 +26,7 @@ public inline fun <reified T : Any> Krate.kotlinxPref(
 internal fun <T : Any> Krate.kotlinxPrefImpl(
     key: String,
     type: KType,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
+): PropertyDelegateProvider<Krate, KeyDelegate<T?>> {
     return KotlinxDelegateFactory(key, type)
 }
 
@@ -37,7 +38,7 @@ internal fun <T : Any> Krate.kotlinxPrefImpl(
 public inline fun <reified T : Any> Krate.kotlinxPref(
     key: String,
     defaultValue: T,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
+): PropertyDelegateProvider<Krate, KeyDelegate<T>> {
     return kotlinxPrefImpl(key, defaultValue, typeOf<T>())
 }
 
@@ -46,6 +47,6 @@ internal fun <T : Any> Krate.kotlinxPrefImpl(
     key: String,
     defaultValue: T,
     type: KType,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
+): PropertyDelegateProvider<Krate, KeyDelegate<T>> {
     return KotlinxDelegateWithDefaultFactory(key, defaultValue, type)
 }
