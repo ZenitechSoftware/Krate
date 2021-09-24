@@ -3,8 +3,8 @@
 package hu.autsoft.krate.moshi
 
 import hu.autsoft.krate.Krate
+import hu.autsoft.krate.default.DelegateWithDefaultFactory
 import hu.autsoft.krate.internal.InternalKrateApi
-import hu.autsoft.krate.moshi.default.MoshiDelegateWithDefaultFactory
 import hu.autsoft.krate.moshi.optional.MoshiDelegateFactory
 import hu.autsoft.krate.validation.ValidatedPreferenceDelegateFactory
 import java.lang.reflect.Type
@@ -71,5 +71,5 @@ internal fun <T : Any> Krate.moshiPrefImpl(
     type: Type,
     isValid: (newValue: T) -> Boolean,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
-    return ValidatedPreferenceDelegateFactory(MoshiDelegateWithDefaultFactory(key, defaultValue, type), isValid)
+    return ValidatedPreferenceDelegateFactory(DelegateWithDefaultFactory(MoshiDelegateFactory(key, type), defaultValue), isValid)
 }

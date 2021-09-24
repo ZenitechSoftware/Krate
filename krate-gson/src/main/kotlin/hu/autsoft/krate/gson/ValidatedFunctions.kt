@@ -4,7 +4,7 @@ package hu.autsoft.krate.gson
 
 import com.google.gson.reflect.TypeToken
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.gson.default.GsonDelegateWithDefaultFactory
+import hu.autsoft.krate.default.DelegateWithDefaultFactory
 import hu.autsoft.krate.gson.optional.GsonDelegateFactory
 import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.validation.ValidatedPreferenceDelegateFactory
@@ -68,5 +68,5 @@ internal fun <T : Any> Krate.gsonPrefImpl(
     type: Type,
     isValid: (newValue: T) -> Boolean,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
-    return ValidatedPreferenceDelegateFactory(GsonDelegateWithDefaultFactory(key, defaultValue, type), isValid)
+    return ValidatedPreferenceDelegateFactory(DelegateWithDefaultFactory(GsonDelegateFactory(key, type), defaultValue), isValid)
 }

@@ -1,15 +1,16 @@
-@file:[Suppress("unused") OptIn(InternalKrateApi::class)]
+@file:Suppress("unused")
 
 package hu.autsoft.krate.gson
 
 import com.google.gson.reflect.TypeToken
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.base.KeyDelegate
-import hu.autsoft.krate.gson.default.GsonDelegateWithDefaultFactory
+import hu.autsoft.krate.base.KeyDelegateProvider
+import hu.autsoft.krate.default.DelegateWithDefaultFactory
 import hu.autsoft.krate.gson.optional.GsonDelegateFactory
 import hu.autsoft.krate.internal.InternalKrateApi
 import java.lang.reflect.Type
 import kotlin.properties.PropertyDelegateProvider
+import kotlin.properties.ReadWriteProperty
 
 /**
  * Creates an optional preference of type T with the given [key] in this [Krate] instance.
@@ -17,7 +18,7 @@ import kotlin.properties.PropertyDelegateProvider
  */
 public inline fun <reified T : Any> Krate.gsonPref(
     key: String,
-): PropertyDelegateProvider<Krate, KeyDelegate<T?>> {
+): KeyDelegateProvider<T?> {
     return gsonPrefImpl(key, object : TypeToken<T>() {}.type)
 }
 
@@ -25,7 +26,7 @@ public inline fun <reified T : Any> Krate.gsonPref(
 internal fun <T : Any> Krate.gsonPrefImpl(
     key: String,
     type: Type,
-): PropertyDelegateProvider<Krate, KeyDelegate<T?>> {
+): KeyDelegateProvider<T?> {
     return GsonDelegateFactory(key, type)
 }
 
@@ -33,10 +34,18 @@ internal fun <T : Any> Krate.gsonPrefImpl(
  * Creates a non-optional preference of type T with the given [key] and [defaultValue] in this [Krate] instance.
  * This instance will be serialized using Gson.
  */
+@Deprecated(
+    message = "Use .withDefault() on a gsonPref instead",
+    level = DeprecationLevel.WARNING,
+    replaceWith = ReplaceWith(
+        "this.gsonPref(key).withDefault(defaultValue)",
+        imports = arrayOf("hu.autsoft.krate.default.withDefault"),
+    ),
+)
 public inline fun <reified T : Any> Krate.gsonPref(
     key: String,
     defaultValue: T,
-): PropertyDelegateProvider<Krate, KeyDelegate<T>> {
+): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
     return gsonPrefImpl(key, defaultValue, object : TypeToken<T>() {}.type)
 }
 
@@ -45,6 +54,7 @@ internal fun <T : Any> Krate.gsonPrefImpl(
     key: String,
     defaultValue: T,
     type: Type,
-): PropertyDelegateProvider<Krate, KeyDelegate<T>> {
-    return GsonDelegateWithDefaultFactory(key, defaultValue, type)
+): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
+    @OptIn(InternalKrateApi::class)
+    return DelegateWithDefaultFactory(GsonDelegateFactory(key, type), defaultValue)
 }

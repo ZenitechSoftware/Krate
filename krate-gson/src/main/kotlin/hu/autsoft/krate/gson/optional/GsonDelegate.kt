@@ -1,5 +1,3 @@
-@file:OptIn(InternalKrateApi::class)
-
 package hu.autsoft.krate.gson.optional
 
 import com.google.gson.TypeAdapter
@@ -9,7 +7,6 @@ import hu.autsoft.krate.base.KeyDelegate
 import hu.autsoft.krate.base.KeyDelegateProvider
 import hu.autsoft.krate.gson.internalGson
 import hu.autsoft.krate.gson.util.edit
-import hu.autsoft.krate.internal.InternalKrateApi
 import java.lang.reflect.Type
 import kotlin.reflect.KProperty
 
@@ -22,7 +19,7 @@ private class GsonDelegate<T : Any>(
         return if (!thisRef.sharedPreferences.contains(key)) {
             null
         } else {
-            val string = thisRef.sharedPreferences.getString(key, null)
+            val string = requireNotNull(thisRef.sharedPreferences.getString(key, null))
             adapter.fromJson(string)
         }
     }

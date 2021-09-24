@@ -2,17 +2,9 @@
 
 package hu.autsoft.krate
 
-import hu.autsoft.krate.default.FloatDelegateWithDefault
-import hu.autsoft.krate.default.IntDelegateWithDefault
-import hu.autsoft.krate.default.LongDelegateWithDefault
-import hu.autsoft.krate.default.StringDelegateWithDefault
-import hu.autsoft.krate.default.StringSetDelegateWithDefault
+import hu.autsoft.krate.default.withDefault
 import hu.autsoft.krate.internal.InternalKrateApi
-import hu.autsoft.krate.optional.FloatDelegate
-import hu.autsoft.krate.optional.IntDelegate
-import hu.autsoft.krate.optional.LongDelegate
-import hu.autsoft.krate.optional.StringDelegate
-import hu.autsoft.krate.optional.StringSetDelegate
+import hu.autsoft.krate.optional.*
 import hu.autsoft.krate.validation.ValidatedPreferenceDelegate
 import kotlin.properties.ReadWriteProperty
 
@@ -47,8 +39,8 @@ public fun Krate.floatPref(
     message = "Use .validate {} on a floatPref instead",
     level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
-        "this.floatPref(key, defaultValue).validate(isValid)",
-        imports = arrayOf("hu.autsoft.krate.validation.validate"),
+        "this.floatPref(key).withDefault(defaultValue).validate(isValid)",
+        imports = arrayOf("hu.autsoft.krate.default.withDefault", "hu.autsoft.krate.validation.validate"),
     ),
 )
 public fun Krate.floatPref(
@@ -56,7 +48,7 @@ public fun Krate.floatPref(
     defaultValue: Float,
     isValid: (newValue: Float) -> Boolean,
 ): ReadWriteProperty<Krate, Float> {
-    return ValidatedPreferenceDelegate(FloatDelegateWithDefault(key, defaultValue), isValid)
+    return ValidatedPreferenceDelegate(FloatDelegate(key).withDefault(defaultValue), isValid)
 }
 
 /**
@@ -90,8 +82,8 @@ public fun Krate.intPref(
     message = "Use .validate {} on an intPref instead",
     level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
-        "this.intPref(key, defaultValue).validate(isValid)",
-        imports = arrayOf("hu.autsoft.krate.validation.validate"),
+        "this.intPref(key).withDefault(defaultValue).validate(isValid)",
+        imports = arrayOf("hu.autsoft.krate.default.withDefault", "hu.autsoft.krate.validation.validate"),
     ),
 )
 public fun Krate.intPref(
@@ -99,7 +91,7 @@ public fun Krate.intPref(
     defaultValue: Int,
     isValid: (newValue: Int) -> Boolean,
 ): ReadWriteProperty<Krate, Int> {
-    return ValidatedPreferenceDelegate(IntDelegateWithDefault(key, defaultValue), isValid)
+    return ValidatedPreferenceDelegate(IntDelegate(key).withDefault(defaultValue), isValid)
 }
 
 /**
@@ -133,8 +125,8 @@ public fun Krate.longPref(
     message = "Use .validate {} on a longPref instead",
     level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
-        "this.longPref(key, defaultValue).validate(isValid)",
-        imports = arrayOf("hu.autsoft.krate.validation.validate"),
+        "this.longPref(key).withDefault(defaultValue).validate(isValid)",
+        imports = arrayOf("hu.autsoft.krate.default.withDefault", "hu.autsoft.krate.validation.validate"),
     ),
 )
 public fun Krate.longPref(
@@ -142,7 +134,7 @@ public fun Krate.longPref(
     defaultValue: Long,
     isValid: (newValue: Long) -> Boolean,
 ): ReadWriteProperty<Krate, Long> {
-    return ValidatedPreferenceDelegate(LongDelegateWithDefault(key, defaultValue), isValid)
+    return ValidatedPreferenceDelegate(LongDelegate(key).withDefault(defaultValue), isValid)
 }
 
 /**
@@ -176,8 +168,8 @@ public fun Krate.stringPref(
     message = "Use .validate {} on a stringPref instead",
     level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
-        "this.stringPref(key, defaultValue).validate(isValid)",
-        imports = arrayOf("hu.autsoft.krate.validation.validate"),
+        "this.stringPref(key).withDefault(defaultValue).validate(isValid)",
+        imports = arrayOf("hu.autsoft.krate.default.withDefault", "hu.autsoft.krate.validation.validate"),
     ),
 )
 public fun Krate.stringPref(
@@ -185,7 +177,7 @@ public fun Krate.stringPref(
     defaultValue: String,
     isValid: (newValue: String) -> Boolean,
 ): ReadWriteProperty<Krate, String> {
-    return ValidatedPreferenceDelegate(StringDelegateWithDefault(key, defaultValue), isValid)
+    return ValidatedPreferenceDelegate(StringDelegate(key).withDefault(defaultValue), isValid)
 }
 
 /**
@@ -219,8 +211,8 @@ public fun Krate.stringSetPref(
     message = "Use .validate {} on a stringSetPref instead",
     level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
-        "this.stringSetPref(key, defaultValue).validate(isValid)",
-        imports = arrayOf("hu.autsoft.krate.validation.validate"),
+        "this.stringSetPref(key).withDefault(defaultValue).validate(isValid)",
+        imports = arrayOf("hu.autsoft.krate.default.withDefault", "hu.autsoft.krate.validation.validate"),
     ),
 )
 public fun Krate.stringSetPref(
@@ -228,5 +220,5 @@ public fun Krate.stringSetPref(
     defaultValue: Set<String>,
     isValid: (newValue: Set<String>) -> Boolean,
 ): ReadWriteProperty<Krate, Set<String>> {
-    return ValidatedPreferenceDelegate(StringSetDelegateWithDefault(key, defaultValue), isValid)
+    return ValidatedPreferenceDelegate(StringSetDelegate(key).withDefault(defaultValue), isValid)
 }

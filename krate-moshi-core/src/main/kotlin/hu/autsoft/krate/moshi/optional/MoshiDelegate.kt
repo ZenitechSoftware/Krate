@@ -1,12 +1,9 @@
-@file:OptIn(InternalKrateApi::class)
-
 package hu.autsoft.krate.moshi.optional
 
 import com.squareup.moshi.JsonAdapter
 import hu.autsoft.krate.Krate
 import hu.autsoft.krate.base.KeyDelegate
 import hu.autsoft.krate.base.KeyDelegateProvider
-import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.moshi.realMoshiInstance
 import hu.autsoft.krate.moshi.util.edit
 import java.lang.reflect.Type

@@ -1,11 +1,11 @@
-@file:[Suppress("unused") OptIn(InternalKrateApi::class)]
+@file:Suppress("unused")
 
 package hu.autsoft.krate
 
 import hu.autsoft.krate.base.KeyDelegate
-import hu.autsoft.krate.default.*
-import hu.autsoft.krate.internal.InternalKrateApi
+import hu.autsoft.krate.default.withDefault
 import hu.autsoft.krate.optional.*
+import kotlin.properties.ReadWriteProperty
 
 /**
  * Creates an optional preference of type [Boolean] with the given [key] in this [Krate] instance.
@@ -53,41 +53,89 @@ public fun Krate.stringSetPref(key: String): KeyDelegate<Set<String>?> {
 /**
  * Creates a non-optional preference of type [Boolean] with the given [key] and [defaultValue] in this [Krate] instance.
  */
-public fun Krate.booleanPref(key: String, defaultValue: Boolean): KeyDelegate<Boolean> {
-    return BooleanDelegateWithDefault(key, defaultValue)
+@Deprecated(
+    message = "Use .withDefault() on a booleanPref instead",
+    level = DeprecationLevel.WARNING,
+    replaceWith = ReplaceWith(
+        "this.booleanPref(key).withDefault(defaultValue)",
+        imports = arrayOf("hu.autsoft.krate.default.withDefault"),
+    ),
+)
+public fun Krate.booleanPref(key: String, defaultValue: Boolean): ReadWriteProperty<Krate, Boolean> {
+    return booleanPref(key).withDefault(defaultValue)
 }
 
 /**
  * Creates a non-optional preference of type [Float] with the given [key] and [defaultValue] in this [Krate] instance.
  */
-public fun Krate.floatPref(key: String, defaultValue: Float): KeyDelegate<Float> {
-    return FloatDelegateWithDefault(key, defaultValue)
+@Deprecated(
+    message = "Use .withDefault() on a floatPref instead",
+    level = DeprecationLevel.WARNING,
+    replaceWith = ReplaceWith(
+        "this.floatPref(key).withDefault(defaultValue)",
+        imports = arrayOf("hu.autsoft.krate.default.withDefault"),
+    ),
+)
+public fun Krate.floatPref(key: String, defaultValue: Float): ReadWriteProperty<Krate, Float> {
+    return floatPref(key).withDefault(defaultValue)
 }
 
 /**
  * Creates a non-optional preference of type [Int] with the given [key] and [defaultValue] in this [Krate] instance.
  */
-public fun Krate.intPref(key: String, defaultValue: Int): KeyDelegate<Int> {
-    return IntDelegateWithDefault(key, defaultValue)
+@Deprecated(
+    message = "Use .withDefault() on an intPref instead",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        "this.intPref(key).withDefault(defaultValue)",
+        imports = arrayOf("hu.autsoft.krate.default.withDefault"),
+    ),
+)
+public fun Krate.intPref(key: String, defaultValue: Int): ReadWriteProperty<Krate, Int> {
+    return intPref(key).withDefault(defaultValue)
 }
 
 /**
  * Creates a non-optional preference of type [Long] with the given [key] and [defaultValue] in this [Krate] instance.
  */
-public fun Krate.longPref(key: String, defaultValue: Long): KeyDelegate<Long> {
-    return LongDelegateWithDefault(key, defaultValue)
+@Deprecated(
+    message = "Use .withDefault() on a longPref instead",
+    level = DeprecationLevel.WARNING,
+    replaceWith = ReplaceWith(
+        "this.longPref(key).withDefault(defaultValue)",
+        imports = arrayOf("hu.autsoft.krate.default.withDefault"),
+    ),
+)
+public fun Krate.longPref(key: String, defaultValue: Long): ReadWriteProperty<Krate, Long> {
+    return longPref(key).withDefault(defaultValue)
 }
 
 /**
  * Creates a non-optional preference of type [String] with the given [key] and [defaultValue] in this [Krate] instance.
  */
-public fun Krate.stringPref(key: String, defaultValue: String): KeyDelegate<String> {
-    return StringDelegateWithDefault(key, defaultValue)
+@Deprecated(
+    message = "Use .withDefault() on a stringPref instead",
+    level = DeprecationLevel.WARNING,
+    replaceWith = ReplaceWith(
+        "this.stringPref(key).withDefault(defaultValue)",
+        imports = arrayOf("hu.autsoft.krate.default.withDefault"),
+    ),
+)
+public fun Krate.stringPref(key: String, defaultValue: String): ReadWriteProperty<Krate, String> {
+    return stringPref(key).withDefault(defaultValue)
 }
 
 /**
  * Creates a non-optional preference of type Set<String> with the given [key] and [defaultValue] in this [Krate] instance.
  */
-public fun Krate.stringSetPref(key: String, defaultValue: Set<String>): KeyDelegate<Set<String>> {
-    return StringSetDelegateWithDefault(key, defaultValue)
+@Deprecated(
+    message = "Use .withDefault() on a stringSetPref instead",
+    level = DeprecationLevel.WARNING,
+    replaceWith = ReplaceWith(
+        "this.stringSetPref(key).withDefault(defaultValue)",
+        imports = arrayOf("hu.autsoft.krate.default.withDefault"),
+    ),
+)
+public fun Krate.stringSetPref(key: String, defaultValue: Set<String>): ReadWriteProperty<Krate, Set<String>> {
+    return stringSetPref(key).withDefault(defaultValue)
 }

@@ -1,11 +1,8 @@
-@file:OptIn(InternalKrateApi::class)
-
 package hu.autsoft.krate.kotlinx.optional
 
 import hu.autsoft.krate.Krate
 import hu.autsoft.krate.base.KeyDelegate
 import hu.autsoft.krate.base.KeyDelegateProvider
-import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.kotlinx.internalJson
 import hu.autsoft.krate.kotlinx.util.edit
 import kotlinx.serialization.KSerializer
