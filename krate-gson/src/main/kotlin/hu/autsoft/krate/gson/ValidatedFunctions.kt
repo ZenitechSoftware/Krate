@@ -14,6 +14,7 @@ import kotlin.properties.ReadWriteProperty
 
 /**
  * Creates a validated, optional preference of type T with the given [key] in this [Krate] instance.
+ * If [key] is `null` then the property name will be used as key.
  * This value will be serialized using Gson.
  */
 @Deprecated(
@@ -25,7 +26,7 @@ import kotlin.properties.ReadWriteProperty
     ),
 )
 public inline fun <reified T : Any> Krate.gsonPref(
-    key: String,
+    key: String? = null,
     noinline isValid: (newValue: T?) -> Boolean,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
     return gsonPrefImpl(key, object : TypeToken<T>() {}.type, isValid)
@@ -33,7 +34,7 @@ public inline fun <reified T : Any> Krate.gsonPref(
 
 @PublishedApi
 internal fun <T : Any> Krate.gsonPrefImpl(
-    key: String,
+    key: String? = null,
     type: Type,
     isValid: (newValue: T?) -> Boolean,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
@@ -43,6 +44,7 @@ internal fun <T : Any> Krate.gsonPrefImpl(
 /**
  * Creates a validated, non-optional preference of type T with the given [key] and [defaultValue]
  * in this [Krate] instance.
+ * If [key] is `null` then the property name will be used as key.
  * This value will be serialized using Gson.
  */
 @Deprecated(
@@ -54,7 +56,7 @@ internal fun <T : Any> Krate.gsonPrefImpl(
     ),
 )
 public inline fun <reified T : Any> Krate.gsonPref(
-    key: String,
+    key: String? = null,
     defaultValue: T,
     noinline isValid: (newValue: T) -> Boolean,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
@@ -63,7 +65,7 @@ public inline fun <reified T : Any> Krate.gsonPref(
 
 @PublishedApi
 internal fun <T : Any> Krate.gsonPrefImpl(
-    key: String,
+    key: String? = null,
     defaultValue: T,
     type: Type,
     isValid: (newValue: T) -> Boolean,

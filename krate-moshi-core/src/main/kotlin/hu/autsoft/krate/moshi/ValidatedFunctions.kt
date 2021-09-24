@@ -15,6 +15,7 @@ import kotlin.reflect.typeOf
 
 /**
  * Creates a validated, optional preference of type T with the given [key] in this [Krate] instance.
+ * If [key] is `null` then the property name will be used as key.
  * This value will be serialized using Moshi.
  */
 @OptIn(ExperimentalStdlibApi::class)
@@ -27,7 +28,7 @@ import kotlin.reflect.typeOf
     ),
 )
 public inline fun <reified T : Any> Krate.moshiPref(
-    key: String,
+    key: String? = null,
     noinline isValid: (newValue: T?) -> Boolean,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
     return moshiPrefImpl(key, typeOf<T>().javaType, isValid)
@@ -35,7 +36,7 @@ public inline fun <reified T : Any> Krate.moshiPref(
 
 @PublishedApi
 internal fun <T : Any> Krate.moshiPrefImpl(
-    key: String,
+    key: String? = null,
     type: Type,
     isValid: (newValue: T?) -> Boolean,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
@@ -45,6 +46,7 @@ internal fun <T : Any> Krate.moshiPrefImpl(
 /**
  * Creates a validated, non-optional preference of type T with the given [key] and [defaultValue]
  * in this [Krate] instance.
+ * If [key] is `null` then the property name will be used as key.
  * This value will be serialized using Moshi.
  */
 @OptIn(ExperimentalStdlibApi::class)
@@ -57,7 +59,7 @@ internal fun <T : Any> Krate.moshiPrefImpl(
     ),
 )
 public inline fun <reified T : Any> Krate.moshiPref(
-    key: String,
+    key: String? = null,
     defaultValue: T,
     noinline isValid: (newValue: T) -> Boolean,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
@@ -66,7 +68,7 @@ public inline fun <reified T : Any> Krate.moshiPref(
 
 @PublishedApi
 internal fun <T : Any> Krate.moshiPrefImpl(
-    key: String,
+    key: String? = null,
     defaultValue: T,
     type: Type,
     isValid: (newValue: T) -> Boolean,

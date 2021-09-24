@@ -20,7 +20,7 @@ class ExampleSimpleKrate(context: Context) : SimpleKrate(context, NAME), Example
     override var exampleLong by longPref("exampleLong").withDefault(0L)
     override var exampleString by stringPref("exampleString").withDefault("")
     override var exampleStringSet by stringSetPref("exampleStringSet").withDefault(setOf())
-    override var exampleUserGson by gsonPref<User>("user_gson").withDefault(User("Gson", "Smith"))
-    override var exampleUserKotlinX by kotlinxPref<User>("user_kotlinx").withDefault(User("KotlinX", "Smith"))
-    override var exampleUserMoshi by moshiPref<User>("user_moshi").withDefault(User("Moshi", "Smith"))
+    override var exampleUserGson by gsonPref<User>("exampleUserGson").withDefault(User("Gson", "Smith"))
+    override var exampleUserKotlinX by kotlinxPref<User>("exampleUserKotlinx").withDefault(User("KotlinX", "Smith"))
+    override var exampleUserMoshi by moshiPref<User>("exampleUserMoshi").withDefault(User("Moshi", "Smith"))
 }

@@ -5,21 +5,21 @@ import hu.autsoft.krate.base.KeyDelegate
 import hu.autsoft.krate.util.edit
 import kotlin.reflect.KProperty
 
-internal class IntDelegate(key: String) : KeyDelegate<Int?>(key) {
+internal class IntDelegate(key: String?) : KeyDelegate<Int?>(key) {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): Int? {
-        return if (!thisRef.sharedPreferences.contains(key)) {
+        return if (!thisRef.sharedPreferences.contains(key ?: property.name)) {
             null
         } else {
-            thisRef.sharedPreferences.getInt(key, 0)
+            thisRef.sharedPreferences.getInt(key ?: property.name, 0)
         }
     }
 
     override operator fun setValue(thisRef: Krate, property: KProperty<*>, value: Int?) {
         if (value == null) {
-            thisRef.sharedPreferences.edit { remove(key) }
+            thisRef.sharedPreferences.edit { remove(key ?: property.name) }
         } else {
-            thisRef.sharedPreferences.edit { putInt(key, value) }
+            thisRef.sharedPreferences.edit { putInt(key ?: property.name, value) }
         }
     }
 

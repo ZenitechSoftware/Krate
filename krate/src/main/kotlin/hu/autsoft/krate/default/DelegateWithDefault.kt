@@ -21,7 +21,7 @@ public class DelegateWithDefault<T>(
     }
 
     override fun getValue(thisRef: Krate, property: KProperty<*>): T {
-        return if (!thisRef.sharedPreferences.contains(delegate.key)) default else delegate.getValue(thisRef, property)!!
+        return if (!thisRef.sharedPreferences.contains(delegate.key ?: property.name)) default else delegate.getValue(thisRef, property)!!
     }
 }
 

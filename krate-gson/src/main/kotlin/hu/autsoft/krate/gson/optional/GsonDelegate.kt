@@ -11,15 +11,15 @@ import java.lang.reflect.Type
 import kotlin.reflect.KProperty
 
 private class GsonDelegate<T : Any>(
-    key: String,
+    key: String?,
     private val adapter: TypeAdapter<T>,
 ) : KeyDelegate<T?>(key) {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): T? {
-        return if (!thisRef.sharedPreferences.contains(key)) {
+        return if (!thisRef.sharedPreferences.contains(key ?: property.name)) {
             null
         } else {
-            val string = requireNotNull(thisRef.sharedPreferences.getString(key, null))
+            val string = requireNotNull(thisRef.sharedPreferences.getString(key ?: property.name, null))
             adapter.fromJson(string)
         }
     }
@@ -27,24 +27,24 @@ private class GsonDelegate<T : Any>(
     override operator fun setValue(thisRef: Krate, property: KProperty<*>, value: T?) {
         if (value == null) {
             thisRef.sharedPreferences.edit {
-                remove(key)
+                remove(key ?: property.name)
             }
         } else {
             thisRef.sharedPreferences.edit {
-                putString(key, adapter.toJson(value))
+                putString(key ?: property.name, adapter.toJson(value))
             }
         }
     }
 }
 
 internal class GsonDelegateFactory<T : Any>(
-    private val key: String,
+    private val key: String?,
     private val type: Type,
 ) : KeyDelegateProvider<T?>() {
 
     override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyDelegate<T?> {
         @Suppress("UNCHECKED_CAST")
         val adapter: TypeAdapter<T> = thisRef.internalGson.getAdapter(TypeToken.get(type)) as TypeAdapter<T>
-        return GsonDelegate(key, adapter)
+        return GsonDelegate(key ?: property.name, adapter)
     }
 }

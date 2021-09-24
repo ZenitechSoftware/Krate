@@ -15,18 +15,19 @@ import kotlin.reflect.typeOf
 
 /**
  * Creates an optional preference of type T with the given [key] in this [Krate] instance.
+ * If [key] is `null` then the property name will be used as key.
  * This instance will be serialized using Moshi.
  */
 @OptIn(ExperimentalStdlibApi::class)
 public inline fun <reified T : Any> Krate.moshiPref(
-    key: String,
+    key: String? = null,
 ): KeyDelegateProvider<T?> {
     return moshiPrefImpl(key, typeOf<T>().javaType)
 }
 
 @PublishedApi
 internal fun <T : Any> Krate.moshiPrefImpl(
-    key: String,
+    key: String? = null,
     type: Type,
 ): KeyDelegateProvider<T?> {
     return MoshiDelegateFactory(key, type)
@@ -34,6 +35,7 @@ internal fun <T : Any> Krate.moshiPrefImpl(
 
 /**
  * Creates a non-optional preference of type T with the given [key] and [defaultValue] in this [Krate] instance.
+ * If [key] is `null` then the property name will be used as key.
  * This instance will be serialized using Moshi.
  */
 @Deprecated(
@@ -46,7 +48,7 @@ internal fun <T : Any> Krate.moshiPrefImpl(
 )
 @OptIn(ExperimentalStdlibApi::class)
 public inline fun <reified T : Any> Krate.moshiPref(
-    key: String,
+    key: String? = null,
     defaultValue: T,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
     return moshiPrefImpl(key, defaultValue, typeOf<T>().javaType)
@@ -54,7 +56,7 @@ public inline fun <reified T : Any> Krate.moshiPref(
 
 @PublishedApi
 internal fun <T : Any> Krate.moshiPrefImpl(
-    key: String,
+    key: String? = null,
     defaultValue: T,
     type: Type,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {

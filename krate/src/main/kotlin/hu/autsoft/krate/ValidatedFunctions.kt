@@ -23,7 +23,7 @@ import kotlin.properties.ReadWriteProperty
     ),
 )
 public fun Krate.floatPref(
-    key: String,
+    key: String? = null,
     isValid: (newValue: Float?) -> Boolean,
 ): ReadWriteProperty<Krate, Float?> {
     return ValidatedPreferenceDelegate(FloatDelegate(key), isValid)
@@ -44,7 +44,7 @@ public fun Krate.floatPref(
     ),
 )
 public fun Krate.floatPref(
-    key: String,
+    key: String? = null,
     defaultValue: Float,
     isValid: (newValue: Float) -> Boolean,
 ): ReadWriteProperty<Krate, Float> {
@@ -66,7 +66,7 @@ public fun Krate.floatPref(
     ),
 )
 public fun Krate.intPref(
-    key: String,
+    key: String? = null,
     isValid: (newValue: Int?) -> Boolean,
 ): ReadWriteProperty<Krate, Int?> {
     return ValidatedPreferenceDelegate(IntDelegate(key), isValid)
@@ -87,7 +87,7 @@ public fun Krate.intPref(
     ),
 )
 public fun Krate.intPref(
-    key: String,
+    key: String? = null,
     defaultValue: Int,
     isValid: (newValue: Int) -> Boolean,
 ): ReadWriteProperty<Krate, Int> {
@@ -109,7 +109,7 @@ public fun Krate.intPref(
     ),
 )
 public fun Krate.longPref(
-    key: String,
+    key: String? = null,
     isValid: (newValue: Long?) -> Boolean,
 ): ReadWriteProperty<Krate, Long?> {
     return ValidatedPreferenceDelegate(LongDelegate(key), isValid)
@@ -130,7 +130,7 @@ public fun Krate.longPref(
     ),
 )
 public fun Krate.longPref(
-    key: String,
+    key: String? = null,
     defaultValue: Long,
     isValid: (newValue: Long) -> Boolean,
 ): ReadWriteProperty<Krate, Long> {
@@ -152,7 +152,7 @@ public fun Krate.longPref(
     ),
 )
 public fun Krate.stringPref(
-    key: String,
+    key: String? = null,
     isValid: (newValue: String?) -> Boolean,
 ): ReadWriteProperty<Krate, String?> {
     return ValidatedPreferenceDelegate(StringDelegate(key), isValid)
@@ -173,7 +173,7 @@ public fun Krate.stringPref(
     ),
 )
 public fun Krate.stringPref(
-    key: String,
+    key: String? = null,
     defaultValue: String,
     isValid: (newValue: String) -> Boolean,
 ): ReadWriteProperty<Krate, String> {
@@ -195,7 +195,7 @@ public fun Krate.stringPref(
     ),
 )
 public fun Krate.stringSetPref(
-    key: String,
+    key: String? = null,
     isValid: (newValue: Set<String>?) -> Boolean,
 ): ReadWriteProperty<Krate, Set<String>?> {
     return ValidatedPreferenceDelegate(StringSetDelegate(key), isValid)
@@ -216,7 +216,7 @@ public fun Krate.stringSetPref(
     ),
 )
 public fun Krate.stringSetPref(
-    key: String,
+    key: String? = null,
     defaultValue: Set<String>,
     isValid: (newValue: Set<String>) -> Boolean,
 ): ReadWriteProperty<Krate, Set<String>> {
