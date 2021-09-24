@@ -114,6 +114,123 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/gsonPreferenceFirst"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/gsonPreferenceLast"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stringSetPreference">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/gsonPreferenceFirstInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Gson"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/gsonPreferenceLast"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/gsonPreferenceFirst"
+            app:layout_constraintTop_toBottomOf="@+id/stringSetPreference">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/gsonPreferenceLastInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Gson"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/kotlinxPreferenceFirst"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/kotlinxPreferenceLast"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gsonPreferenceFirst">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/kotlinxPreferenceFirstInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First KotlinX"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/kotlinxPreferenceLast"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/kotlinxPreferenceFirst"
+            app:layout_constraintTop_toBottomOf="@+id/gsonPreferenceLast">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/kotlinxPreferenceLastInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last KotlinX"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/moshiPreferenceFirst"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/gsonPreferenceLast"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/kotlinxPreferenceFirst">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/moshiPreferenceFirstInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Moshi"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/moshiPreferenceLast"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/gsonPreferenceFirst"
+            app:layout_constraintTop_toBottomOf="@+id/kotlinxPreferenceLast">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/moshiPreferenceLastInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Moshi"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

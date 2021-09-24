@@ -1,5 +1,9 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.plugin.serialization'
+}
 
 android {
     compileSdkVersion compile_sdk
@@ -22,14 +26,28 @@ android {
 }
 
 dependencies {
+
+    // Krate
+    implementation project(path: ':krate')
+    implementation project(path: ':krate-gson')
+    implementation project(path: ':krate-kotlinx')
+    implementation project(path: ':krate-moshi-codegen')
+
+    // Android
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
 
+    // KotlinX
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0-RC'
+
+    // Moshi
+    def moshiVersion = "1.12.0"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
+    implementation "com.squareup.moshi:moshi-adapters:$moshiVersion"
+
     // Third-party SharedPreferences implementations
     implementation "androidx.security:security-crypto:1.1.0-alpha03"
     implementation 'com.frybits.harmony:harmony:1.1.2'
-
-    implementation project(path: ':krate')
-    implementation project(path: ':krate-gson')
 }
