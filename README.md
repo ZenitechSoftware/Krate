@@ -11,9 +11,9 @@ Here's what its basic usage looks like, extending the provided `SimpleKrate` cla
 ```kotlin
 class UserSettings(context: Context) : SimpleKrate(context) {
 
-    var notificationsEnabled by booleanPref("notifications_enabled", false)
-    var loginCount by intPref("login_count", 0)
-    var nickname by stringPref("nickname", "")
+    var notificationsEnabled by booleanPref("notifications_enabled").withDefault(false)
+    var loginCount by intPref("login_count").withDefault(0)
+    var nickname by stringPref("nickname").withDefault("")
 
 }
 
@@ -44,10 +44,12 @@ var username: String? by stringPref("username")
 
 ### Default values:
 
-A property declared with the two-argument delegate function takes its default value as the second argument, and it will have a non-nullable type. Reading from this property will return either the value it was last set to or the default value. Setting this property will update the value stored in `SharedPreferences`. Note that there's no way to remove these values from `SharedPreferences` (although you could set it explicitly to the default value).
+An extension function declared takes the default value as argument, and it will have a non-nullable type. Reading from this property will
+return either the value it was last set to or the default value. Setting this property will update the value stored in `SharedPreferences`.
+Note that there's no way to remove these values from `SharedPreferences` (although you could set it explicitly to the default value).
 
 ```kotlin
-var username: String by stringPref("username", defaultValue = "admin")
+var username: String by stringPref("username").withDefault("admin")
 ```
 
 # Custom Krate implementations
@@ -65,7 +67,7 @@ class ExampleCustomKrate(context: Context) : Krate {
         sharedPreferences = context.applicationContext.getSharedPreferences("custom_krate_prefs", Context.MODE_PRIVATE)
     }
 
-    var exampleBoolean by booleanPref("exampleBoolean", false)
+    var exampleBoolean by booleanPref("exampleBoolean").withDefault(false)
     
 }
 ```
@@ -79,7 +81,7 @@ class MainActivity : AppCompatActivity(), Krate {
         getPreferences(Context.MODE_PRIVATE) // Could also fetch a named or default SharedPrefs
     }
     
-    var username by stringPref("username", "")
+    var username by stringPref("username").withDefault("")
 
 }
 ```
@@ -99,7 +101,7 @@ class EncryptedKrate(applicationContext: Context) : Krate {
         sharedPreferences = EncryptedSharedPreferences.create(applicationContext, ...)
     }
 
-    val myStringValue: String by stringPref("my_string_value", "")
+    val myStringValue: String by stringPref("my_string_value").withDefault("")
 }
 ```
 
@@ -108,10 +110,9 @@ class EncryptedKrate(applicationContext: Context) : Krate {
 You can add validation rules to your Krate properties by calling `validate` on any of Krate's delegate functions:
 
 ```kotlin
-var percentage: Int by intPref(
-        key = "percentage",
-        defaultValue = 0,
-).validate { it in 0..100 }
+var percentage: Int by intPref("percentage")
+    .withDefault(0)
+    .validate { it in 0..100 }
 ```
 
 If this validation fails, an `IllegalArgumentException` will be thrown.
