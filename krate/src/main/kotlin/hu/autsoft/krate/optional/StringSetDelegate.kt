@@ -1,11 +1,13 @@
 package hu.autsoft.krate.optional
 
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.base.KeyDelegate
+import hu.autsoft.krate.base.KeyedKrateProperty
 import hu.autsoft.krate.util.edit
 import kotlin.reflect.KProperty
 
-internal class StringSetDelegate(key: String?) : KeyDelegate<Set<String>?>(key) {
+internal class StringSetDelegate(
+    override val key: String?,
+) : KeyedKrateProperty<Set<String>?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): Set<String>? {
         return if (!thisRef.sharedPreferences.contains(key ?: property.name)) {

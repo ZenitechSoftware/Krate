@@ -3,8 +3,8 @@
 package hu.autsoft.krate.default
 
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.base.KeyDelegate
-import hu.autsoft.krate.base.KeyDelegateProvider
+import hu.autsoft.krate.base.KeyedKrateProperty
+import hu.autsoft.krate.base.KeyedKratePropertyProvider
 import hu.autsoft.krate.internal.InternalKrateApi
 import kotlin.properties.PropertyDelegateProvider
 import kotlin.properties.ReadWriteProperty
@@ -12,7 +12,7 @@ import kotlin.reflect.KProperty
 
 @InternalKrateApi
 public class DelegateWithDefault<T>(
-    private val delegate: KeyDelegate<T?>,
+    private val delegate: KeyedKrateProperty<T?>,
     private val default: T,
 ) : ReadWriteProperty<Krate, T> {
 
@@ -27,7 +27,7 @@ public class DelegateWithDefault<T>(
 
 @InternalKrateApi
 public class DelegateWithDefaultFactory<T>(
-    private val propertyDelegateProvider: PropertyDelegateProvider<Krate, KeyDelegate<T?>>,
+    private val propertyDelegateProvider: PropertyDelegateProvider<Krate, KeyedKrateProperty<T?>>,
     private val default: T,
 ) : PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
 
@@ -50,7 +50,7 @@ public class DelegateWithDefaultFactory<T>(
  * var defaultString by stringPref("validatedString").withDefault("default")
  * ```
  */
-public fun <T : Any?> KeyDelegate<T?>.withDefault(
+public fun <T : Any?> KeyedKrateProperty<T?>.withDefault(
     default: T
 ): ReadWriteProperty<Krate, T> {
     @OptIn(InternalKrateApi::class)
@@ -68,7 +68,7 @@ public fun <T : Any?> KeyDelegate<T?>.withDefault(
  * var defaultModel by kotlinxPref("defaultModel").withDefault(DefaultModel())
  * ```
  */
-public fun <T : Any?> KeyDelegateProvider<T?>.withDefault(
+public fun <T : Any?> KeyedKratePropertyProvider<T?>.withDefault(
     default: T
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
     @OptIn(InternalKrateApi::class)

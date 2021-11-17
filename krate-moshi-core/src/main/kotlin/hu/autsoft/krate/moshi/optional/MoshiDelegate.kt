@@ -2,17 +2,17 @@ package hu.autsoft.krate.moshi.optional
 
 import com.squareup.moshi.JsonAdapter
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.base.KeyDelegate
-import hu.autsoft.krate.base.KeyDelegateProvider
+import hu.autsoft.krate.base.KeyedKrateProperty
+import hu.autsoft.krate.base.KeyedKratePropertyProvider
 import hu.autsoft.krate.moshi.realMoshiInstance
 import hu.autsoft.krate.moshi.util.edit
 import java.lang.reflect.Type
 import kotlin.reflect.KProperty
 
 private class MoshiDelegate<T : Any>(
-    key: String?,
+    override val key: String?,
     private val adapter: JsonAdapter<T>,
-) : KeyDelegate<T?>(key) {
+) : KeyedKrateProperty<T?> {
 
     override fun getValue(thisRef: Krate, property: KProperty<*>): T? {
         return if (!thisRef.sharedPreferences.contains(key ?: property.name)) {
@@ -39,9 +39,9 @@ private class MoshiDelegate<T : Any>(
 internal class MoshiDelegateFactory<T : Any>(
     private val key: String?,
     private val type: Type,
-) : KeyDelegateProvider<T?>() {
+) : KeyedKratePropertyProvider<T?> {
 
-    override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyDelegate<T?> {
+    override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyedKrateProperty<T?> {
         val adapter = thisRef.realMoshiInstance.adapter<T?>(type)
         return MoshiDelegate(key ?: property.name, adapter)
     }

@@ -4,10 +4,9 @@ package hu.autsoft.krate.gson
 
 import com.google.gson.reflect.TypeToken
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.base.KeyDelegateProvider
-import hu.autsoft.krate.default.DelegateWithDefaultFactory
+import hu.autsoft.krate.base.KeyedKratePropertyProvider
+import hu.autsoft.krate.default.withDefault
 import hu.autsoft.krate.gson.optional.GsonDelegateFactory
-import hu.autsoft.krate.internal.InternalKrateApi
 import java.lang.reflect.Type
 import kotlin.properties.PropertyDelegateProvider
 import kotlin.properties.ReadWriteProperty
@@ -19,15 +18,15 @@ import kotlin.properties.ReadWriteProperty
  */
 public inline fun <reified T : Any> Krate.gsonPref(
     key: String? = null,
-): KeyDelegateProvider<T?> {
+): KeyedKratePropertyProvider<T?> {
     return gsonPrefImpl(key, object : TypeToken<T>() {}.type)
 }
 
 @PublishedApi
 internal fun <T : Any> Krate.gsonPrefImpl(
-    key: String? = null,
+    key: String?,
     type: Type,
-): KeyDelegateProvider<T?> {
+): KeyedKratePropertyProvider<T?> {
     return GsonDelegateFactory(key, type)
 }
 
@@ -38,7 +37,7 @@ internal fun <T : Any> Krate.gsonPrefImpl(
  */
 @Deprecated(
     message = "Use .withDefault() on a gsonPref instead",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
         "this.gsonPref(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
@@ -48,15 +47,5 @@ public inline fun <reified T : Any> Krate.gsonPref(
     key: String? = null,
     defaultValue: T,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
-    return gsonPrefImpl(key, defaultValue, object : TypeToken<T>() {}.type)
-}
-
-@PublishedApi
-internal fun <T : Any> Krate.gsonPrefImpl(
-    key: String? = null,
-    defaultValue: T,
-    type: Type,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
-    @OptIn(InternalKrateApi::class)
-    return DelegateWithDefaultFactory(GsonDelegateFactory(key, type), defaultValue)
+    return gsonPref<T>(key).withDefault(defaultValue)
 }

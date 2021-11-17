@@ -3,9 +3,8 @@
 package hu.autsoft.krate.kotlinx
 
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.base.KeyDelegateProvider
-import hu.autsoft.krate.default.DelegateWithDefaultFactory
-import hu.autsoft.krate.internal.InternalKrateApi
+import hu.autsoft.krate.base.KeyedKratePropertyProvider
+import hu.autsoft.krate.default.withDefault
 import hu.autsoft.krate.kotlinx.optional.KotlinxDelegateFactory
 import kotlin.properties.PropertyDelegateProvider
 import kotlin.properties.ReadWriteProperty
@@ -20,7 +19,7 @@ import kotlin.reflect.typeOf
 @OptIn(ExperimentalStdlibApi::class)
 public inline fun <reified T : Any> Krate.kotlinxPref(
     key: String? = null,
-): KeyDelegateProvider<T?> {
+): KeyedKratePropertyProvider<T?> {
     return kotlinxPrefImpl(key, typeOf<T>())
 }
 
@@ -28,7 +27,7 @@ public inline fun <reified T : Any> Krate.kotlinxPref(
 internal fun <T : Any> Krate.kotlinxPrefImpl(
     key: String? = null,
     type: KType,
-): KeyDelegateProvider<T?> {
+): KeyedKratePropertyProvider<T?> {
     return KotlinxDelegateFactory(key, type)
 }
 
@@ -39,7 +38,7 @@ internal fun <T : Any> Krate.kotlinxPrefImpl(
  */
 @Deprecated(
     message = "Use .withDefault() on a kotlinxPref instead",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
         "this.kotlinxPref(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
@@ -50,15 +49,5 @@ public inline fun <reified T : Any> Krate.kotlinxPref(
     key: String? = null,
     defaultValue: T,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
-    return kotlinxPrefImpl(key, defaultValue, typeOf<T>())
-}
-
-@PublishedApi
-internal fun <T : Any> Krate.kotlinxPrefImpl(
-    key: String? = null,
-    defaultValue: T,
-    type: KType,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
-    @OptIn(InternalKrateApi::class)
-    return DelegateWithDefaultFactory(KotlinxDelegateFactory(key, type), defaultValue)
+    return kotlinxPref<T>(key).withDefault(defaultValue)
 }

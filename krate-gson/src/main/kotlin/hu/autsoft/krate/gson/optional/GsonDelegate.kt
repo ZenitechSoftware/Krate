@@ -3,17 +3,17 @@ package hu.autsoft.krate.gson.optional
 import com.google.gson.TypeAdapter
 import com.google.gson.reflect.TypeToken
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.base.KeyDelegate
-import hu.autsoft.krate.base.KeyDelegateProvider
+import hu.autsoft.krate.base.KeyedKrateProperty
+import hu.autsoft.krate.base.KeyedKratePropertyProvider
 import hu.autsoft.krate.gson.internalGson
 import hu.autsoft.krate.gson.util.edit
 import java.lang.reflect.Type
 import kotlin.reflect.KProperty
 
 private class GsonDelegate<T : Any>(
-    key: String?,
+    override val key: String?,
     private val adapter: TypeAdapter<T>,
-) : KeyDelegate<T?>(key) {
+) : KeyedKrateProperty<T?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): T? {
         return if (!thisRef.sharedPreferences.contains(key ?: property.name)) {
@@ -40,9 +40,9 @@ private class GsonDelegate<T : Any>(
 internal class GsonDelegateFactory<T : Any>(
     private val key: String?,
     private val type: Type,
-) : KeyDelegateProvider<T?>() {
+) : KeyedKratePropertyProvider<T?> {
 
-    override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyDelegate<T?> {
+    override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyedKrateProperty<T?> {
         @Suppress("UNCHECKED_CAST")
         val adapter: TypeAdapter<T> = thisRef.internalGson.getAdapter(TypeToken.get(type)) as TypeAdapter<T>
         return GsonDelegate(key ?: property.name, adapter)

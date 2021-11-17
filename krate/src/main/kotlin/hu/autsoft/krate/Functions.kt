@@ -2,16 +2,21 @@
 
 package hu.autsoft.krate
 
-import hu.autsoft.krate.base.KeyDelegate
+import hu.autsoft.krate.base.KeyedKrateProperty
 import hu.autsoft.krate.default.withDefault
-import hu.autsoft.krate.optional.*
+import hu.autsoft.krate.optional.BooleanDelegate
+import hu.autsoft.krate.optional.FloatDelegate
+import hu.autsoft.krate.optional.IntDelegate
+import hu.autsoft.krate.optional.LongDelegate
+import hu.autsoft.krate.optional.StringDelegate
+import hu.autsoft.krate.optional.StringSetDelegate
 import kotlin.properties.ReadWriteProperty
 
 /**
  * Creates an optional preference of type [Boolean] with the given [key] in this [Krate] instance.
  * If [key] is `null` then the property name will be used as key.
  */
-public fun Krate.booleanPref(key: String? = null): KeyDelegate<Boolean?> {
+public fun Krate.booleanPref(key: String? = null): KeyedKrateProperty<Boolean?> {
     return BooleanDelegate(key)
 }
 
@@ -19,7 +24,7 @@ public fun Krate.booleanPref(key: String? = null): KeyDelegate<Boolean?> {
  * Creates an optional preference of type [Float] with the given [key] in this [Krate] instance.
  * If [key] is `null` then the property name will be used as key.
  */
-public fun Krate.floatPref(key: String? = null): KeyDelegate<Float?> {
+public fun Krate.floatPref(key: String? = null): KeyedKrateProperty<Float?> {
     return FloatDelegate(key)
 }
 
@@ -27,7 +32,7 @@ public fun Krate.floatPref(key: String? = null): KeyDelegate<Float?> {
  * Creates an optional preference of type [Int] with the given [key] in this [Krate] instance.
  * If [key] is `null` then the property name will be used as key.
  */
-public fun Krate.intPref(key: String? = null): KeyDelegate<Int?> {
+public fun Krate.intPref(key: String? = null): KeyedKrateProperty<Int?> {
     return IntDelegate(key)
 }
 
@@ -35,7 +40,7 @@ public fun Krate.intPref(key: String? = null): KeyDelegate<Int?> {
  * Creates an optional preference of type [Long] with the given [key] in this [Krate] instance.
  * If [key] is `null` then the property name will be used as key.
  */
-public fun Krate.longPref(key: String? = null): KeyDelegate<Long?> {
+public fun Krate.longPref(key: String? = null): KeyedKrateProperty<Long?> {
     return LongDelegate(key)
 }
 
@@ -43,7 +48,7 @@ public fun Krate.longPref(key: String? = null): KeyDelegate<Long?> {
  * Creates an optional preference of type [String] with the given [key] in this [Krate] instance.
  * If [key] is `null` then the property name will be used as key.
  */
-public fun Krate.stringPref(key: String? = null): KeyDelegate<String?> {
+public fun Krate.stringPref(key: String? = null): KeyedKrateProperty<String?> {
     return StringDelegate(key)
 }
 
@@ -51,7 +56,7 @@ public fun Krate.stringPref(key: String? = null): KeyDelegate<String?> {
  * Creates an optional preference of type Set<String> with the given [key] in this [Krate] instance.
  * If [key] is `null` then the property name will be used as key.
  */
-public fun Krate.stringSetPref(key: String? = null): KeyDelegate<Set<String>?> {
+public fun Krate.stringSetPref(key: String? = null): KeyedKrateProperty<Set<String>?> {
     return StringSetDelegate(key)
 }
 
@@ -62,7 +67,7 @@ public fun Krate.stringSetPref(key: String? = null): KeyDelegate<Set<String>?> {
  */
 @Deprecated(
     message = "Use .withDefault() on a booleanPref instead",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
         "this.booleanPref(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
@@ -78,7 +83,7 @@ public fun Krate.booleanPref(key: String? = null, defaultValue: Boolean): ReadWr
  */
 @Deprecated(
     message = "Use .withDefault() on a floatPref instead",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
         "this.floatPref(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
@@ -110,7 +115,7 @@ public fun Krate.intPref(key: String? = null, defaultValue: Int): ReadWritePrope
  */
 @Deprecated(
     message = "Use .withDefault() on a longPref instead",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
         "this.longPref(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
@@ -126,7 +131,7 @@ public fun Krate.longPref(key: String? = null, defaultValue: Long): ReadWritePro
  */
 @Deprecated(
     message = "Use .withDefault() on a stringPref instead",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
         "this.stringPref(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
@@ -142,7 +147,7 @@ public fun Krate.stringPref(key: String? = null, defaultValue: String): ReadWrit
  */
 @Deprecated(
     message = "Use .withDefault() on a stringSetPref instead",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
         "this.stringSetPref(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
