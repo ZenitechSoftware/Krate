@@ -4,7 +4,7 @@ package hu.autsoft.krate.gson
 
 import com.google.gson.reflect.TypeToken
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.base.KeyDelegateProvider
+import hu.autsoft.krate.base.KeyedKratePropertyProvider
 import hu.autsoft.krate.default.DelegateWithDefaultFactory
 import hu.autsoft.krate.gson.optional.GsonDelegateFactory
 import hu.autsoft.krate.internal.InternalKrateApi
@@ -17,16 +17,16 @@ import kotlin.properties.ReadWriteProperty
  * This instance will be serialized using Gson.
  */
 public inline fun <reified T : Any> Krate.gsonPref(
-    key: String,
-): KeyDelegateProvider<T?> {
+        key: String,
+): KeyedKratePropertyProvider<T?> {
     return gsonPrefImpl(key, object : TypeToken<T>() {}.type)
 }
 
 @PublishedApi
 internal fun <T : Any> Krate.gsonPrefImpl(
-    key: String,
-    type: Type,
-): KeyDelegateProvider<T?> {
+        key: String,
+        type: Type,
+): KeyedKratePropertyProvider<T?> {
     return GsonDelegateFactory(key, type)
 }
 

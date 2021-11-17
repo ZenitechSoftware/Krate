@@ -3,7 +3,7 @@
 package hu.autsoft.krate.kotlinx
 
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.base.KeyDelegateProvider
+import hu.autsoft.krate.base.KeyedKratePropertyProvider
 import hu.autsoft.krate.default.DelegateWithDefaultFactory
 import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.kotlinx.optional.KotlinxDelegateFactory
@@ -18,16 +18,16 @@ import kotlin.reflect.typeOf
  */
 @OptIn(ExperimentalStdlibApi::class)
 public inline fun <reified T : Any> Krate.kotlinxPref(
-    key: String,
-): KeyDelegateProvider<T?> {
+        key: String,
+): KeyedKratePropertyProvider<T?> {
     return kotlinxPrefImpl(key, typeOf<T>())
 }
 
 @PublishedApi
 internal fun <T : Any> Krate.kotlinxPrefImpl(
-    key: String,
-    type: KType,
-): KeyDelegateProvider<T?> {
+        key: String,
+        type: KType,
+): KeyedKratePropertyProvider<T?> {
     return KotlinxDelegateFactory(key, type)
 }
 

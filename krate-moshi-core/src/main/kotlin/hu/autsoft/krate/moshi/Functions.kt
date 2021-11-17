@@ -3,7 +3,7 @@
 package hu.autsoft.krate.moshi
 
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.base.KeyDelegateProvider
+import hu.autsoft.krate.base.KeyedKratePropertyProvider
 import hu.autsoft.krate.default.DelegateWithDefaultFactory
 import hu.autsoft.krate.internal.InternalKrateApi
 import hu.autsoft.krate.moshi.optional.MoshiDelegateFactory
@@ -19,16 +19,16 @@ import kotlin.reflect.typeOf
  */
 @OptIn(ExperimentalStdlibApi::class)
 public inline fun <reified T : Any> Krate.moshiPref(
-    key: String,
-): KeyDelegateProvider<T?> {
+        key: String,
+): KeyedKratePropertyProvider<T?> {
     return moshiPrefImpl(key, typeOf<T>().javaType)
 }
 
 @PublishedApi
 internal fun <T : Any> Krate.moshiPrefImpl(
-    key: String,
-    type: Type,
-): KeyDelegateProvider<T?> {
+        key: String,
+        type: Type,
+): KeyedKratePropertyProvider<T?> {
     return MoshiDelegateFactory(key, type)
 }
 

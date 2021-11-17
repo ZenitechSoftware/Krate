@@ -1,8 +1,8 @@
 package hu.autsoft.krate.kotlinx.optional
 
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.base.KeyDelegate
-import hu.autsoft.krate.base.KeyDelegateProvider
+import hu.autsoft.krate.base.KeyedKrateProperty
+import hu.autsoft.krate.base.KeyedKratePropertyProvider
 import hu.autsoft.krate.kotlinx.internalJson
 import hu.autsoft.krate.kotlinx.util.edit
 import kotlinx.serialization.KSerializer
@@ -14,7 +14,7 @@ import kotlin.reflect.KType
 private class KotlinxDelegate<T : Any>(
         override val key: String,
         private val serializer: KSerializer<T>,
-) : KeyDelegate<T?> {
+) : KeyedKrateProperty<T?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): T? {
         return if (!thisRef.sharedPreferences.contains(key)) {
@@ -41,9 +41,9 @@ private class KotlinxDelegate<T : Any>(
 internal class KotlinxDelegateFactory<T : Any>(
         private val key: String,
         private val type: KType,
-) : KeyDelegateProvider<T?> {
+) : KeyedKratePropertyProvider<T?> {
 
-    override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyDelegate<T?> {
+    override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyedKrateProperty<T?> {
         @Suppress("UNCHECKED_CAST")
         val serializer = thisRef.internalJson.serializersModule.serializer(type) as KSerializer<T>
         return KotlinxDelegate(key, serializer)

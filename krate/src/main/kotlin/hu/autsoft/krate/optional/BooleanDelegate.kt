@@ -1,11 +1,11 @@
 package hu.autsoft.krate.optional
 
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.base.KeyDelegate
+import hu.autsoft.krate.base.KeyedKrateProperty
 import hu.autsoft.krate.util.edit
 import kotlin.reflect.KProperty
 
-internal class BooleanDelegate(override val key: String) : KeyDelegate<Boolean?> {
+internal class BooleanDelegate(override val key: String) : KeyedKrateProperty<Boolean?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): Boolean? {
         return if (!thisRef.sharedPreferences.contains(key)) {

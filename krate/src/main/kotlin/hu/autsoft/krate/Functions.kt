@@ -2,7 +2,7 @@
 
 package hu.autsoft.krate
 
-import hu.autsoft.krate.base.KeyDelegate
+import hu.autsoft.krate.base.KeyedKrateProperty
 import hu.autsoft.krate.default.withDefault
 import hu.autsoft.krate.optional.*
 import kotlin.properties.ReadWriteProperty
@@ -10,42 +10,42 @@ import kotlin.properties.ReadWriteProperty
 /**
  * Creates an optional preference of type [Boolean] with the given [key] in this [Krate] instance.
  */
-public fun Krate.booleanPref(key: String): KeyDelegate<Boolean?> {
+public fun Krate.booleanPref(key: String): KeyedKrateProperty<Boolean?> {
     return BooleanDelegate(key)
 }
 
 /**
  * Creates an optional preference of type [Float] with the given [key] in this [Krate] instance.
  */
-public fun Krate.floatPref(key: String): KeyDelegate<Float?> {
+public fun Krate.floatPref(key: String): KeyedKrateProperty<Float?> {
     return FloatDelegate(key)
 }
 
 /**
  * Creates an optional preference of type [Int] with the given [key] in this [Krate] instance.
  */
-public fun Krate.intPref(key: String): KeyDelegate<Int?> {
+public fun Krate.intPref(key: String): KeyedKrateProperty<Int?> {
     return IntDelegate(key)
 }
 
 /**
  * Creates an optional preference of type [Long] with the given [key] in this [Krate] instance.
  */
-public fun Krate.longPref(key: String): KeyDelegate<Long?> {
+public fun Krate.longPref(key: String): KeyedKrateProperty<Long?> {
     return LongDelegate(key)
 }
 
 /**
  * Creates an optional preference of type [String] with the given [key] in this [Krate] instance.
  */
-public fun Krate.stringPref(key: String): KeyDelegate<String?> {
+public fun Krate.stringPref(key: String): KeyedKrateProperty<String?> {
     return StringDelegate(key)
 }
 
 /**
  * Creates an optional preference of type Set<String> with the given [key] in this [Krate] instance.
  */
-public fun Krate.stringSetPref(key: String): KeyDelegate<Set<String>?> {
+public fun Krate.stringSetPref(key: String): KeyedKrateProperty<Set<String>?> {
     return StringSetDelegate(key)
 }
 
