@@ -13,7 +13,7 @@ import kotlin.reflect.KProperty
 @InternalKrateApi
 public class DelegateWithDefault<T>(
     private val delegate: KeyedKrateProperty<T?>,
-    private val default: T,
+    private val defaultValue: T,
 ) : ReadWriteProperty<Krate, T> {
 
     override fun setValue(thisRef: Krate, property: KProperty<*>, value: T) {
@@ -21,20 +21,20 @@ public class DelegateWithDefault<T>(
     }
 
     override fun getValue(thisRef: Krate, property: KProperty<*>): T {
-        return if (!thisRef.sharedPreferences.contains(delegate.key)) default else delegate.getValue(thisRef, property)!!
+        return if (!thisRef.sharedPreferences.contains(delegate.key)) defaultValue else delegate.getValue(thisRef, property)!!
     }
 }
 
 @InternalKrateApi
 public class DelegateWithDefaultFactory<T>(
     private val propertyDelegateProvider: PropertyDelegateProvider<Krate, KeyedKrateProperty<T?>>,
-    private val default: T,
+    private val defaultValue: T,
 ) : PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
 
     override fun provideDelegate(thisRef: Krate, property: KProperty<*>): ReadWriteProperty<Krate, T> {
         return DelegateWithDefault(
             delegate = propertyDelegateProvider.provideDelegate(thisRef, property),
-            default = default
+            defaultValue = defaultValue
         )
     }
 }
@@ -42,7 +42,7 @@ public class DelegateWithDefaultFactory<T>(
 /**
  * Adds a default value to a Krate delegate.
  *
- * If a delegate returns with null because it have not been set before, then this returns with [default]
+ * If a delegate returns with null because it have not been set before, then this returns with [defaultValue]
  *
  * Example property using this function:
  *
@@ -51,16 +51,16 @@ public class DelegateWithDefaultFactory<T>(
  * ```
  */
 public fun <T : Any?> KeyedKrateProperty<T?>.withDefault(
-    default: T
+    defaultValue: T
 ): ReadWriteProperty<Krate, T> {
     @OptIn(InternalKrateApi::class)
-    return DelegateWithDefault(this, default)
+    return DelegateWithDefault(this, defaultValue)
 }
 
 /**
  * Adds a default value to a Krate delegate factory.
  *
- * If a delegate returns with null because it have not been set before, then this returns with [default]
+ * If a delegate returns with null because it have not been set before, then this returns with [defaultValue]
  *
  * Example property using this function:
  *
@@ -69,8 +69,8 @@ public fun <T : Any?> KeyedKrateProperty<T?>.withDefault(
  * ```
  */
 public fun <T : Any?> KeyedKratePropertyProvider<T?>.withDefault(
-    default: T
+    defaultValue: T
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
     @OptIn(InternalKrateApi::class)
-    return DelegateWithDefaultFactory(this, default)
+    return DelegateWithDefaultFactory(this, defaultValue)
 }
