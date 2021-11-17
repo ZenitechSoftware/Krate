@@ -1,0 +1,10 @@
+public final class hu/autsoft/krate/kotlinx/FunctionsKt {
+	public static final fun kotlinxPrefImpl (Lhu/autsoft/krate/Krate;Ljava/lang/String;Ljava/lang/Object;Lkotlin/reflect/KType;)Lkotlin/properties/PropertyDelegateProvider;
+	public static final fun kotlinxPrefImpl (Lhu/autsoft/krate/Krate;Ljava/lang/String;Lkotlin/reflect/KType;)Lkotlin/properties/PropertyDelegateProvider;
+}
+
+public final class hu/autsoft/krate/kotlinx/JsonInstancesKt {
+	public static final fun getJson (Lhu/autsoft/krate/Krate;)Lkotlinx/serialization/json/Json;
+	public static final fun setJson (Lhu/autsoft/krate/Krate;Lkotlinx/serialization/json/Json;)V
+}
+

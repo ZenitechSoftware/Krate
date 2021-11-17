@@ -1,0 +1,11 @@
+public final class hu/autsoft/krate/moshi/FunctionsKt {
+	public static final fun moshiPrefImpl (Lhu/autsoft/krate/Krate;Ljava/lang/String;Ljava/lang/Object;Ljava/lang/reflect/Type;)Lkotlin/properties/PropertyDelegateProvider;
+	public static final fun moshiPrefImpl (Lhu/autsoft/krate/Krate;Ljava/lang/String;Ljava/lang/reflect/Type;)Lkotlin/properties/PropertyDelegateProvider;
+}
+
+public final class hu/autsoft/krate/moshi/MoshiInstancesKt {
+	public static final fun getMoshi (Lhu/autsoft/krate/Krate;)Lcom/squareup/moshi/Moshi;
+	public static final fun getRealMoshiInstance (Lhu/autsoft/krate/Krate;)Lcom/squareup/moshi/Moshi;
+	public static final fun setMoshi (Lhu/autsoft/krate/Krate;Lcom/squareup/moshi/Moshi;)V
+}
+
