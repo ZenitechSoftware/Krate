@@ -5,7 +5,9 @@ import hu.autsoft.krate.base.KeyedKrateProperty
 import hu.autsoft.krate.util.edit
 import kotlin.reflect.KProperty
 
-internal class LongDelegate(override val key: String) : KeyedKrateProperty<Long?> {
+internal class LongDelegate(
+        override val key: String
+) : KeyedKrateProperty<Long?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): Long? {
         return if (!thisRef.sharedPreferences.contains(key)) {
