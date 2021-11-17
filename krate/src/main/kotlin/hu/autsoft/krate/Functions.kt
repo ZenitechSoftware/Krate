@@ -60,7 +60,7 @@ public fun Krate.stringSetPref(key: String): KeyedKrateProperty<Set<String>?> {
  */
 @Deprecated(
     message = "Use .withDefault() on a booleanPref instead",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
         "this.booleanPref(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
@@ -75,7 +75,7 @@ public fun Krate.booleanPref(key: String, defaultValue: Boolean): ReadWritePrope
  */
 @Deprecated(
     message = "Use .withDefault() on a floatPref instead",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
         "this.floatPref(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
@@ -105,7 +105,7 @@ public fun Krate.intPref(key: String, defaultValue: Int): ReadWriteProperty<Krat
  */
 @Deprecated(
     message = "Use .withDefault() on a longPref instead",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
         "this.longPref(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
@@ -120,7 +120,7 @@ public fun Krate.longPref(key: String, defaultValue: Long): ReadWriteProperty<Kr
  */
 @Deprecated(
     message = "Use .withDefault() on a stringPref instead",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
         "this.stringPref(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
@@ -135,7 +135,7 @@ public fun Krate.stringPref(key: String, defaultValue: String): ReadWritePropert
  */
 @Deprecated(
     message = "Use .withDefault() on a stringSetPref instead",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
         "this.stringSetPref(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),

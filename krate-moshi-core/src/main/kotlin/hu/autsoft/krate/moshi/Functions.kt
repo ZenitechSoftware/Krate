@@ -4,8 +4,7 @@ package hu.autsoft.krate.moshi
 
 import hu.autsoft.krate.Krate
 import hu.autsoft.krate.base.KeyedKratePropertyProvider
-import hu.autsoft.krate.default.DelegateWithDefaultFactory
-import hu.autsoft.krate.internal.InternalKrateApi
+import hu.autsoft.krate.default.withDefault
 import hu.autsoft.krate.moshi.optional.MoshiDelegateFactory
 import java.lang.reflect.Type
 import kotlin.properties.PropertyDelegateProvider
@@ -38,7 +37,7 @@ internal fun <T : Any> Krate.moshiPrefImpl(
  */
 @Deprecated(
     message = "Use .withDefault() on a moshiPref instead",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
         "this.moshiPref(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
@@ -49,15 +48,5 @@ public inline fun <reified T : Any> Krate.moshiPref(
     key: String,
     defaultValue: T,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
-    return moshiPrefImpl(key, defaultValue, typeOf<T>().javaType)
-}
-
-@PublishedApi
-internal fun <T : Any> Krate.moshiPrefImpl(
-    key: String,
-    defaultValue: T,
-    type: Type,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
-    @OptIn(InternalKrateApi::class)
-    return DelegateWithDefaultFactory(MoshiDelegateFactory(key, type), defaultValue)
+    return moshiPref<T>(key).withDefault(defaultValue)
 }
