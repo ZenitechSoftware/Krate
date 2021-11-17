@@ -18,15 +18,15 @@ import kotlin.reflect.typeOf
  */
 @OptIn(ExperimentalStdlibApi::class)
 public inline fun <reified T : Any> Krate.moshiPref(
-        key: String,
+    key: String,
 ): KeyedKratePropertyProvider<T?> {
     return moshiPrefImpl(key, typeOf<T>().javaType)
 }
 
 @PublishedApi
 internal fun <T : Any> Krate.moshiPrefImpl(
-        key: String,
-        type: Type,
+    key: String,
+    type: Type,
 ): KeyedKratePropertyProvider<T?> {
     return MoshiDelegateFactory(key, type)
 }
