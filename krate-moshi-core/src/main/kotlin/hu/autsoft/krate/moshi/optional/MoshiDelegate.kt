@@ -37,9 +37,9 @@ private class MoshiDelegate<T : Any>(
 }
 
 internal class MoshiDelegateFactory<T : Any>(
-    private val key: String,
-    private val type: Type,
-) : KeyDelegateProvider<T?>() {
+        private val key: String,
+        private val type: Type,
+) : KeyDelegateProvider<T?> {
 
     override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyDelegate<T?> {
         val adapter = thisRef.realMoshiInstance.adapter<T?>(type)

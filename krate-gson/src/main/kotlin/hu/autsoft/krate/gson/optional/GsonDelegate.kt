@@ -38,9 +38,9 @@ private class GsonDelegate<T : Any>(
 }
 
 internal class GsonDelegateFactory<T : Any>(
-    private val key: String,
-    private val type: Type,
-) : KeyDelegateProvider<T?>() {
+        private val key: String,
+        private val type: Type,
+) : KeyDelegateProvider<T?> {
 
     override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyDelegate<T?> {
         @Suppress("UNCHECKED_CAST")

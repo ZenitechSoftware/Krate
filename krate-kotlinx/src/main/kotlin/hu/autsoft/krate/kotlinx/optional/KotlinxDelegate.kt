@@ -39,9 +39,9 @@ private class KotlinxDelegate<T : Any>(
 }
 
 internal class KotlinxDelegateFactory<T : Any>(
-    private val key: String,
-    private val type: KType,
-) : KeyDelegateProvider<T?>() {
+        private val key: String,
+        private val type: KType,
+) : KeyDelegateProvider<T?> {
 
     override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyDelegate<T?> {
         @Suppress("UNCHECKED_CAST")
