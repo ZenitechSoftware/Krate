@@ -12,9 +12,9 @@ import kotlin.reflect.KType
 
 
 private class KotlinxDelegate<T : Any>(
-    key: String,
-    private val serializer: KSerializer<T>,
-) : KeyDelegate<T?>(key) {
+        override val key: String,
+        private val serializer: KSerializer<T>,
+) : KeyDelegate<T?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): T? {
         return if (!thisRef.sharedPreferences.contains(key)) {

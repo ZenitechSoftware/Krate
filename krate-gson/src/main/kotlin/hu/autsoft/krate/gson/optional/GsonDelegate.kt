@@ -11,9 +11,9 @@ import java.lang.reflect.Type
 import kotlin.reflect.KProperty
 
 private class GsonDelegate<T : Any>(
-    key: String,
-    private val adapter: TypeAdapter<T>,
-) : KeyDelegate<T?>(key) {
+        override val key: String,
+        private val adapter: TypeAdapter<T>,
+) : KeyDelegate<T?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): T? {
         return if (!thisRef.sharedPreferences.contains(key)) {

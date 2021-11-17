@@ -10,9 +10,9 @@ import java.lang.reflect.Type
 import kotlin.reflect.KProperty
 
 private class MoshiDelegate<T : Any>(
-    key: String,
-    private val adapter: JsonAdapter<T>,
-) : KeyDelegate<T?>(key) {
+        override val key: String,
+        private val adapter: JsonAdapter<T>,
+) : KeyDelegate<T?> {
 
     override fun getValue(thisRef: Krate, property: KProperty<*>): T? {
         return if (!thisRef.sharedPreferences.contains(key)) {
