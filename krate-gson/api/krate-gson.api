@@ -1,0 +1,10 @@
+public final class hu/autsoft/krate/gson/FunctionsKt {
+	public static final fun gsonPrefImpl (Lhu/autsoft/krate/Krate;Ljava/lang/String;Ljava/lang/Object;Ljava/lang/reflect/Type;)Lkotlin/properties/PropertyDelegateProvider;
+	public static final fun gsonPrefImpl (Lhu/autsoft/krate/Krate;Ljava/lang/String;Ljava/lang/reflect/Type;)Lkotlin/properties/PropertyDelegateProvider;
+}
+
+public final class hu/autsoft/krate/gson/GsonInstancesKt {
+	public static final fun getGson (Lhu/autsoft/krate/Krate;)Lcom/google/gson/Gson;
+	public static final fun setGson (Lhu/autsoft/krate/Krate;Lcom/google/gson/Gson;)V
+}
+

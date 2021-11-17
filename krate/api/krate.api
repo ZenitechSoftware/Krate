@@ -1,0 +1,33 @@
+public final class hu/autsoft/krate/FunctionsKt {
+	public static final fun booleanPref (Lhu/autsoft/krate/Krate;Ljava/lang/String;)Lkotlin/properties/ReadWriteProperty;
+	public static final fun booleanPref (Lhu/autsoft/krate/Krate;Ljava/lang/String;Z)Lkotlin/properties/ReadWriteProperty;
+	public static final fun floatPref (Lhu/autsoft/krate/Krate;Ljava/lang/String;)Lkotlin/properties/ReadWriteProperty;
+	public static final fun floatPref (Lhu/autsoft/krate/Krate;Ljava/lang/String;F)Lkotlin/properties/ReadWriteProperty;
+	public static final fun intPref (Lhu/autsoft/krate/Krate;Ljava/lang/String;)Lkotlin/properties/ReadWriteProperty;
+	public static final fun intPref (Lhu/autsoft/krate/Krate;Ljava/lang/String;I)Lkotlin/properties/ReadWriteProperty;
+	public static final fun longPref (Lhu/autsoft/krate/Krate;Ljava/lang/String;)Lkotlin/properties/ReadWriteProperty;
+	public static final fun longPref (Lhu/autsoft/krate/Krate;Ljava/lang/String;J)Lkotlin/properties/ReadWriteProperty;
+	public static final fun stringPref (Lhu/autsoft/krate/Krate;Ljava/lang/String;)Lkotlin/properties/ReadWriteProperty;
+	public static final fun stringPref (Lhu/autsoft/krate/Krate;Ljava/lang/String;Ljava/lang/String;)Lkotlin/properties/ReadWriteProperty;
+	public static final fun stringSetPref (Lhu/autsoft/krate/Krate;Ljava/lang/String;)Lkotlin/properties/ReadWriteProperty;
+	public static final fun stringSetPref (Lhu/autsoft/krate/Krate;Ljava/lang/String;Ljava/util/Set;)Lkotlin/properties/ReadWriteProperty;
+}
+
+public abstract interface class hu/autsoft/krate/Krate {
+	public abstract fun getSharedPreferences ()Landroid/content/SharedPreferences;
+}
+
+public abstract class hu/autsoft/krate/SimpleKrate : hu/autsoft/krate/Krate {
+	public fun <init> (Landroid/content/Context;Ljava/lang/String;)V
+	public synthetic fun <init> (Landroid/content/Context;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getSharedPreferences ()Landroid/content/SharedPreferences;
+}
+
+public abstract interface annotation class hu/autsoft/krate/internal/InternalKrateApi : java/lang/annotation/Annotation {
+}
+
+public final class hu/autsoft/krate/validation/ValidatedPreferenceDelegateKt {
+	public static final fun validate (Lkotlin/properties/PropertyDelegateProvider;Lkotlin/jvm/functions/Function1;)Lkotlin/properties/PropertyDelegateProvider;
+	public static final fun validate (Lkotlin/properties/ReadWriteProperty;Lkotlin/jvm/functions/Function1;)Lkotlin/properties/ReadWriteProperty;
+}
+

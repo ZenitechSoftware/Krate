@@ -1,0 +1,4 @@
+public final class hu/autsoft/krate/moshi/DefaultMoshiInstanceKt {
+	public static final fun getDefaultMoshi ()Lcom/squareup/moshi/Moshi;
+}
+
