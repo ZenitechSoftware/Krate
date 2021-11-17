@@ -12,8 +12,8 @@ import kotlin.reflect.KType
 
 
 private class KotlinxDelegate<T : Any>(
-        override val key: String,
-        private val serializer: KSerializer<T>,
+    override val key: String,
+    private val serializer: KSerializer<T>,
 ) : KeyedKrateProperty<T?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): T? {
@@ -39,8 +39,8 @@ private class KotlinxDelegate<T : Any>(
 }
 
 internal class KotlinxDelegateFactory<T : Any>(
-        private val key: String,
-        private val type: KType,
+    private val key: String,
+    private val type: KType,
 ) : KeyedKratePropertyProvider<T?> {
 
     override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyedKrateProperty<T?> {

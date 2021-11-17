@@ -11,8 +11,8 @@ import java.lang.reflect.Type
 import kotlin.reflect.KProperty
 
 private class GsonDelegate<T : Any>(
-        override val key: String,
-        private val adapter: TypeAdapter<T>,
+    override val key: String,
+    private val adapter: TypeAdapter<T>,
 ) : KeyedKrateProperty<T?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): T? {
@@ -38,8 +38,8 @@ private class GsonDelegate<T : Any>(
 }
 
 internal class GsonDelegateFactory<T : Any>(
-        private val key: String,
-        private val type: Type,
+    private val key: String,
+    private val type: Type,
 ) : KeyedKratePropertyProvider<T?> {
 
     override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyedKrateProperty<T?> {

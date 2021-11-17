@@ -4,7 +4,12 @@ package hu.autsoft.krate
 
 import hu.autsoft.krate.base.KeyedKrateProperty
 import hu.autsoft.krate.default.withDefault
-import hu.autsoft.krate.optional.*
+import hu.autsoft.krate.optional.BooleanDelegate
+import hu.autsoft.krate.optional.FloatDelegate
+import hu.autsoft.krate.optional.IntDelegate
+import hu.autsoft.krate.optional.LongDelegate
+import hu.autsoft.krate.optional.StringDelegate
+import hu.autsoft.krate.optional.StringSetDelegate
 import kotlin.properties.ReadWriteProperty
 
 /**

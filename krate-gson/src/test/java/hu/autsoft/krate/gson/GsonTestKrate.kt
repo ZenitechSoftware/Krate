@@ -21,21 +21,21 @@ internal class GsonTestKrate(context: Context) : SimpleKrate(context) {
     var listOfValues: List<TestModel>? by gsonPref("listOfValues")
 
     var simpleValueWithDefault: TestModel
-            by gsonPref("simpleValueWithDefault", DEFAULT_SIMPLE_VALUE)
+        by gsonPref("simpleValueWithDefault").withDefault(DEFAULT_SIMPLE_VALUE)
 
     var listOfValuesWithDefault: List<TestModel>
-            by gsonPref("listOfValuesWithDefault", defaultValue = DEFAULT_LIST_VALUE)
+            by gsonPref("listOfValuesWithDefault").withDefault(DEFAULT_LIST_VALUE)
 
     var validatedValue: TestModel
-            by gsonPref(key = "validatedValue", defaultValue = DEFAULT_SIMPLE_VALUE)
-                .validate { newValue ->
-                    newValue.x < newValue.y // arbitrary rule
-                }
+            by gsonPref("validatedValue").withDefault(DEFAULT_SIMPLE_VALUE)
+                    .validate { newValue ->
+                        newValue.x < newValue.y // arbitrary rule
+                    }
 
     var validatedOptionalValue: List<TestModel>?
             by gsonPref<List<TestModel>>(key = "validatedOptionalValue")
-                .validate { newValue ->
-                    newValue.isNullOrEmpty().not()
-                }
+                    .validate { newValue ->
+                        newValue.isNullOrEmpty().not()
+                    }
 
 }

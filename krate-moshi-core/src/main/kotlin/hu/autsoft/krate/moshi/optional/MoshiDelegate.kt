@@ -10,8 +10,8 @@ import java.lang.reflect.Type
 import kotlin.reflect.KProperty
 
 private class MoshiDelegate<T : Any>(
-        override val key: String,
-        private val adapter: JsonAdapter<T>,
+    override val key: String,
+    private val adapter: JsonAdapter<T>,
 ) : KeyedKrateProperty<T?> {
 
     override fun getValue(thisRef: Krate, property: KProperty<*>): T? {
@@ -37,8 +37,8 @@ private class MoshiDelegate<T : Any>(
 }
 
 internal class MoshiDelegateFactory<T : Any>(
-        private val key: String,
-        private val type: Type,
+    private val key: String,
+    private val type: Type,
 ) : KeyedKratePropertyProvider<T?> {
 
     override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyedKrateProperty<T?> {

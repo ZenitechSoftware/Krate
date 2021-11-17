@@ -21,21 +21,21 @@ internal class KotlinxTestKrate(context: Context) : SimpleKrate(context) {
     var listOfValues: List<TestModel>? by kotlinxPref("listOfValues")
 
     var simpleValueWithDefault: TestModel
-            by kotlinxPref("simpleValueWithDefault", DEFAULT_SIMPLE_VALUE)
+        by kotlinxPref("simpleValueWithDefault").withDefault(DEFAULT_SIMPLE_VALUE)
 
     var listOfValuesWithDefault: List<TestModel>
-            by kotlinxPref("listOfValuesWithDefault", defaultValue = DEFAULT_LIST_VALUE)
+            by kotlinxPref("listOfValuesWithDefault").withDefault(DEFAULT_LIST_VALUE)
 
     var validatedValue: TestModel
-            by kotlinxPref(key = "validatedValue", defaultValue = DEFAULT_SIMPLE_VALUE)
-                .validate { newValue ->
-                    newValue.x < newValue.y // arbitrary rule
-                }
+            by kotlinxPref("validatedValue").withDefault(DEFAULT_SIMPLE_VALUE)
+                    .validate { newValue ->
+                        newValue.x < newValue.y // arbitrary rule
+                    }
 
     var validatedOptionalValue: List<TestModel>?
             by kotlinxPref<List<TestModel>>(key = "validatedOptionalValue")
-                .validate { newValue ->
-                    newValue.isNullOrEmpty().not() // arbitrary rule
-                }
+                    .validate { newValue ->
+                        newValue.isNullOrEmpty().not() // arbitrary rule
+                    }
 
 }

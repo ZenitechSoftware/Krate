@@ -17,15 +17,15 @@ import kotlin.properties.ReadWriteProperty
  * This instance will be serialized using Gson.
  */
 public inline fun <reified T : Any> Krate.gsonPref(
-        key: String,
+    key: String,
 ): KeyedKratePropertyProvider<T?> {
     return gsonPrefImpl(key, object : TypeToken<T>() {}.type)
 }
 
 @PublishedApi
 internal fun <T : Any> Krate.gsonPrefImpl(
-        key: String,
-        type: Type,
+    key: String,
+    type: Type,
 ): KeyedKratePropertyProvider<T?> {
     return GsonDelegateFactory(key, type)
 }

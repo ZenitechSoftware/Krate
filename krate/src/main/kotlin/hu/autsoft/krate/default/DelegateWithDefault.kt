@@ -12,8 +12,8 @@ import kotlin.reflect.KProperty
 
 @InternalKrateApi
 public class DelegateWithDefault<T>(
-        private val delegate: KeyedKrateProperty<T?>,
-        private val default: T,
+    private val delegate: KeyedKrateProperty<T?>,
+    private val default: T,
 ) : ReadWriteProperty<Krate, T> {
 
     override fun setValue(thisRef: Krate, property: KProperty<*>, value: T) {
@@ -27,8 +27,8 @@ public class DelegateWithDefault<T>(
 
 @InternalKrateApi
 public class DelegateWithDefaultFactory<T>(
-        private val propertyDelegateProvider: PropertyDelegateProvider<Krate, KeyedKrateProperty<T?>>,
-        private val default: T,
+    private val propertyDelegateProvider: PropertyDelegateProvider<Krate, KeyedKrateProperty<T?>>,
+    private val default: T,
 ) : PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
 
     override fun provideDelegate(thisRef: Krate, property: KProperty<*>): ReadWriteProperty<Krate, T> {
@@ -51,7 +51,7 @@ public class DelegateWithDefaultFactory<T>(
  * ```
  */
 public fun <T : Any?> KeyedKrateProperty<T?>.withDefault(
-        default: T
+    default: T
 ): ReadWriteProperty<Krate, T> {
     @OptIn(InternalKrateApi::class)
     return DelegateWithDefault(this, default)
@@ -69,7 +69,7 @@ public fun <T : Any?> KeyedKrateProperty<T?>.withDefault(
  * ```
  */
 public fun <T : Any?> KeyedKratePropertyProvider<T?>.withDefault(
-        default: T
+    default: T
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
     @OptIn(InternalKrateApi::class)
     return DelegateWithDefaultFactory(this, default)

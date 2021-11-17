@@ -18,15 +18,15 @@ import kotlin.reflect.typeOf
  */
 @OptIn(ExperimentalStdlibApi::class)
 public inline fun <reified T : Any> Krate.kotlinxPref(
-        key: String,
+    key: String,
 ): KeyedKratePropertyProvider<T?> {
     return kotlinxPrefImpl(key, typeOf<T>())
 }
 
 @PublishedApi
 internal fun <T : Any> Krate.kotlinxPrefImpl(
-        key: String,
-        type: KType,
+    key: String,
+    type: KType,
 ): KeyedKratePropertyProvider<T?> {
     return KotlinxDelegateFactory(key, type)
 }
