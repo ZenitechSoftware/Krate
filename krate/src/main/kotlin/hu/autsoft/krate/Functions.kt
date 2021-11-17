@@ -2,62 +2,63 @@
 
 package hu.autsoft.krate
 
-import hu.autsoft.krate.base.KeyedKrateProperty
+import hu.autsoft.krate.base.KeyedKratePropertyProvider
 import hu.autsoft.krate.default.withDefault
-import hu.autsoft.krate.optional.BooleanDelegate
-import hu.autsoft.krate.optional.FloatDelegate
-import hu.autsoft.krate.optional.IntDelegate
-import hu.autsoft.krate.optional.LongDelegate
-import hu.autsoft.krate.optional.StringDelegate
-import hu.autsoft.krate.optional.StringSetDelegate
+import hu.autsoft.krate.optional.BooleanDelegateProvider
+import hu.autsoft.krate.optional.FloatDelegateProvider
+import hu.autsoft.krate.optional.IntDelegateProvider
+import hu.autsoft.krate.optional.LongDelegateProvider
+import hu.autsoft.krate.optional.StringDelegateProvider
+import hu.autsoft.krate.optional.StringSetDelegateProvider
+import kotlin.properties.PropertyDelegateProvider
 import kotlin.properties.ReadWriteProperty
 
 /**
  * Creates an optional preference of type [Boolean] with the given [key] in this [Krate] instance.
  * If [key] is `null` then the property name will be used as key.
  */
-public fun Krate.booleanPref(key: String? = null): KeyedKrateProperty<Boolean?> {
-    return BooleanDelegate(key)
+public fun Krate.booleanPref(key: String? = null): KeyedKratePropertyProvider<Boolean?> {
+    return BooleanDelegateProvider(key)
 }
 
 /**
  * Creates an optional preference of type [Float] with the given [key] in this [Krate] instance.
  * If [key] is `null` then the property name will be used as key.
  */
-public fun Krate.floatPref(key: String? = null): KeyedKrateProperty<Float?> {
-    return FloatDelegate(key)
+public fun Krate.floatPref(key: String? = null): KeyedKratePropertyProvider<Float?> {
+    return FloatDelegateProvider(key)
 }
 
 /**
  * Creates an optional preference of type [Int] with the given [key] in this [Krate] instance.
  * If [key] is `null` then the property name will be used as key.
  */
-public fun Krate.intPref(key: String? = null): KeyedKrateProperty<Int?> {
-    return IntDelegate(key)
+public fun Krate.intPref(key: String? = null): KeyedKratePropertyProvider<Int?> {
+    return IntDelegateProvider(key)
 }
 
 /**
  * Creates an optional preference of type [Long] with the given [key] in this [Krate] instance.
  * If [key] is `null` then the property name will be used as key.
  */
-public fun Krate.longPref(key: String? = null): KeyedKrateProperty<Long?> {
-    return LongDelegate(key)
+public fun Krate.longPref(key: String? = null): KeyedKratePropertyProvider<Long?> {
+    return LongDelegateProvider(key)
 }
 
 /**
  * Creates an optional preference of type [String] with the given [key] in this [Krate] instance.
  * If [key] is `null` then the property name will be used as key.
  */
-public fun Krate.stringPref(key: String? = null): KeyedKrateProperty<String?> {
-    return StringDelegate(key)
+public fun Krate.stringPref(key: String? = null): KeyedKratePropertyProvider<String?> {
+    return StringDelegateProvider(key)
 }
 
 /**
  * Creates an optional preference of type Set<String> with the given [key] in this [Krate] instance.
  * If [key] is `null` then the property name will be used as key.
  */
-public fun Krate.stringSetPref(key: String? = null): KeyedKrateProperty<Set<String>?> {
-    return StringSetDelegate(key)
+public fun Krate.stringSetPref(key: String? = null): KeyedKratePropertyProvider<Set<String>?> {
+    return StringSetDelegateProvider(key)
 }
 
 
@@ -73,7 +74,7 @@ public fun Krate.stringSetPref(key: String? = null): KeyedKrateProperty<Set<Stri
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
     ),
 )
-public fun Krate.booleanPref(key: String? = null, defaultValue: Boolean): ReadWriteProperty<Krate, Boolean> {
+public fun Krate.booleanPref(key: String? = null, defaultValue: Boolean): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, Boolean>> {
     return booleanPref(key).withDefault(defaultValue)
 }
 
@@ -89,7 +90,7 @@ public fun Krate.booleanPref(key: String? = null, defaultValue: Boolean): ReadWr
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
     ),
 )
-public fun Krate.floatPref(key: String? = null, defaultValue: Float): ReadWriteProperty<Krate, Float> {
+public fun Krate.floatPref(key: String? = null, defaultValue: Float): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, Float>> {
     return floatPref(key).withDefault(defaultValue)
 }
 
@@ -105,7 +106,7 @@ public fun Krate.floatPref(key: String? = null, defaultValue: Float): ReadWriteP
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
     ),
 )
-public fun Krate.intPref(key: String? = null, defaultValue: Int): ReadWriteProperty<Krate, Int> {
+public fun Krate.intPref(key: String? = null, defaultValue: Int): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, Int>> {
     return intPref(key).withDefault(defaultValue)
 }
 
@@ -121,7 +122,7 @@ public fun Krate.intPref(key: String? = null, defaultValue: Int): ReadWritePrope
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
     ),
 )
-public fun Krate.longPref(key: String? = null, defaultValue: Long): ReadWriteProperty<Krate, Long> {
+public fun Krate.longPref(key: String? = null, defaultValue: Long): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, Long>> {
     return longPref(key).withDefault(defaultValue)
 }
 
@@ -137,7 +138,7 @@ public fun Krate.longPref(key: String? = null, defaultValue: Long): ReadWritePro
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
     ),
 )
-public fun Krate.stringPref(key: String? = null, defaultValue: String): ReadWriteProperty<Krate, String> {
+public fun Krate.stringPref(key: String? = null, defaultValue: String): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, String>> {
     return stringPref(key).withDefault(defaultValue)
 }
 
@@ -153,6 +154,6 @@ public fun Krate.stringPref(key: String? = null, defaultValue: String): ReadWrit
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
     ),
 )
-public fun Krate.stringSetPref(key: String? = null, defaultValue: Set<String>): ReadWriteProperty<Krate, Set<String>> {
+public fun Krate.stringSetPref(key: String? = null, defaultValue: Set<String>): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, Set<String>>> {
     return stringSetPref(key).withDefault(defaultValue)
 }

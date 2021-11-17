@@ -11,15 +11,15 @@ import java.lang.reflect.Type
 import kotlin.reflect.KProperty
 
 private class GsonDelegate<T : Any>(
-    override val key: String?,
+    override val key: String,
     private val adapter: TypeAdapter<T>,
 ) : KeyedKrateProperty<T?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): T? {
-        return if (!thisRef.sharedPreferences.contains(key ?: property.name)) {
+        return if (!thisRef.sharedPreferences.contains(key)) {
             null
         } else {
-            val string = requireNotNull(thisRef.sharedPreferences.getString(key ?: property.name, null))
+            val string = requireNotNull(thisRef.sharedPreferences.getString(key, null))
             adapter.fromJson(string)
         }
     }
@@ -27,11 +27,11 @@ private class GsonDelegate<T : Any>(
     override operator fun setValue(thisRef: Krate, property: KProperty<*>, value: T?) {
         if (value == null) {
             thisRef.sharedPreferences.edit {
-                remove(key ?: property.name)
+                remove(key)
             }
         } else {
             thisRef.sharedPreferences.edit {
-                putString(key ?: property.name, adapter.toJson(value))
+                putString(key, adapter.toJson(value))
             }
         }
     }

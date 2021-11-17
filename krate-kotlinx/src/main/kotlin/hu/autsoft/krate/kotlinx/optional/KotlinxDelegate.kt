@@ -12,15 +12,15 @@ import kotlin.reflect.KType
 
 
 private class KotlinxDelegate<T : Any>(
-    override val key: String?,
+    override val key: String,
     private val serializer: KSerializer<T>,
 ) : KeyedKrateProperty<T?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): T? {
-        return if (!thisRef.sharedPreferences.contains(key ?: property.name)) {
+        return if (!thisRef.sharedPreferences.contains(key)) {
             null
         } else {
-            val string = requireNotNull(thisRef.sharedPreferences.getString(key ?: property.name, null))
+            val string = requireNotNull(thisRef.sharedPreferences.getString(key, null))
             thisRef.internalJson.decodeFromString(serializer, string)
         }
     }
@@ -28,11 +28,11 @@ private class KotlinxDelegate<T : Any>(
     override operator fun setValue(thisRef: Krate, property: KProperty<*>, value: T?) {
         if (value == null) {
             thisRef.sharedPreferences.edit {
-                remove(key ?: property.name)
+                remove(key)
             }
         } else {
             thisRef.sharedPreferences.edit {
-                putString(key ?: property.name, thisRef.internalJson.encodeToString(serializer, value))
+                putString(key, thisRef.internalJson.encodeToString(serializer, value))
             }
         }
     }

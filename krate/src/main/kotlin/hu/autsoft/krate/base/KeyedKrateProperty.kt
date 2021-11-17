@@ -8,5 +8,5 @@ import kotlin.properties.ReadWriteProperty
  * for storing the value.
  */
 public interface KeyedKrateProperty<T> : ReadWriteProperty<Krate, T> {
-    public val key: String?
+    public val key: String
 }
