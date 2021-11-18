@@ -46,19 +46,19 @@ You can provide a default value for the property by chaining a `withDefault` cal
 var username: String by stringPref().withDefault("admin")
 ```
 
-# Custom keys
+Reading from this property will return either the value it was last set to, or the default value if it's never been set.
 
-By default the the property will be stored under the key of the property's name in the `SharedPreferences`.
+> Note that there's no way to remove these values from `SharedPreferences` (although you could set it explicitly to the default value).
 
-You can change this behaviour by explicitly give the key in the argument of the delegate function.
+### Custom keys
+
+By default, the the property will be stored under the key of the property's name in the underlying `SharedPreferences` instance.
+
+You can change this behaviour by explicitly providing the key as an argument:
 
 ```kotlin
 var username: String by stringPref("username").withDefault("admin")
 ```
-
-Reading from this property will return either the value it was last set to, or the default value if it's never been set.
-
-> Note that there's no way to remove these values from `SharedPreferences` (although you could set it explicitly to the default value).
 
 ### Validation
 
@@ -74,13 +74,9 @@ If this validation fails, an `IllegalArgumentException` will be thrown.
 
 # Custom Krate implementations
 
-You can usually get away with extending `SimpleKrate`, as it does allow you to pass in a custom name for the `SharedPreferences` to be used
-to store your values in its constructor as an optional parameter. (If you pass in no `name` parameter to its constructor, it will default to
-using the instance returned by `PreferenceManager.getDefaultSharedPreferences(context)`.)
+You can usually get away with extending `SimpleKrate`, as it does allow you to pass in a custom name for the `SharedPreferences` to be used to store your values in its constructor as an optional parameter. (If you pass in no `name` parameter to its constructor, it will default to using the instance returned by `PreferenceManager.getDefaultSharedPreferences(context)`.)
 
-However, you can also implement the `Krate` interface directly if you want to manage the `SharedPreferences` instance yourself for whatever
-reason - all this interface requires is a property that holds a `SharedPreferences` instance. With that, you can use the delegate functions
-the same way as shown above:
+However, you can also implement the `Krate` interface directly if you want to manage the `SharedPreferences` instance yourself for whatever reason - all this interface requires is a property that holds a `SharedPreferences` instance. With that, you can use the delegate functions the same way as shown above:
 
 ```kotlin
 class ExampleCustomKrate(context: Context) : Krate {
