@@ -4,7 +4,7 @@
 
 ![Krate banner](./docs/krate.png)
 
-_Krate_ is a `SharedPreferences` wrapper library that uses delegated properties for convenient access to `SharedPreferences` values.
+**Krate** is a `SharedPreferences` wrapper library that uses delegated properties for convenient access to `SharedPreferences` values.
 
 Here's what its basic usage looks like, extending the provided `SimpleKrate` class:
 
@@ -13,7 +13,7 @@ class UserSettings(context: Context) : SimpleKrate(context) {
 
     var notificationsEnabled by booleanPref().withDefault(false)
     var loginCount by intPref().withDefault(0)
-    var nickname by stringPref().withDefault("")
+    var nickname by stringPref()
 
 }
 
@@ -24,30 +24,23 @@ Log.d("LOGIN_COUNT", "Count: ${settings.loginCount}")
 
 # Dependency
 
-You can include _Krate_ in your project from the `mavenCentral()` repository, like so:
+Krate is available from `mavenCentral()`. You can add it to your dependencies with the following:
 
 ```groovy
 implementation 'hu.autsoft:krate:1.2.0'
 ```
 
-# Optionals vs defaults
+# Basics
 
-Each stored property can be declared with or without a default value. Here's how the two options differ:
-
-### Optional values:
-
-A property declared with the delegate function will have a nullable type. It will have a `null` value if no value has been set for this
-property yet, and its current value can be erased from `SharedPreferences` completely by setting it to `null`.
+A Krate property is nullable by default. It will have a `null` value if no value has been set for the property yet, and its current value can be erased from `SharedPreferences` completely by setting it to `null`.
 
 ```kotlin
 var username: String? by stringPref()
 ```
 
-### Default values:
+### Default values
 
-An extension function declared takes the default value as argument, and it will have a non-nullable type. Reading from this property will
-return either the value it was last set to or the default value. Setting this property will update the value stored in `SharedPreferences`.
-Note that there's no way to remove these values from `SharedPreferences` (although you could set it explicitly to the default value).
+You can provide a default value for the property by chaining a `withDefault` call on the delegate function. This will give the property a non-nullable type.
 
 ```kotlin
 var username: String by stringPref().withDefault("admin")
@@ -62,6 +55,22 @@ You can change this behaviour by explicitly give the key in the argument of the 
 ```kotlin
 var username: String by stringPref("username").withDefault("admin")
 ```
+
+Reading from this property will return either the value it was last set to, or the default value if it's never been set.
+
+> Note that there's no way to remove these values from `SharedPreferences` (although you could set it explicitly to the default value).
+
+### Validation
+
+You can add validation rules to your Krate properties by calling `validate` on any of Krate's delegate functions:
+
+```kotlin
+var percentage: Int by intPref()
+    .withDefault(0)
+    .validate { it in 0..100 }
+```
+
+If this validation fails, an `IllegalArgumentException` will be thrown.
 
 # Custom Krate implementations
 
@@ -120,19 +129,7 @@ class EncryptedKrate(applicationContext: Context) : Krate {
 }
 ```
 
-# Validation
-
-You can add validation rules to your Krate properties by calling `validate` on any of Krate's delegate functions:
-
-```kotlin
-var percentage: Int by intPref()
-    .withDefault(0)
-    .validate { it in 0..100 }
-```
-
-If this validation fails, an `IllegalArgumentException` will be thrown.
-
-# Addons
+# Serialization addons
 
 Krate, by default, supports the types that `SharedPreferences` supports. These are `Boolean`, `Float`, `Int`, `Long`, `String` and `Set<String>`. You may of course want to store additional types in Krate.
 

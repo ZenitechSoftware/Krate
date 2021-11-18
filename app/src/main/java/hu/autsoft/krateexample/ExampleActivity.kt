@@ -68,15 +68,15 @@ class ExampleActivity : AppCompatActivity() {
             binding.stringSetPreferenceInput.text.toString().split(",").map(String::trim).toSet()
         exampleSettings.exampleUserGson = User(
             binding.gsonPreferenceFirstInput.text.toString(),
-            binding.gsonPreferenceLastInput.text.toString()
+            binding.gsonPreferenceLastInput.text.toString(),
         )
         exampleSettings.exampleUserKotlinX = User(
             binding.kotlinxPreferenceFirstInput.text.toString(),
-            binding.kotlinxPreferenceLastInput.text.toString()
+            binding.kotlinxPreferenceLastInput.text.toString(),
         )
         exampleSettings.exampleUserMoshi = User(
             binding.moshiPreferenceFirstInput.text.toString(),
-            binding.moshiPreferenceLastInput.text.toString()
+            binding.moshiPreferenceLastInput.text.toString(),
         )
     }
 

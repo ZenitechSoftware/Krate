@@ -129,7 +129,7 @@
                 android:id="@+id/gsonPreferenceFirstInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="First Gson"
+                android:hint="First Name"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -148,7 +148,7 @@
                 android:id="@+id/gsonPreferenceLastInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Last Gson"
+                android:hint="Last Name"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -168,7 +168,7 @@
                 android:id="@+id/kotlinxPreferenceFirstInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="First KotlinX"
+                android:hint="First Name"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -187,7 +187,7 @@
                 android:id="@+id/kotlinxPreferenceLastInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Last KotlinX"
+                android:hint="Last Name"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -197,7 +197,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/gsonPreferenceLast"
+            app:layout_constraintEnd_toStartOf="@+id/moshiPreferenceLast"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
@@ -207,7 +207,7 @@
                 android:id="@+id/moshiPreferenceFirstInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="First Moshi"
+                android:hint="First Name"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -219,14 +219,14 @@
             android:layout_margin="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/gsonPreferenceFirst"
+            app:layout_constraintStart_toEndOf="@+id/moshiPreferenceFirst"
             app:layout_constraintTop_toBottomOf="@+id/kotlinxPreferenceLast">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/moshiPreferenceLastInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Last Moshi"
+                android:hint="Last Name"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>

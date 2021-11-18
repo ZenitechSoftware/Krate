@@ -41,7 +41,7 @@ internal fun <T : Any> Krate.moshiPrefImpl(
     message = "Use .withDefault() on a moshiPref instead",
     level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
-        "this.moshiPref(key).withDefault(defaultValue)",
+        "this.moshiPref<T>(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
     ),
 )

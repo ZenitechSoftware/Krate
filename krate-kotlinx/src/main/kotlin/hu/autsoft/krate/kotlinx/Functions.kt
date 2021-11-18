@@ -40,7 +40,7 @@ internal fun <T : Any> Krate.kotlinxPrefImpl(
     message = "Use .withDefault() on a kotlinxPref instead",
     level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
-        "this.kotlinxPref(key).withDefault(defaultValue)",
+        "this.kotlinxPref<T>(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
     ),
 )
