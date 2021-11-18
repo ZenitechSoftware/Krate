@@ -15,13 +15,16 @@ public class DelegateWithDefault<T>(
     private val delegate: KeyedKrateProperty<T?>,
     private val defaultValue: T,
 ) : ReadWriteProperty<Krate, T> {
+    override fun getValue(thisRef: Krate, property: KProperty<*>): T {
+        return if (delegate.key !in thisRef.sharedPreferences) {
+            defaultValue
+        } else {
+            delegate.getValue(thisRef, property)!!
+        }
+    }
 
     override fun setValue(thisRef: Krate, property: KProperty<*>, value: T) {
         delegate.setValue(thisRef, property, value)
-    }
-
-    override fun getValue(thisRef: Krate, property: KProperty<*>): T {
-        return if (!thisRef.sharedPreferences.contains(delegate.key)) defaultValue else delegate.getValue(thisRef, property)!!
     }
 }
 

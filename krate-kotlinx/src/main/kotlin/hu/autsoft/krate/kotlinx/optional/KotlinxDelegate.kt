@@ -17,7 +17,7 @@ private class KotlinxDelegate<T : Any>(
 ) : KeyedKrateProperty<T?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): T? {
-        return if (!thisRef.sharedPreferences.contains(key)) {
+        return if (key !in thisRef.sharedPreferences) {
             null
         } else {
             val string = requireNotNull(thisRef.sharedPreferences.getString(key, null))
