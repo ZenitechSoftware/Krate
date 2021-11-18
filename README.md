@@ -57,7 +57,7 @@ By default, the the property will be stored under the key of the property's name
 You can change this behaviour by explicitly providing the key as an argument:
 
 ```kotlin
-var username: String by stringPref("username").withDefault("admin")
+var username: String? by stringPref(key = "USER_NAME")
 ```
 
 ### Validation
