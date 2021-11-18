@@ -13,7 +13,8 @@ import kotlin.reflect.typeOf
 
 /**
  * Creates an optional preference of type T with the given [key] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
+ *
  * This instance will be serialized using kotlinx.serialization.
  */
 @OptIn(ExperimentalStdlibApi::class)
@@ -25,7 +26,7 @@ public inline fun <reified T : Any> Krate.kotlinxPref(
 
 @PublishedApi
 internal fun <T : Any> Krate.kotlinxPrefImpl(
-    key: String? = null,
+    key: String?,
     type: KType,
 ): KeyedKratePropertyProvider<T?> {
     return KotlinxDelegateFactory(key, type)
@@ -33,7 +34,8 @@ internal fun <T : Any> Krate.kotlinxPrefImpl(
 
 /**
  * Creates a non-optional preference of type T with the given [key] and [defaultValue] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
+ *
  * This instance will be serialized using kotlinx.serialization.
  */
 @Deprecated(

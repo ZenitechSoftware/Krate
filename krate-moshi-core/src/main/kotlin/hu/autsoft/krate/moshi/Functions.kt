@@ -14,7 +14,8 @@ import kotlin.reflect.typeOf
 
 /**
  * Creates an optional preference of type T with the given [key] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
+ *
  * This instance will be serialized using Moshi.
  */
 @OptIn(ExperimentalStdlibApi::class)
@@ -26,7 +27,7 @@ public inline fun <reified T : Any> Krate.moshiPref(
 
 @PublishedApi
 internal fun <T : Any> Krate.moshiPrefImpl(
-    key: String? = null,
+    key: String?,
     type: Type,
 ): KeyedKratePropertyProvider<T?> {
     return MoshiDelegateFactory(key, type)
@@ -34,7 +35,8 @@ internal fun <T : Any> Krate.moshiPrefImpl(
 
 /**
  * Creates a non-optional preference of type T with the given [key] and [defaultValue] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
+ *
  * This instance will be serialized using Moshi.
  */
 @Deprecated(

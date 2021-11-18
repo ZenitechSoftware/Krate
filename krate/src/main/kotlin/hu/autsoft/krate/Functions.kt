@@ -15,7 +15,7 @@ import kotlin.properties.ReadWriteProperty
 
 /**
  * Creates an optional preference of type [Boolean] with the given [key] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
  */
 public fun Krate.booleanPref(key: String? = null): KeyedKratePropertyProvider<Boolean?> {
     return BooleanDelegateProvider(key)
@@ -23,7 +23,7 @@ public fun Krate.booleanPref(key: String? = null): KeyedKratePropertyProvider<Bo
 
 /**
  * Creates an optional preference of type [Float] with the given [key] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
  */
 public fun Krate.floatPref(key: String? = null): KeyedKratePropertyProvider<Float?> {
     return FloatDelegateProvider(key)
@@ -31,7 +31,7 @@ public fun Krate.floatPref(key: String? = null): KeyedKratePropertyProvider<Floa
 
 /**
  * Creates an optional preference of type [Int] with the given [key] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
  */
 public fun Krate.intPref(key: String? = null): KeyedKratePropertyProvider<Int?> {
     return IntDelegateProvider(key)
@@ -39,7 +39,7 @@ public fun Krate.intPref(key: String? = null): KeyedKratePropertyProvider<Int?> 
 
 /**
  * Creates an optional preference of type [Long] with the given [key] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
  */
 public fun Krate.longPref(key: String? = null): KeyedKratePropertyProvider<Long?> {
     return LongDelegateProvider(key)
@@ -47,7 +47,7 @@ public fun Krate.longPref(key: String? = null): KeyedKratePropertyProvider<Long?
 
 /**
  * Creates an optional preference of type [String] with the given [key] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
  */
 public fun Krate.stringPref(key: String? = null): KeyedKratePropertyProvider<String?> {
     return StringDelegateProvider(key)
@@ -55,7 +55,7 @@ public fun Krate.stringPref(key: String? = null): KeyedKratePropertyProvider<Str
 
 /**
  * Creates an optional preference of type Set<String> with the given [key] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
  */
 public fun Krate.stringSetPref(key: String? = null): KeyedKratePropertyProvider<Set<String>?> {
     return StringSetDelegateProvider(key)
@@ -64,7 +64,7 @@ public fun Krate.stringSetPref(key: String? = null): KeyedKratePropertyProvider<
 
 /**
  * Creates a non-optional preference of type [Boolean] with the given [key] and [defaultValue] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
  */
 @Deprecated(
     message = "Use .withDefault() on a booleanPref instead",
@@ -80,7 +80,7 @@ public fun Krate.booleanPref(key: String? = null, defaultValue: Boolean): Proper
 
 /**
  * Creates a non-optional preference of type [Float] with the given [key] and [defaultValue] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
  */
 @Deprecated(
     message = "Use .withDefault() on a floatPref instead",
@@ -96,7 +96,7 @@ public fun Krate.floatPref(key: String? = null, defaultValue: Float): PropertyDe
 
 /**
  * Creates a non-optional preference of type [Int] with the given [key] and [defaultValue] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
  */
 @Deprecated(
     message = "Use .withDefault() on an intPref instead",
@@ -112,7 +112,7 @@ public fun Krate.intPref(key: String? = null, defaultValue: Int): PropertyDelega
 
 /**
  * Creates a non-optional preference of type [Long] with the given [key] and [defaultValue] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
  */
 @Deprecated(
     message = "Use .withDefault() on a longPref instead",
@@ -128,7 +128,7 @@ public fun Krate.longPref(key: String? = null, defaultValue: Long): PropertyDele
 
 /**
  * Creates a non-optional preference of type [String] with the given [key] and [defaultValue] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
  */
 @Deprecated(
     message = "Use .withDefault() on a stringPref instead",
@@ -144,7 +144,7 @@ public fun Krate.stringPref(key: String? = null, defaultValue: String): Property
 
 /**
  * Creates a non-optional preference of type Set<String> with the given [key] and [defaultValue] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
  */
 @Deprecated(
     message = "Use .withDefault() on a stringSetPref instead",

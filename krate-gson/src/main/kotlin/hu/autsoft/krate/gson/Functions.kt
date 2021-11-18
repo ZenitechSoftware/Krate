@@ -13,7 +13,8 @@ import kotlin.properties.ReadWriteProperty
 
 /**
  * Creates an optional preference of type T with the given [key] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
+ *
  * This instance will be serialized using Gson.
  */
 public inline fun <reified T : Any> Krate.gsonPref(
@@ -32,7 +33,8 @@ internal fun <T : Any> Krate.gsonPrefImpl(
 
 /**
  * Creates a non-optional preference of type T with the given [key] and [defaultValue] in this [Krate] instance.
- * If [key] is `null` then the property name will be used as key.
+ * If no [key] is provided, the property's name will be used as the key.
+ *
  * This instance will be serialized using Gson.
  */
 @Deprecated(
