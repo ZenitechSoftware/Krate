@@ -10,6 +10,11 @@ import kotlin.properties.PropertyDelegateProvider
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
+/**
+ * Wraps [delegate] and returns [defaultValue] when the underlying delegate's
+ * value is accessed, but the SharedPreferences instead does not contain the
+ * associated key.
+ */
 @InternalKrateApi
 public class DelegateWithDefault<T>(
     private val delegate: KeyedKrateProperty<T?>,
@@ -28,6 +33,9 @@ public class DelegateWithDefault<T>(
     }
 }
 
+/**
+ * Wraps the delegate provided by [propertyDelegateProvider] into a [DelegateWithDefault].
+ */
 @InternalKrateApi
 public class DelegateWithDefaultFactory<T>(
     private val propertyDelegateProvider: PropertyDelegateProvider<Krate, KeyedKrateProperty<T?>>,
@@ -43,14 +51,13 @@ public class DelegateWithDefaultFactory<T>(
 }
 
 /**
- * Adds a default value to a Krate delegate.
- *
- * If a delegate returns with null because it have not been set before, then this returns with [defaultValue]
+ * Adds a default value to a Krate delegate: if a Krate property's value
+ * not been set before, [defaultValue] is returned instead of `null`.
  *
  * Example property using this function:
  *
  * ```kotlin
- * var defaultString by stringPref("validatedString").withDefault("default")
+ * var username by stringPref("username").withDefault("Default User")
  * ```
  */
 public fun <T : Any?> KeyedKrateProperty<T?>.withDefault(
@@ -61,14 +68,13 @@ public fun <T : Any?> KeyedKrateProperty<T?>.withDefault(
 }
 
 /**
- * Adds a default value to a Krate delegate factory.
- *
- * If a delegate returns with null because it have not been set before, then this returns with [defaultValue]
+ * Adds a default value to a Krate delegate: if a Krate property's value
+ * not been set before, [defaultValue] is returned instead of `null`.
  *
  * Example property using this function:
  *
  * ```kotlin
- * var defaultModel by kotlinxPref("defaultModel").withDefault(DefaultModel())
+ * var user by moshiPref("user").withDefault(User("Guest"))
  * ```
  */
 public fun <T : Any?> KeyedKratePropertyProvider<T?>.withDefault(
