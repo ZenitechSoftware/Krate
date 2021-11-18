@@ -37,7 +37,7 @@ internal fun <T : Any> Krate.gsonPrefImpl(
     message = "Use .withDefault() on a gsonPref instead",
     level = DeprecationLevel.ERROR,
     replaceWith = ReplaceWith(
-        "this.gsonPref(key).withDefault(defaultValue)",
+        "this.gsonPref<T>(key).withDefault(defaultValue)",
         imports = arrayOf("hu.autsoft.krate.default.withDefault"),
     ),
 )
