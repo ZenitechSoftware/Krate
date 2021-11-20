@@ -24,7 +24,7 @@ Log.d("LOGIN_COUNT", "Count: ${settings.loginCount}")
 
 # Dependency
 
-Krate is available from `mavenCentral()`. You can add it to your dependencies with the following:
+Krate is available from `mavenCentral()`. You can add it to your dependencies with the following line:
 
 ```groovy
 implementation 'hu.autsoft:krate:1.2.0'
