@@ -6,7 +6,7 @@ import hu.autsoft.krate.util.edit
 import kotlin.reflect.KProperty
 
 internal class FloatDelegate(
-    override val key: String
+    override val key: String,
 ) : KeyedKrateProperty<Float?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): Float? {

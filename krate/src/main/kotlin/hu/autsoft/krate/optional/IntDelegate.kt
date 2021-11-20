@@ -6,7 +6,7 @@ import hu.autsoft.krate.util.edit
 import kotlin.reflect.KProperty
 
 internal class IntDelegate(
-    override val key: String
+    override val key: String,
 ) : KeyedKrateProperty<Int?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): Int? {

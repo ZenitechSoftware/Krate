@@ -6,7 +6,7 @@ import hu.autsoft.krate.util.edit
 import kotlin.reflect.KProperty
 
 internal class BooleanDelegate(
-    override val key: String
+    override val key: String,
 ) : KeyedKrateProperty<Boolean?> {
 
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): Boolean? {
