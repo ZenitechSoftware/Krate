@@ -2,13 +2,13 @@ package hu.autsoft.krate.optional
 
 import hu.autsoft.krate.Krate
 import hu.autsoft.krate.base.KeyedKrateProperty
+import hu.autsoft.krate.base.KeyedKratePropertyProvider
 import hu.autsoft.krate.util.edit
 import kotlin.reflect.KProperty
 
 internal class FloatDelegate(
     override val key: String,
 ) : KeyedKrateProperty<Float?> {
-
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): Float? {
         return if (!thisRef.sharedPreferences.contains(key)) {
             null
@@ -24,5 +24,12 @@ internal class FloatDelegate(
             thisRef.sharedPreferences.edit { putFloat(key, value) }
         }
     }
+}
 
+internal class FloatDelegateProvider(
+    val key: String?,
+) : KeyedKratePropertyProvider<Float?> {
+    override fun provideDelegate(thisRef: Krate, property: KProperty<*>): FloatDelegate {
+        return FloatDelegate(key ?: property.name)
+    }
 }

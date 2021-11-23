@@ -11,9 +11,9 @@ Here's what its basic usage looks like, extending the provided `SimpleKrate` cla
 ```kotlin
 class UserSettings(context: Context) : SimpleKrate(context) {
 
-    var notificationsEnabled by booleanPref("notifications_enabled").withDefault(false)
-    var loginCount by intPref("login_count").withDefault(0)
-    var nickname by stringPref("nickname")
+    var notificationsEnabled by booleanPref().withDefault(false)
+    var loginCount by intPref().withDefault(0)
+    var nickname by stringPref()
 
 }
 
@@ -35,7 +35,7 @@ implementation 'hu.autsoft:krate:1.2.0'
 A Krate property is nullable by default. It will have a `null` value if no value has been set for the property yet, and its current value can be erased from `SharedPreferences` completely by setting it to `null`.
 
 ```kotlin
-var username: String? by stringPref("username")
+var username: String? by stringPref()
 ```
 
 ### Default values
@@ -43,19 +43,29 @@ var username: String? by stringPref("username")
 You can provide a default value for the property by chaining a `withDefault` call on the delegate function. This will give the property a non-nullable type.
 
 ```kotlin
-var username: String by stringPref("username").withDefault("admin")
+var username: String by stringPref().withDefault("admin")
 ```
 
 Reading from this property will return either the value it was last set to, or the default value if it's never been set.
 
 > Note that there's no way to remove these values from `SharedPreferences` (although you could set it explicitly to the default value).
 
+### Custom keys
+
+By default, the the property will be stored under the key of the property's name in the underlying `SharedPreferences` instance.
+
+You can change this behaviour by explicitly providing the key as an argument:
+
+```kotlin
+var username: String? by stringPref(key = "USER_NAME")
+```
+
 ### Validation
 
 You can add validation rules to your Krate properties by calling `validate` on any of Krate's delegate functions:
 
 ```kotlin
-var percentage: Int by intPref("percentage")
+var percentage: Int by intPref()
     .withDefault(0)
     .validate { it in 0..100 }
 ```
@@ -64,9 +74,9 @@ If this validation fails, an `IllegalArgumentException` will be thrown.
 
 # Custom Krate implementations
 
-You can usually get away with extending `SimpleKrate`, as it does allow you to pass in a custom name for the `SharedPreferences` to be used to store your values in its constructor as an optional parameter. (If you pass in no `name` parameter to its constructor, it will default to using the instance returned by `PreferenceManager.getDefaultSharedPreferences(context)`.)  
+You can usually get away with extending `SimpleKrate`, as it does allow you to pass in a custom name for the `SharedPreferences` to be used to store your values in its constructor as an optional parameter. (If you pass in no `name` parameter to its constructor, it will default to using the instance returned by `PreferenceManager.getDefaultSharedPreferences(context)`.)
 
-However, you can also implement the `Krate` interface directly if you want to manage the `SharedPreferences` instance yourself for whatever reason - all this interface requires is a property that holds a `SharedPreferences` instance. With that, you can use the delegate functions the same way as shown above: 
+However, you can also implement the `Krate` interface directly if you want to manage the `SharedPreferences` instance yourself for whatever reason - all this interface requires is a property that holds a `SharedPreferences` instance. With that, you can use the delegate functions the same way as shown above:
 
 ```kotlin
 class ExampleCustomKrate(context: Context) : Krate {
@@ -77,7 +87,7 @@ class ExampleCustomKrate(context: Context) : Krate {
         sharedPreferences = context.applicationContext.getSharedPreferences("custom_krate_prefs", Context.MODE_PRIVATE)
     }
 
-    var exampleBoolean by booleanPref("exampleBoolean").withDefault(false)
+    var exampleBoolean by booleanPref().withDefault(false)
     
 }
 ```
@@ -91,7 +101,7 @@ class MainActivity : AppCompatActivity(), Krate {
         getPreferences(Context.MODE_PRIVATE) // Could also fetch a named or default SharedPrefs
     }
     
-    var username by stringPref("username").withDefault("")
+    var username by stringPref().withDefault("")
 
 }
 ```
@@ -111,7 +121,7 @@ class EncryptedKrate(applicationContext: Context) : Krate {
         sharedPreferences = EncryptedSharedPreferences.create(applicationContext, ...)
     }
 
-    val myStringValue: String by stringPref("my_string_value").withDefault("")
+    val myStringValue: String by stringPref().withDefault("")
 }
 ```
 
@@ -131,8 +141,8 @@ The usage of the Krate integration is the same for both setups:
 
 ```kotlin
 class MoshiKrate(context: Context) : SimpleKrate(context) {
-    var user: User? by moshiPref("user")
-    var savedArticles: List<Article>? by moshiPref("articles")
+    var user: User? by moshiPref()
+    var savedArticles: List<Article>? by moshiPref()
 }
 ```
 
@@ -180,8 +190,8 @@ Its usage is the same as with any of the base library's delegates:
 
 ```kotlin
 class KotlinxKrate(context: Context) : SimpleKrate(context) {
-    var user: User? by kotlinxPref("user")
-    var savedArticles: List<Article>? by kotlinxPref("articles")
+    var user: User? by kotlinxPref()
+    var savedArticles: List<Article>? by kotlinxPref()
 }
 ```
 
@@ -196,7 +206,7 @@ class CustomKotlinxKrate(context: Context) : SimpleKrate(context) {
         }
     }
 
-    var user: User? by kotlinxPref("user")
+    var user: User? by kotlinxPref()
 }
 ```
 
@@ -212,8 +222,8 @@ Its basic usage is the same as with any of the base library's delegates:
 
 ```kotlin
 class GsonKrate(context: Context) : SimpleKrate(context) {
-    var user: User? by gsonPref("user")
-    var savedArticles: List<Article>? by gsonPref("articles")
+    var user: User? by gsonPref()
+    var savedArticles: List<Article>? by gsonPref()
 }
 ```
 
@@ -225,7 +235,7 @@ class CustomGsonKrate(context: Context) : SimpleKrate(context) {
         gson = GsonBuilder().create()
     }
 
-    var user: User? by gsonPref("user")
+    var user: User? by gsonPref()
 }
 ```
 

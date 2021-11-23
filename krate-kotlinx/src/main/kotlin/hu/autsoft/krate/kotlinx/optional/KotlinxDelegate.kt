@@ -39,13 +39,13 @@ private class KotlinxDelegate<T : Any>(
 }
 
 internal class KotlinxDelegateFactory<T : Any>(
-    private val key: String,
+    private val key: String?,
     private val type: KType,
 ) : KeyedKratePropertyProvider<T?> {
 
     override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyedKrateProperty<T?> {
         @Suppress("UNCHECKED_CAST")
         val serializer = thisRef.internalJson.serializersModule.serializer(type) as KSerializer<T>
-        return KotlinxDelegate(key, serializer)
+        return KotlinxDelegate(key ?: property.name, serializer)
     }
 }

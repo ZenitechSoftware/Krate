@@ -37,12 +37,12 @@ private class MoshiDelegate<T : Any>(
 }
 
 internal class MoshiDelegateFactory<T : Any>(
-    private val key: String,
+    private val key: String?,
     private val type: Type,
 ) : KeyedKratePropertyProvider<T?> {
 
     override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyedKrateProperty<T?> {
         val adapter = thisRef.realMoshiInstance.adapter<T?>(type)
-        return MoshiDelegate(key, adapter)
+        return MoshiDelegate(key ?: property.name, adapter)
     }
 }

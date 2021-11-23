@@ -13,17 +13,19 @@ import kotlin.properties.ReadWriteProperty
 
 /**
  * Creates an optional preference of type T with the given [key] in this [Krate] instance.
+ * If no [key] is provided, the property's name will be used as the key.
+ *
  * This instance will be serialized using Gson.
  */
 public inline fun <reified T : Any> Krate.gsonPref(
-    key: String,
+    key: String? = null,
 ): KeyedKratePropertyProvider<T?> {
     return gsonPrefImpl(key, object : TypeToken<T>() {}.type)
 }
 
 @PublishedApi
 internal fun <T : Any> Krate.gsonPrefImpl(
-    key: String,
+    key: String?,
     type: Type,
 ): KeyedKratePropertyProvider<T?> {
     return GsonDelegateFactory(key, type)
@@ -31,6 +33,8 @@ internal fun <T : Any> Krate.gsonPrefImpl(
 
 /**
  * Creates a non-optional preference of type T with the given [key] and [defaultValue] in this [Krate] instance.
+ * If no [key] is provided, the property's name will be used as the key.
+ *
  * This instance will be serialized using Gson.
  */
 @Deprecated(
@@ -42,7 +46,7 @@ internal fun <T : Any> Krate.gsonPrefImpl(
     ),
 )
 public inline fun <reified T : Any> Krate.gsonPref(
-    key: String,
+    key: String? = null,
     defaultValue: T,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
     return gsonPref<T>(key).withDefault(defaultValue)

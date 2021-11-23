@@ -38,13 +38,13 @@ private class GsonDelegate<T : Any>(
 }
 
 internal class GsonDelegateFactory<T : Any>(
-    private val key: String,
+    private val key: String?,
     private val type: Type,
 ) : KeyedKratePropertyProvider<T?> {
 
     override fun provideDelegate(thisRef: Krate, property: KProperty<*>): KeyedKrateProperty<T?> {
         @Suppress("UNCHECKED_CAST")
         val adapter: TypeAdapter<T> = thisRef.internalGson.getAdapter(TypeToken.get(type)) as TypeAdapter<T>
-        return GsonDelegate(key, adapter)
+        return GsonDelegate(key ?: property.name, adapter)
     }
 }
