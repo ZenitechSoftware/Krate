@@ -1,6 +1,7 @@
 package hu.autsoft.krate
 
 import android.content.Context
+import hu.autsoft.krate.default.withDefault
 import hu.autsoft.krate.validation.validate
 
 internal class TestKrate(context: Context) : SimpleKrate(context) {
@@ -17,7 +18,8 @@ internal class TestKrate(context: Context) : SimpleKrate(context) {
     var optionalStringSet by stringSetPref("optionalStringSet")
     var optionalValidatedString by stringPref("optionalValidatedString")
         .validate { it?.length ?: 5 == 5 }
-    var defaultValidatedFloat by floatPref("defaultValidatedFloat", 0.0f)
+    var defaultValidatedFloat by floatPref("defaultValidatedFloat")
+        .withDefault(0.0f)
         .validate { it in 0.0f..1.0f }
 
 }

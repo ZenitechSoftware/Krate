@@ -3,7 +3,8 @@
 package hu.autsoft.krate.kotlinx
 
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.kotlinx.default.KotlinxDelegateWithDefaultFactory
+import hu.autsoft.krate.base.KeyedKratePropertyProvider
+import hu.autsoft.krate.default.withDefault
 import hu.autsoft.krate.kotlinx.optional.KotlinxDelegateFactory
 import kotlin.properties.PropertyDelegateProvider
 import kotlin.properties.ReadWriteProperty
@@ -17,7 +18,7 @@ import kotlin.reflect.typeOf
 @OptIn(ExperimentalStdlibApi::class)
 public inline fun <reified T : Any> Krate.kotlinxPref(
     key: String,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
+): KeyedKratePropertyProvider<T?> {
     return kotlinxPrefImpl(key, typeOf<T>())
 }
 
@@ -25,7 +26,7 @@ public inline fun <reified T : Any> Krate.kotlinxPref(
 internal fun <T : Any> Krate.kotlinxPrefImpl(
     key: String,
     type: KType,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
+): KeyedKratePropertyProvider<T?> {
     return KotlinxDelegateFactory(key, type)
 }
 
@@ -33,19 +34,18 @@ internal fun <T : Any> Krate.kotlinxPrefImpl(
  * Creates a non-optional preference of type T with the given [key] and [defaultValue] in this [Krate] instance.
  * This instance will be serialized using kotlinx.serialization.
  */
+@Deprecated(
+    message = "Use .withDefault() on a kotlinxPref instead",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        "this.kotlinxPref<T>(key).withDefault(defaultValue)",
+        imports = arrayOf("hu.autsoft.krate.default.withDefault"),
+    ),
+)
 @OptIn(ExperimentalStdlibApi::class)
 public inline fun <reified T : Any> Krate.kotlinxPref(
     key: String,
     defaultValue: T,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
-    return kotlinxPrefImpl(key, defaultValue, typeOf<T>())
-}
-
-@PublishedApi
-internal fun <T : Any> Krate.kotlinxPrefImpl(
-    key: String,
-    defaultValue: T,
-    type: KType,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
-    return KotlinxDelegateWithDefaultFactory(key, defaultValue, type)
+    return kotlinxPref<T>(key).withDefault(defaultValue)
 }

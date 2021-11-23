@@ -6,6 +6,7 @@ import hu.autsoft.krateexample.databinding.ActivityExampleBinding
 import hu.autsoft.krateexample.krates.ExampleCustomKrate
 import hu.autsoft.krateexample.krates.ExampleSettings
 import hu.autsoft.krateexample.krates.ExampleSimpleKrate
+import hu.autsoft.krateexample.models.User
 
 class ExampleActivity : AppCompatActivity() {
 
@@ -47,6 +48,12 @@ class ExampleActivity : AppCompatActivity() {
         binding.longPreferenceInput.setText(exampleSettings.exampleLong.toString())
         binding.stringPreferenceInput.setText(exampleSettings.exampleString)
         binding.stringSetPreferenceInput.setText(exampleSettings.exampleStringSet.joinToString(separator = ", "))
+        binding.gsonPreferenceFirstInput.setText(exampleSettings.exampleUserGson.firstName)
+        binding.gsonPreferenceLastInput.setText(exampleSettings.exampleUserGson.lastName)
+        binding.kotlinxPreferenceFirstInput.setText(exampleSettings.exampleUserKotlinX.firstName)
+        binding.kotlinxPreferenceLastInput.setText(exampleSettings.exampleUserKotlinX.lastName)
+        binding.moshiPreferenceFirstInput.setText(exampleSettings.exampleUserMoshi.firstName)
+        binding.moshiPreferenceLastInput.setText(exampleSettings.exampleUserMoshi.lastName)
     }
 
     override fun onPause() {
@@ -59,6 +66,18 @@ class ExampleActivity : AppCompatActivity() {
         exampleSettings.exampleString = binding.stringPreferenceInput.text.toString()
         exampleSettings.exampleStringSet =
             binding.stringSetPreferenceInput.text.toString().split(",").map(String::trim).toSet()
+        exampleSettings.exampleUserGson = User(
+            binding.gsonPreferenceFirstInput.text.toString(),
+            binding.gsonPreferenceLastInput.text.toString(),
+        )
+        exampleSettings.exampleUserKotlinX = User(
+            binding.kotlinxPreferenceFirstInput.text.toString(),
+            binding.kotlinxPreferenceLastInput.text.toString(),
+        )
+        exampleSettings.exampleUserMoshi = User(
+            binding.moshiPreferenceFirstInput.text.toString(),
+            binding.moshiPreferenceLastInput.text.toString(),
+        )
     }
 
 }

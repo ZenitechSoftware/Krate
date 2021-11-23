@@ -6,6 +6,7 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.frybits.harmony.getHarmonySharedPreferences
 import hu.autsoft.krate.Krate
+import hu.autsoft.krate.default.withDefault
 import hu.autsoft.krate.stringPref
 
 /**
@@ -32,7 +33,7 @@ class EncryptedKrate(applicationContext: Context) : Krate {
         )
     }
 
-    val myStringValue: String by stringPref("my_string_value", "")
+    val myStringValue: String by stringPref("my_string_value").withDefault("")
 }
 
 /**
@@ -42,5 +43,5 @@ class EncryptedKrate(applicationContext: Context) : Krate {
 class HarmonyKrate(context: Context) : Krate {
     override val sharedPreferences: SharedPreferences = context.getHarmonySharedPreferences("PREF_NAME")
 
-    val myStringValue: String by stringPref("my_string_value", "")
+    val myStringValue: String by stringPref("my_string_value").withDefault("")
 }
