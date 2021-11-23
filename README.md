@@ -60,6 +60,8 @@ You can change this behaviour by explicitly providing the key as an argument:
 var username: String? by stringPref(key = "USER_NAME")
 ```
 
+> Note that if you rely on property names as keys, renaming a Krate property will become a breaking change, and the previously stored value will be lost. This can be avoided by adding an explicit key with the name of the original property.
+
 ### Validation
 
 You can add validation rules to your Krate properties by calling `validate` on any of Krate's delegate functions:
