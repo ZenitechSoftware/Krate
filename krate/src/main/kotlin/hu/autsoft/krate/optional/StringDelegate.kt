@@ -1,14 +1,14 @@
 package hu.autsoft.krate.optional
 
 import hu.autsoft.krate.Krate
+import hu.autsoft.krate.base.KeyedKrateProperty
+import hu.autsoft.krate.base.KeyedKratePropertyProvider
 import hu.autsoft.krate.util.edit
-import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 internal class StringDelegate(
-    private val key: String,
-) : ReadWriteProperty<Krate, String?> {
-
+    override val key: String,
+) : KeyedKrateProperty<String?> {
     override operator fun getValue(thisRef: Krate, property: KProperty<*>): String? {
         return if (!thisRef.sharedPreferences.contains(key)) {
             null
@@ -24,5 +24,12 @@ internal class StringDelegate(
             thisRef.sharedPreferences.edit { putString(key, value) }
         }
     }
+}
 
+internal class StringDelegateProvider(
+    val key: String?,
+) : KeyedKratePropertyProvider<String?> {
+    override fun provideDelegate(thisRef: Krate, property: KProperty<*>): StringDelegate {
+        return StringDelegate(key ?: property.name)
+    }
 }

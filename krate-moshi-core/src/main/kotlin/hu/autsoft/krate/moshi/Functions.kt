@@ -3,7 +3,8 @@
 package hu.autsoft.krate.moshi
 
 import hu.autsoft.krate.Krate
-import hu.autsoft.krate.moshi.default.MoshiDelegateWithDefaultFactory
+import hu.autsoft.krate.base.KeyedKratePropertyProvider
+import hu.autsoft.krate.default.withDefault
 import hu.autsoft.krate.moshi.optional.MoshiDelegateFactory
 import java.lang.reflect.Type
 import kotlin.properties.PropertyDelegateProvider
@@ -13,40 +14,43 @@ import kotlin.reflect.typeOf
 
 /**
  * Creates an optional preference of type T with the given [key] in this [Krate] instance.
+ * If no [key] is provided, the property's name will be used as the key.
+ *
  * This instance will be serialized using Moshi.
  */
 @OptIn(ExperimentalStdlibApi::class)
 public inline fun <reified T : Any> Krate.moshiPref(
-    key: String,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
+    key: String? = null,
+): KeyedKratePropertyProvider<T?> {
     return moshiPrefImpl(key, typeOf<T>().javaType)
 }
 
 @PublishedApi
 internal fun <T : Any> Krate.moshiPrefImpl(
-    key: String,
+    key: String?,
     type: Type,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T?>> {
+): KeyedKratePropertyProvider<T?> {
     return MoshiDelegateFactory(key, type)
 }
 
 /**
  * Creates a non-optional preference of type T with the given [key] and [defaultValue] in this [Krate] instance.
+ * If no [key] is provided, the property's name will be used as the key.
+ *
  * This instance will be serialized using Moshi.
  */
+@Deprecated(
+    message = "Use .withDefault() on a moshiPref instead",
+    level = DeprecationLevel.ERROR,
+    replaceWith = ReplaceWith(
+        "this.moshiPref<T>(key).withDefault(defaultValue)",
+        imports = arrayOf("hu.autsoft.krate.default.withDefault"),
+    ),
+)
 @OptIn(ExperimentalStdlibApi::class)
 public inline fun <reified T : Any> Krate.moshiPref(
-    key: String,
+    key: String? = null,
     defaultValue: T,
 ): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
-    return moshiPrefImpl(key, defaultValue, typeOf<T>().javaType)
-}
-
-@PublishedApi
-internal fun <T : Any> Krate.moshiPrefImpl(
-    key: String,
-    defaultValue: T,
-    type: Type,
-): PropertyDelegateProvider<Krate, ReadWriteProperty<Krate, T>> {
-    return MoshiDelegateWithDefaultFactory(key, defaultValue, type)
+    return moshiPref<T>(key).withDefault(defaultValue)
 }

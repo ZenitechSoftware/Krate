@@ -1,19 +1,19 @@
 # Krate
 
-[![Build Status](https://app.bitrise.io/app/40d6bd22db4cfda8/status.svg?token=0neqv73n3TXp9F0nNxj_rA&branch=main)](https://app.bitrise.io/app/40d6bd22db4cfda8)
+![Build Status](https://github.com/AutSoft/Krate/workflows/Build%20and%20test/badge.svg?branch=main)
 
 ![Krate banner](./docs/krate.png)
 
-_Krate_ is a `SharedPreferences` wrapper library that uses delegated properties for convenient access to `SharedPreferences` values.
+**Krate** is a `SharedPreferences` wrapper library that uses delegated properties for convenient access to `SharedPreferences` values.
 
 Here's what its basic usage looks like, extending the provided `SimpleKrate` class:
 
 ```kotlin
 class UserSettings(context: Context) : SimpleKrate(context) {
 
-    var notificationsEnabled by booleanPref("notifications_enabled", false)
-    var loginCount by intPref("login_count", 0)
-    var nickname by stringPref("nickname", "")
+    var notificationsEnabled by booleanPref().withDefault(false)
+    var loginCount by intPref().withDefault(0)
+    var nickname by stringPref()
 
 }
 
@@ -24,37 +24,61 @@ Log.d("LOGIN_COUNT", "Count: ${settings.loginCount}")
 
 # Dependency
 
-You can include _Krate_ in your project from the `mavenCentral()` repository, like so:
+Krate is available from `mavenCentral()`. You can add it to your dependencies with the following line:
 
 ```groovy
-implementation 'hu.autsoft:krate:1.2.0'
+implementation 'hu.autsoft:krate:2.0.0'
 ```
 
-# Optionals vs defaults
+# Basics
 
-Each stored property can be declared with or without a default value. Here's how the two options differ:
-
-### Optional values:
-
-A property declared with the one-argument delegate function will have a nullable type. It will have a `null` value if no value has been set for this property yet, and its current value can be erased from `SharedPreferences` completely by setting it to `null`.
+A Krate property is nullable by default. It will have a `null` value if no value has been set for the property yet, and its current value can be erased from `SharedPreferences` completely by setting it to `null`.
 
 ```kotlin
-var username: String? by stringPref("username")
+var username: String? by stringPref()
 ```
 
-### Default values:
+### Default values
 
-A property declared with the two-argument delegate function takes its default value as the second argument, and it will have a non-nullable type. Reading from this property will return either the value it was last set to or the default value. Setting this property will update the value stored in `SharedPreferences`. Note that there's no way to remove these values from `SharedPreferences` (although you could set it explicitly to the default value).
+You can provide a default value for the property by chaining a `withDefault` call on the delegate function. This will give the property a non-nullable type.
 
 ```kotlin
-var username: String by stringPref("username", defaultValue = "admin")
+var username: String by stringPref().withDefault("admin")
 ```
+
+Reading from this property will return either the value it was last set to, or the default value if it's never been set.
+
+> Note that there's no way to remove these values from `SharedPreferences` (although you could set it explicitly to the default value).
+
+### Custom keys
+
+By default, the the property will be stored under the key of the property's name in the underlying `SharedPreferences` instance.
+
+You can change this behaviour by explicitly providing the key as an argument:
+
+```kotlin
+var username: String? by stringPref(key = "USER_NAME")
+```
+
+> Note that if you rely on property names as keys, renaming a Krate property will become a breaking change, and the previously stored value will be lost. This can be avoided by adding an explicit key with the name of the original property.
+
+### Validation
+
+You can add validation rules to your Krate properties by calling `validate` on any of Krate's delegate functions:
+
+```kotlin
+var percentage: Int by intPref()
+    .withDefault(0)
+    .validate { it in 0..100 }
+```
+
+If this validation fails, an `IllegalArgumentException` will be thrown.
 
 # Custom Krate implementations
 
-You can usually get away with extending `SimpleKrate`, as it does allow you to pass in a custom name for the `SharedPreferences` to be used to store your values in its constructor as an optional parameter. (If you pass in no `name` parameter to its constructor, it will default to using the instance returned by `PreferenceManager.getDefaultSharedPreferences(context)`.)  
+You can usually get away with extending `SimpleKrate`, as it does allow you to pass in a custom name for the `SharedPreferences` to be used to store your values in its constructor as an optional parameter. (If you pass in no `name` parameter to its constructor, it will default to using the instance returned by `PreferenceManager.getDefaultSharedPreferences(context)`.)
 
-However, you can also implement the `Krate` interface directly if you want to manage the `SharedPreferences` instance yourself for whatever reason - all this interface requires is a property that holds a `SharedPreferences` instance. With that, you can use the delegate functions the same way as shown above: 
+However, you can also implement the `Krate` interface directly if you want to manage the `SharedPreferences` instance yourself for whatever reason - all this interface requires is a property that holds a `SharedPreferences` instance. With that, you can use the delegate functions the same way as shown above:
 
 ```kotlin
 class ExampleCustomKrate(context: Context) : Krate {
@@ -65,7 +89,7 @@ class ExampleCustomKrate(context: Context) : Krate {
         sharedPreferences = context.applicationContext.getSharedPreferences("custom_krate_prefs", Context.MODE_PRIVATE)
     }
 
-    var exampleBoolean by booleanPref("exampleBoolean", false)
+    var exampleBoolean by booleanPref().withDefault(false)
     
 }
 ```
@@ -79,7 +103,7 @@ class MainActivity : AppCompatActivity(), Krate {
         getPreferences(Context.MODE_PRIVATE) // Could also fetch a named or default SharedPrefs
     }
     
-    var username by stringPref("username", "")
+    var username by stringPref().withDefault("")
 
 }
 ```
@@ -99,24 +123,11 @@ class EncryptedKrate(applicationContext: Context) : Krate {
         sharedPreferences = EncryptedSharedPreferences.create(applicationContext, ...)
     }
 
-    val myStringValue: String by stringPref("my_string_value", "")
+    val myStringValue: String by stringPref().withDefault("")
 }
 ```
 
-# Validation
-
-You can add validation rules to your Krate properties by calling `validate` on any of Krate's delegate functions:
-
-```kotlin
-var percentage: Int by intPref(
-        key = "percentage",
-        defaultValue = 0,
-).validate { it in 0..100 }
-```
-
-If this validation fails, an `IllegalArgumentException` will be thrown.
-
-# Addons
+# Serialization addons
 
 Krate, by default, supports the types that `SharedPreferences` supports. These are `Boolean`, `Float`, `Int`, `Long`, `String` and `Set<String>`. You may of course want to store additional types in Krate.
 
@@ -132,8 +143,8 @@ The usage of the Krate integration is the same for both setups:
 
 ```kotlin
 class MoshiKrate(context: Context) : SimpleKrate(context) {
-    var user: User? by moshiPref("user")
-    var savedArticles: List<Article>? by moshiPref("articles")
+    var user: User? by moshiPref()
+    var savedArticles: List<Article>? by moshiPref()
 }
 ```
 
@@ -152,7 +163,7 @@ class CustomMoshiKrate(context: Context) : SimpleKrate(context) {
 If you only want to use Moshi adapters that you generate via Moshi's [codegen facilities](https://github.com/square/moshi#codegen), you can use the following Krate artifact in your project to make use of these adapters: 
 
 ```groovy
-implementation 'hu.autsoft:krate-moshi-codegen:1.2.0'
+implementation 'hu.autsoft:krate-moshi-codegen:2.0.0'
 ```
 
 This will give you a default `Moshi` instance created by a call to `Moshi.Builder().build()`. This instance will find and use any of the adapters generated by Moshi's codegen automatically.
@@ -162,7 +173,7 @@ This will give you a default `Moshi` instance created by a call to `Moshi.Builde
 If you rely on [reflection](https://github.com/square/moshi#reflection) for your Moshi serialization, and therefore need a `KotlinJsonAdapterFactory` included in your `Moshi` instance, use the following Krate Moshi dependency:
 
 ```groovy
-implementation 'hu.autsoft:krate-moshi-reflect:1.2.0'
+implementation 'hu.autsoft:krate-moshi-reflect:2.0.0'
 ```
 
 The default `Moshi` instance from this dependency will include the aforementioned factory, and be able to serialize any Kotlin class. Note that this approach relies on the `kotlin-reflect` library, which is a large dependency.
@@ -174,15 +185,15 @@ You may choose to use Moshi's codegen for some classes in your project, and seri
 The `krate-kotlinx` artifact provides a `kotlinxPref` delegate which can store any arbitrary type, as long as Kotlinx.serializazion can serialize and deserialize it. This addon, like the base library, is available from `mavenCentral()`:
 
 ```groovy
-implementation 'hu.autsoft:krate-kotlinx:1.2.0'
+implementation 'hu.autsoft:krate-kotlinx:2.0.0'
 ```
 
 Its usage is the same as with any of the base library's delegates:
 
 ```kotlin
 class KotlinxKrate(context: Context) : SimpleKrate(context) {
-    var user: User? by kotlinxPref("user")
-    var savedArticles: List<Article>? by kotlinxPref("articles")
+    var user: User? by kotlinxPref()
+    var savedArticles: List<Article>? by kotlinxPref()
 }
 ```
 
@@ -197,7 +208,7 @@ class CustomKotlinxKrate(context: Context) : SimpleKrate(context) {
         }
     }
 
-    var user: User? by kotlinxPref("user")
+    var user: User? by kotlinxPref()
 }
 ```
 
@@ -206,15 +217,15 @@ class CustomKotlinxKrate(context: Context) : SimpleKrate(context) {
 The `krate-gson` artifact provides a `gsonPref` delegate which can store any arbitrary type, as long as Gson can serialize and deserialize it. This addon, like the base library, is available from `mavenCentral()`:
 
 ```groovy
-implementation 'hu.autsoft:krate-gson:1.2.0'
+implementation 'hu.autsoft:krate-gson:2.0.0'
 ```
 
 Its basic usage is the same as with any of the base library's delegates:
 
 ```kotlin
 class GsonKrate(context: Context) : SimpleKrate(context) {
-    var user: User? by gsonPref("user")
-    var savedArticles: List<Article>? by gsonPref("articles")
+    var user: User? by gsonPref()
+    var savedArticles: List<Article>? by gsonPref()
 }
 ```
 
@@ -226,7 +237,7 @@ class CustomGsonKrate(context: Context) : SimpleKrate(context) {
         gson = GsonBuilder().create()
     }
 
-    var user: User? by gsonPref("user")
+    var user: User? by gsonPref()
 }
 ```
 
